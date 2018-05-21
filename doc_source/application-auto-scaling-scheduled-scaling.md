@@ -1,4 +1,4 @@
-# Scheduled Scaling<a name="application-auto-scaling-scheduled-scaling"></a>
+# Scheduled Scaling for Application Auto Scaling<a name="application-auto-scaling-scheduled-scaling"></a>
 
 Scaling based on a schedule enables you to scale your application in response to predictable load changes\. You can plan scaling activities based on the predictable traffic patterns of your web application\. For example, every week the traffic to your web application starts to increase on Wednesday, remains high on Thursday, and starts to decrease on Friday\. You can configure Application Auto Scaling to increase capacity on Wednesday and decrease capacity on Friday\.
 

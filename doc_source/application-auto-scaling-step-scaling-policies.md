@@ -1,15 +1,12 @@
-# Step Scaling Policies<a name="application-auto-scaling-step-scaling-policies"></a>
+# Step Scaling Policies for Application Auto Scaling<a name="application-auto-scaling-step-scaling-policies"></a>
 
 Step scaling policies increase or decrease the current capacity of a scalable target based on a set of scaling adjustments, known as *step adjustments*, that vary based on the size of the alarm breach\.
 
 After a scaling activity is started, the policy continues to respond to additional alarms, even while a scaling activity or health check replacement is in progress\. Therefore, all alarms that are breached are evaluated by Application Auto Scaling as it receives the alarm messages\.
 
 **Limits**
-
 + You cannot create step scaling policies for DynamoDB tables and global secondary indexes\.
-
 + You can create 50 scaling policies per scalable target\. This includes both step scaling policies and target tracking policies\.
-
 + You can create 20 step adjustments per scaling policy\.
 
 ## Scaling Adjustment Types<a name="as-scaling-adjustment"></a>
@@ -17,23 +14,16 @@ After a scaling activity is started, the policy continues to respond to addition
 When a step scaling policy is performed, it changes the current capacity of your scalable target using the scaling adjustment specified in the policy\. A scaling adjustment can't change the capacity of the scalable target above the maximum capacity or below the minimum capacity\.
 
 Application Auto Scaling supports the following adjustment types for step scaling policies:
-
 + **ChangeInCapacity**—Increase or decrease the current capacity of the scalable target by the specified value\. A positive value increases the capacity and a negative value decreases the capacity\.
 
   Example: If the current capacity of a Spot Fleet is 3 and the adjustment is 5, then when this policy is performed, Application Auto Scaling adds 5 to the capacity of the Spot Fleet for a total of 8\.
-
 + **ExactCapacity**—Change the current capacity of the scalable target to the specified value\. Specify a positive value with this adjustment type\.
 
   Example: If the current capacity of a Spot Fleet is 3 and the adjustment is 5, then when this policy is performed, Application Auto Scaling changes the capacity to 5\.
-
 + **PercentChangeInCapacity**—Increase or decrease the current capacity of the scalable target by the specified percentage\. A positive value increases the capacity and a negative value decreases the capacity\. If the resulting value is not an integer, Application Auto Scaling rounds it as follows:
-
   + Values greater than 1 are rounded down\. For example, `12.7` is rounded to `12`\.
-
   + Values between 0 and 1 are rounded to 1\. For example, `.67` is rounded to `1`\.
-
   + Values between 0 and \-1 are rounded to \-1\. For example, `-.58` is rounded to `-1`\.
-
   + Values less than \-1 are rounded up\. For example, `-6.67` is rounded to `-6`\.
 
   Example: If the current capacity is 10 and the adjustment is 10 percent, then when this policy is performed, Application Auto Scaling adds 1 to the capacity for a total of 11\.
@@ -45,15 +35,10 @@ With **PercentChangeInCapacity**, you can also specify the minimum amount to sca
 When you create a step scaling policy, you add one or more step adjustments that enable you to scale based on the size of the alarm breach\. Each step adjustment specifies a lower bound for the metric value, an upper bound for the metric value, and the amount by which to scale, based on the scaling adjustment type\.
 
 There are a few rules for the step adjustments for your policy:
-
 + The ranges of your step adjustments can't overlap or have a gap\.
-
 + Only one step adjustment can have a null lower bound \(negative infinity\)\. If one step adjustment has a negative lower bound, then there must be a step adjustment with a null lower bound\.
-
 + Only one step adjustment can have a null upper bound \(positive infinity\)\. If one step adjustment has a positive upper bound, then there must be a step adjustment with a null upper bound\.
-
 + The upper and lower bound can't be null in the same step adjustment\.
-
 + If the metric value is above the breach threshold, the lower bound is inclusive and the upper bound is exclusive\. If the metric value is below the breach threshold, the lower bound is exclusive and the upper bound is inclusive\.
 
 Application Auto Scaling applies the aggregation type to the metric data points from all scalable targets\. It compares the aggregated metric value against the upper and lower bounds defined by the step adjustments to determine which step adjustment to perform\.

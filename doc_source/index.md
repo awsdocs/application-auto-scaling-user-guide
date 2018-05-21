@@ -15,9 +15,9 @@ Amazon's trademarks and trade dress may not be used in
 -----
 ## Contents
 + [What Is Application Auto Scaling?](what-is-application-auto-scaling.md)
-+ [Target Tracking Scaling Policies](application-auto-scaling-target-tracking.md)
-+ [Step Scaling Policies](application-auto-scaling-step-scaling-policies.md)
-+ [Scheduled Scaling](application-auto-scaling-scheduled-scaling.md)
++ [Target Tracking Scaling Policies for Application Auto Scaling](application-auto-scaling-target-tracking.md)
++ [Step Scaling Policies for Application Auto Scaling](application-auto-scaling-step-scaling-policies.md)
++ [Scheduled Scaling for Application Auto Scaling](application-auto-scaling-scheduled-scaling.md)
 + [Authentication and Access Control for Application Auto Scaling](auth-and-access-control.md)
    + [Service-Linked Roles for Application Auto Scaling](application-autoscaling-service-linked-roles.md)
 + [Application Auto Scaling Limits](application-auto-scaling-limits.md)

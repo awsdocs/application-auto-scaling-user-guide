@@ -1,27 +1,19 @@
 # What Is Application Auto Scaling?<a name="what-is-application-auto-scaling"></a>
 
 Use Application Auto Scaling to scale the following compute and data resources for your cloud\-based web applications:
-
 + Amazon ECS services
-
 + Spot Fleet requests
-
 + Amazon EMR clusters
-
 + AppStream 2\.0 fleets
-
 + DynamoDB tables and global secondary indexes
-
 + Aurora replicas
++ Amazon SageMaker endpoint variants
 
 Use Auto Scaling to scale your fleet of EC2 instances\. For more information, see the [Amazon EC2 Auto Scaling User Guide](http://docs.aws.amazon.com/autoscaling/ec2/userguide/)\.
 
 ## Features of Application Auto Scaling<a name="features"></a>
-
 + **Target tracking scaling**—Scale a resource based on a target value for a specific CloudWatch metric\.
-
 + **Step scaling**— Scale a resource based on a set of scaling adjustments that vary based on the size of the alarm breach\.
-
 + **Scheduled scaling**—Scale a resource based on the date and time\.
 
 ## Accessing Application Auto Scaling<a name="access"></a>
@@ -31,10 +23,10 @@ AWS provides a web\-based user interface, the AWS Management Console\. If you've
 If you prefer to use a command line interface, you have the following options:
 
 **AWS Command Line Interface \(AWS CLI\)**  
-Provides commands for a broad set of AWS products, and is supported on Windows, Mac, and Linux\. To get started, see [AWS Command Line Interface User Guide](http://docs.aws.amazon.com/cli/latest/userguide/)\. For more information about the commands for Application Auto Scaling, see [application\-autoscaling](http://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/) in the *AWS Command Line Interface Reference*\.
+Provides commands for a broad set of AWS products, and is supported on Windows, Mac, and Linux\. To get started, see [AWS Command Line Interface User Guide](http://docs.aws.amazon.com/cli/latest/userguide/)\. For more information about the commands for Application Auto Scaling, see [application\-autoscaling](http://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/) in the *AWS CLI Command Reference*\.
 
 **AWS Tools for Windows PowerShell**  
-Provides commands for a broad set of AWS products for those who script in the PowerShell environment\. To get started, see the [AWS Tools for Windows PowerShell User Guide](http://docs.aws.amazon.com/powershell/latest/userguide/)\. For more information about the cmdlets for Application Auto Scaling, see the [AWS Tools for Windows PowerShell Reference](http://docs.aws.amazon.com/powershell/latest/reference/)\.
+Provides commands for a broad set of AWS products for those who script in the PowerShell environment\. To get started, see the [AWS Tools for Windows PowerShell User Guide](http://docs.aws.amazon.com/powershell/latest/userguide/)\. For more information about the cmdlets for Application Auto Scaling, see the [AWS Tools for PowerShell Cmdlet Reference](http://docs.aws.amazon.com/powershell/latest/reference/)\.
 
 Application Auto Scaling provides a Query API\. These requests are HTTP or HTTPS requests that use the HTTP verbs GET or POST and a Query parameter named `Action`\. For more information about the API actions for Application Auto Scaling, see [Actions](http://docs.aws.amazon.com/autoscaling/application/APIReference/API_Operations.html) in the *Application Auto Scaling API Reference*\.
 
@@ -45,15 +37,9 @@ For information about your credentials for accessing AWS, see [AWS Security Cred
 ## Getting Started<a name="getting-started"></a>
 
 To learn more about the scalable resources supported by Application Auto Scaling, see the following documentation:
-
 + [Service Auto Scaling](http://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-auto-scaling.html) in the *Amazon Elastic Container Service Developer Guide*
-
 + [Automatic Scaling for Spot Fleet](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet-automatic-scaling.html) in the *Amazon EC2 User Guide*
-
 + [Using Automatic Scaling in Amazon EMR](http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-automatic-scaling.html) in the *Amazon EMR Management Guide*
-
 + [Fleet Auto Scaling for AppStream 2\.0](http://docs.aws.amazon.com/appstream2/latest/developerguide/autoscaling.html) in the *Amazon AppStream 2\.0 Developer Guide*
-
 + [Managing Throughput Capacity with DynamoDB Auto Scaling](http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/AutoScaling.html) in the *Amazon DynamoDB Developer Guide*
-
 + [Using Amazon Aurora Auto Scaling with Aurora Replicas](http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Aurora.Integrating.AutoScaling.html) in the *Amazon Relational Database Service User Guide*

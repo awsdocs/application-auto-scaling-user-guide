@@ -85,31 +85,20 @@ To configure scheduled scaling for a scalable resource, users must have permissi
 Users must have the following additional permissions for each type of scalable resource for which they will configure scaling policies\.
 
 **ECS services**
-
 + `ecs:DescribeServices`
-
 + `ecs:UpdateServices`
 
 **Spot Fleet requests**
-
 + `ec2:DescribeSpotFleetRequests`
-
 + `ec2:ModifySpotFleetRequest`
 
 **DynamoDB tables**
-
 + `dynamodb:DescribeTable`
-
 + `dynamodb:UpdateTable`
 
 **Aurora DB clusters**
-
 + `rds:AddTagsToResource`
-
 + `rds:CreateDBInstance`
-
 + `rds:DeleteDBInstance`
-
 + `rds:DescribeDBClusters`
-
 + `rds:DescribeDBInstances`

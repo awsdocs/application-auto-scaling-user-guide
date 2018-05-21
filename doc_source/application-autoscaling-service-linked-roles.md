@@ -4,75 +4,77 @@ Application Auto Scaling uses service\-linked roles for the permissions that it 
 
 ## Permissions Granted by the Service\-Linked Roles<a name="service-linked-role-permissions"></a>
 
-Application Auto Scaling uses the following service\-linked roles to make the specified calls on your behalf\. There is one service\-linked role per type of scalable resource\.
+Application Auto Scaling uses the following service\-linked roles to make the specified calls on your behalf\. There is one service\-linked role per type of scalable resource\. Each service\-linked role trusts the specified service principal to assume it\.
 
 **AWSServiceRoleForApplicationAutoScaling\_AppStreamFleet**
 
+Actions:
 + `appstream:DescribeFleets`
-
 + `appstream:UpdateFleet`
-
 + `cloudwatch:DeleteAlarms`
-
 + `cloudwatch:DescribeAlarms`
-
 + `cloudwatch:PutMetricAlarm`
+
+Service principal: `appstream.application-autoscaling.amazonaws.com`
 
 **AWSServiceRoleForApplicationAutoScaling\_DynamoDBTable**
 
+Actions:
 + `dynamodb:DescribeTable`
-
 + `dynamodb:UpdateTable`
-
 + `cloudwatch:DeleteAlarms`
-
 + `cloudwatch:DescribeAlarms`
-
 + `cloudwatch:PutMetricAlarm`
+
+Service principal: `dynamodb.application-autoscaling.amazonaws.com`
 
 **AWSServiceRoleForApplicationAutoScaling\_EC2SpotFleetRequest**
 
+Actions:
 + `ec2:DescribeSpotFleetRequests`
-
 + `ec2:ModifySpotFleetRequest`
-
 + `cloudwatch:DeleteAlarms`
-
 + `cloudwatch:DescribeAlarms`
-
 + `cloudwatch:PutMetricAlarm`
+
+Service principal: `ec2.application-autoscaling.amazonaws.com`
 
 **AWSServiceRoleForApplicationAutoScaling\_ECSService**
 
+Actions:
 + `ecs:DescribeServices`
-
 + `ecs:UpdateService`
-
 + `cloudwatch:DeleteAlarms`
-
 + `cloudwatch:DescribeAlarms`
-
 + `cloudwatch:PutMetricAlarm`
+
+Service principal: `ecs.application-autoscaling.amazonaws.com`
 
 **AWSServiceRoleForApplicationAutoScaling\_RDSCluster**
 
+Actions:
 + `rds:AddTagsToResource`
-
 + `rds:CreateDBInstance`
-
 + `rds:DeleteDBInstance`
-
 + `rds:DescribeDBClusters`
-
 + `rds:DescribeDBInstance`
-
 + `cloudwatch:DeleteAlarms`
-
 + `cloudwatch:DescribeAlarms`
-
 + `cloudwatch:PutMetricAlarm`
 
-The service\-linked roles for Application Auto Scaling trust the `ec2.application-autoscaling.amazonaws.com` service to assume them\.
+Service principal: `rds.application-autoscaling.amazonaws.com`
+
+**AWSServiceRoleForApplicationAutoScaling\_SageMakerEndpoint**
+
+Actions:
++ `sagemaker:DescribeEndpoint`
++ `sagemaker:DescribeEndpointConfig`
++ `sagemaker:UpdateEndpointWeightsAndCapacities`
++ `cloudwatch:DeleteAlarms`
++ `cloudwatch:DescribeAlarms`
++ `cloudwatch:PutMetricAlarm`
+
+Service principal: `sagemaker.application-autoscaling.amazonaws.com`
 
 ## Create Service\-Linked Roles<a name="create-service-linked-role"></a>
 

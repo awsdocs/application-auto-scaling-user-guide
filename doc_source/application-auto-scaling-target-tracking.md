@@ -1,4 +1,4 @@
-# Target Tracking Scaling Policies<a name="application-auto-scaling-target-tracking"></a>
+# Target Tracking Scaling Policies for Application Auto Scaling<a name="application-auto-scaling-target-tracking"></a>
 
 With target tracking scaling policies, you select a predefined metric or configure a customized metric, and set a target value\. Application Auto Scaling creates and manages the CloudWatch alarms that trigger the scaling policy and calculates the scaling adjustment based on the metric and the target value\. The scaling policy adds or removes capacity as required to keep the metric at, or close to, the specified target value\. In addition to keeping the metric close to the target value, a target tracking scaling policy also adjusts to changes in the metric due to a changing load pattern and minimizes changes to the capacity of the scalable target\.
 
@@ -9,27 +9,17 @@ You can have multiple target tracking scaling policies for a scalable target, pr
 You can also optionally disable the scale\-in portion of a target tracking scaling policy\. This feature provides the flexibility to use a different method for scale in than you use for scale out \(for example, a different scaling policy type\)\.
 
 **Limits**
-
 + You cannot create target tracking scaling policies for Amazon EMR clusters or AppStream 2\.0 fleets\.
-
 + You can create 50 scaling policies per scalable target\. This includes both step scaling policies and target tracking policies\.
-
-+ A target tracking scaling policy does not scale out if the current capacity of the resource is 0, because it scales proportionally to the current capacity\.
 
 ## Considerations<a name="target-tracking-considerations"></a>
 
 Keep the following considerations in mind:
-
 + A target tracking scaling policy assumes that it should perform scale out when the specified metric is above the target value\. You cannot use a target tracking scaling policy to scale out when the specified metric is below the target value\.
-
 + A target tracking scaling policy does not perform scaling when the specified metric has insufficient data\. It does not perform scale in because it does not interpret insufficient data as low utilization\. To scale in when a metric has insufficient data, create a step scaling policy and have an alarm invoke the scaling policy when it changes to the `INSUFFICIENT_DATA` state\.
-
 + You may see gaps between the target value and the actual metric data points\. This is because Application Auto Scaling always acts conservatively by rounding up or down when it determines how much capacity to add or remove\. This prevents it from adding insufficient capacity or removing too much capacity\. However, for a scalable target with small capacity, the actual metric data points might seem far from the target value\. For a scalable target with larger capacity, adding or removing capacity causes less of a gap between the target value and the actual metric data points\.
-
 + We recommend that you scale based on metrics with a 1\-minute frequency because that ensures a faster response to utilization changes\. Scaling on metrics with a 5\-minute frequency can result in slower response time and scaling on stale metric data\.
-
 + To ensure application availability, Application Auto Scaling scales out proportionally to the metric as fast as it can, but scales in more gradually\.
-
 + Do not edit or delete the CloudWatch alarms that Application Auto Scaling manages for a target tracking scaling policy\. Application Auto Scaling deletes the alarms automatically when you delete the Auto Scaling policy\.
 
 ## Cooldown Period<a name="target-tracking-cooldown"></a>
