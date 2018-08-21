@@ -1,40 +1,60 @@
 # Authentication and Access Control for Application Auto Scaling<a name="auth-and-access-control"></a>
 
-By default, IAM users don't have permission to create or modify AWS resources\. To grant IAM users permission to create or modify AWS resources, you must create policies using AWS Identity and Access Management \(IAM\)\. IAM policies grant permissions to specific resources and API actions\. You attach am IAM policy to the IAM users or groups that require the permissions it grants\. For more information, see [Access Management](http://docs.aws.amazon.com/IAM/latest/UserGuide/access.html) in the *IAM User Guide*\.
+Access to Application Auto Scaling requires credentials that AWS can use to authenticate your requests\. Those credentials must have [permissions](http://docs.aws.amazon.com/IAM/latest/UserGuide/access.html) to perform Application Auto Scaling actions, such as configuring scaling policies\.
 
-## Application Auto Scaling Actions<a name="application-auto-scaling-actions"></a>
+This topic provides details on how you can use AWS Identity and Access Management \(IAM\) to help secure your resources by controlling who can perform Application Auto Scaling actions\. 
 
-You can specify any and all Application Auto Scaling actions in an IAM policy\. Use the following prefix with the name of the action: `application-autoscaling:`\. For example:
+By default, a brand new IAM user has no permissions to do anything\. To grant permissions to call Application Auto Scaling actions, you attach an IAM policy to the IAM users or groups that require the permissions it grants\. 
+
+## Specifying Actions in a Policy<a name="application-auto-scaling-actions"></a>
+
+Application Auto Scaling provides a set of actions that you can specify in an IAM policy\. For more information, see [Actions](http://docs.aws.amazon.com/autoscaling/application/APIReference/API_Operations.html) in the *Application Auto Scaling API Reference*\.
+
+To specify a single policy, you can use the following prefix with the name of the action: `application-autoscaling:`\. For example:
 
 ```
 "Action": "application-autoscaling:DescribeScalingActivities"
 ```
 
-You can also use wildcards\. For example, use `application-autoscaling:*` to specify all Auto Scaling actions\.
+Wildcards are supported\. For example, you can use `application-autoscaling:*` to specify all Application Auto Scaling actions\.
 
 ```
 "Action": "application-autoscaling:*"
 ```
 
-Use `Describe:*` to specify all actions whose names start with `Describe`\.
+You can also use `Describe:*` to specify all actions whose names start with `Describe`\.
 
 ```
 "Action": "application-autoscaling:Describe*"
 ```
 
-For a list of actions, see [Application Auto Scaling Actions](http://docs.aws.amazon.com/autoscaling/application/APIReference/API_Operations.html) in the *Application Auto Scaling API Reference*\.
+In addition to the permissions for calling Application Auto Scaling actions, users also require permissions to create a service\-linked role\.
 
-## Application Auto Scaling Resources<a name="application-auto-scaling-resources"></a>
+When users call `RegisterScalableTarget`, Application Auto Scaling creates a service\-linked role in your account, if the role does not exist already\. The service\-linked role grants permissions to Application Auto Scaling, so that it can call other services on your behalf\. 
 
-When writing an IAM policy to control access to Application Auto Scaling actions, you must use "\*" as the resource\. There are no supported Amazon Resource Names \(ARNs\) for Application Auto Scaling resources\.
+For automatic role creation to succeed, users must have permissions for the `iam:CreateServiceLinkedRole` action\. 
 
-## Application Auto Scaling Keys<a name="application-autoscaling-keys"></a>
+```
+"Action": "iam:CreateServiceLinkedRole"
+```
 
-For a list of context keys supported by each AWS service and a list of AWS\-wide policy keys, see [AWS Service Actions and Condition Context Keys](http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_actionsconditions.html) and [Global and IAM Condition Context Keys](http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html) in the *IAM User Guide*\.
+For more information, see [Service\-Linked Roles for Application Auto Scaling](application-auto-scaling-service-linked-roles.md)\.
+
+## Specifying the Resource<a name="application-auto-scaling-resources"></a>
+
+Application Auto Scaling has no service\-defined resources that can be used as the `Resource` element of an IAM policy statement\. Therefore, there are no Amazon Resource Names \(ARNs\) for you to use in an IAM policy\. To control access to Application Auto Scaling actions, always use an \* \(asterisk\) as the resource when writing an IAM policy\. 
+
+## Specifying Conditions in a Policy<a name="application-auto-scaling-keys"></a>
+
+When you grant permissions, you can use IAM policy language to specify the conditions when a policy should take effect\. For example, you might want a policy to be applied only after a specific date\. To express conditions, use predefined condition keys\.
+
+For a list of context keys supported by each AWS service and a list of AWS\-wide policy keys, see [Actions, Resources, and Condition Keys for AWS Services](http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_actions-resources-contextkeys.html) and [AWS Global Condition Context Keys](http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html) in the *IAM User Guide*\.
+
+Application Auto Scaling does not provide additional condition keys\.
 
 ## Example Policies<a name="application-auto-scaling-example-policies"></a>
 
-To configure step scaling policies or target tracking policies for a scalable resource, users must have permission to use the actions in the following example policy\.
+To configure step scaling policies or target tracking policies for a scalable resource, users must have permissions to use the actions in the following example policy:
 
 ```
 {
@@ -58,7 +78,7 @@ To configure step scaling policies or target tracking policies for a scalable re
 }
 ```
 
-To configure scheduled scaling for a scalable resource, users must have permission to use the actions in the following example policy\.
+To configure scheduled scaling for a scalable resource, users must have permissions to use the actions in the following example policy:
 
 ```
 {
@@ -82,19 +102,44 @@ To configure scheduled scaling for a scalable resource, users must have permissi
 }
 ```
 
-Users must have the following additional permissions for each type of scalable resource for which they will configure scaling policies\.
+## Additional IAM Permissions<a name="application-auto-scaling-additional-permissions"></a>
 
-**ECS services**
-+ `ecs:DescribeServices`
-+ `ecs:UpdateServices`
+Users must have the following IAM additional permissions for each type of scalable resource for which they will configure scaling policies\. You can specify the following actions in the `Action` element of an IAM policy statement\. 
 
-**Spot Fleet requests**
-+ `ec2:DescribeSpotFleetRequests`
-+ `ec2:ModifySpotFleetRequest`
+**AppStream 2\.0 fleets**
++ `appstream:DescribeFleets`
++ `appstream:UpdateFleet`
++ `cloudwatch:DeleteAlarms`
++ `cloudwatch:DescribeAlarms`
++ `cloudwatch:PutMetricAlarm`
 
-**DynamoDB tables**
+**DynamoDB tables and global secondary indexes**
 + `dynamodb:DescribeTable`
 + `dynamodb:UpdateTable`
++ `cloudwatch:DeleteAlarms`
++ `cloudwatch:DescribeAlarms`
++ `cloudwatch:PutMetricAlarm`
+
+**Amazon EC2 Spot Fleet requests**
++ `ec2:DescribeSpotFleetRequests`
++ `ec2:ModifySpotFleetRequest`
++ `cloudwatch:DeleteAlarms`
++ `cloudwatch:DescribeAlarms`
++ `cloudwatch:PutMetricAlarm`
+
+**Amazon ECS services**
++ `ecs:DescribeServices`
++ `ecs:UpdateServices`
++ `cloudwatch:DeleteAlarms`
++ `cloudwatch:DescribeAlarms`
++ `cloudwatch:PutMetricAlarm`
+
+**Amazon EMR clusters**
++ `elasticmapreduce:ModifyInstanceGroups`
++ `elasticmapreduce:ListInstanceGroups`
++ `cloudwatch:DeleteAlarms`
++ `cloudwatch:DescribeAlarms`
++ `cloudwatch:PutMetricAlarm`
 
 **Aurora DB clusters**
 + `rds:AddTagsToResource`
@@ -102,3 +147,20 @@ Users must have the following additional permissions for each type of scalable r
 + `rds:DeleteDBInstance`
 + `rds:DescribeDBClusters`
 + `rds:DescribeDBInstances`
++ `cloudwatch:DeleteAlarms`
++ `cloudwatch:DescribeAlarms`
++ `cloudwatch:PutMetricAlarm`
+
+**Amazon SageMaker endpoints**
++ `sagemaker:DescribeEndpoint`
++ `sagemaker:DescribeEndpointConfig`
++ `sagemaker:UpdateEndpointWeightsAndCapacities`
++ `cloudwatch:DeleteAlarms`
++ `cloudwatch:DescribeAlarms`
++ `cloudwatch:PutMetricAlarm`
+
+**Custom Resources**
++ `execute-api:Invoke`
++ `cloudwatch:DeleteAlarms `
++ `cloudwatch:DescribeAlarms `
++ `cloudwatch:PutMetricAlarm `
