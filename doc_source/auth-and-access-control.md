@@ -1,6 +1,6 @@
 # Authentication and Access Control for Application Auto Scaling<a name="auth-and-access-control"></a>
 
-Access to Application Auto Scaling requires credentials that AWS can use to authenticate your requests\. Those credentials must have [permissions](http://docs.aws.amazon.com/IAM/latest/UserGuide/access.html) to perform Application Auto Scaling actions, such as configuring scaling policies\.
+Access to Application Auto Scaling requires credentials that AWS can use to authenticate your requests\. Those credentials must have [permissions](https://docs.aws.amazon.com/IAM/latest/UserGuide/access.html) to perform Application Auto Scaling actions, such as configuring scaling policies\.
 
 This topic provides details on how you can use AWS Identity and Access Management \(IAM\) to help secure your resources by controlling who can perform Application Auto Scaling actions\. 
 
@@ -8,7 +8,7 @@ By default, a brand new IAM user has no permissions to do anything\. To grant pe
 
 ## Specifying Actions in a Policy<a name="application-auto-scaling-actions"></a>
 
-Application Auto Scaling provides a set of actions that you can specify in an IAM policy\. For more information, see [Actions](http://docs.aws.amazon.com/autoscaling/application/APIReference/API_Operations.html) in the *Application Auto Scaling API Reference*\.
+Application Auto Scaling provides a set of actions that you can specify in an IAM policy\. For more information, see [Actions](https://docs.aws.amazon.com/autoscaling/application/APIReference/API_Operations.html) in the *Application Auto Scaling API Reference*\.
 
 To specify a single policy, you can use the following prefix with the name of the action: `application-autoscaling:`\. For example:
 
@@ -48,7 +48,7 @@ Application Auto Scaling has no service\-defined resources that can be used as t
 
 When you grant permissions, you can use IAM policy language to specify the conditions when a policy should take effect\. For example, you might want a policy to be applied only after a specific date\. To express conditions, use predefined condition keys\.
 
-For a list of context keys supported by each AWS service and a list of AWS\-wide policy keys, see [Actions, Resources, and Condition Keys for AWS Services](http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_actions-resources-contextkeys.html) and [AWS Global Condition Context Keys](http://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html) in the *IAM User Guide*\.
+For a list of context keys supported by each AWS service and a list of AWS\-wide policy keys, see [Actions, Resources, and Condition Keys for AWS Services](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_actions-resources-contextkeys.html) and [AWS Global Condition Context Keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html) in the *IAM User Guide*\.
 
 Application Auto Scaling does not provide additional condition keys\.
 
@@ -104,7 +104,7 @@ To configure scheduled scaling for a scalable resource, users must have permissi
 
 ## Additional IAM Permissions<a name="application-auto-scaling-additional-permissions"></a>
 
-Users must have the following IAM additional permissions for each type of scalable resource for which they will configure scaling policies\. You can specify the following actions in the `Action` element of an IAM policy statement\. 
+Users must have additional permissions for each type of resource for which they will configure scaling policies\. You specify the following actions in the `Action` element of an IAM policy statement\. 
 
 **AppStream 2\.0 fleets**
 + `appstream:DescribeFleets`
