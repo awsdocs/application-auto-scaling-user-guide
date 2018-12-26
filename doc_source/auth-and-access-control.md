@@ -22,7 +22,7 @@ Wildcards are supported\. For example, you can use `application-autoscaling:*` t
 "Action": "application-autoscaling:*"
 ```
 
-You can also use `Describe:*` to specify all actions whose names start with `Describe`\.
+You can also use `Describe*` to specify all actions whose names start with `Describe`\.
 
 ```
 "Action": "application-autoscaling:Describe*"
