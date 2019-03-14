@@ -1,13 +1,15 @@
 # Step Scaling Policies for Application Auto Scaling<a name="application-auto-scaling-step-scaling-policies"></a>
 
+With step scaling, you choose scaling metrics and threshold values for the CloudWatch alarms that trigger the scaling process as well as define how your scalable target should be scaled when a threshold is in breach for a specified number of evaluation periods\. 
+
 Step scaling policies increase or decrease the current capacity of a scalable target based on a set of scaling adjustments, known as *step adjustments*\. The adjustments vary based on the size of the alarm breach\.
 
-After a scaling activity is started, the policy continues to respond to additional alarms, even while a scaling activity or health check replacement is in progress\. Therefore, all alarms that are breached are evaluated by Application Auto Scaling as it receives the alarm messages\.
+After a scaling activity is started, the policy continues to respond to additional alarms, even while a scaling activity is in progress\. Therefore, all alarms that are breached are evaluated by Application Auto Scaling as it receives the alarm messages\.
+
+If your scaling metric is a utilization metric that increases or decreases proportionally to the capacity of the scalable target, we recommend that you use a target tracking scaling policy\. For more information, see [Target Tracking Scaling Policies for Application Auto Scaling](application-auto-scaling-target-tracking.md)\. You still have the option to use target tracking scaling with step scaling for a more advanced scaling policy configuration\. For example, if you want, you can configure a more aggressive response when utilization reaches a certain level\. 
 
 **Limits**
 + You cannot create step scaling policies for DynamoDB tables and global secondary indexes\.
-+ You can create 50 scaling policies per scalable target\. This includes both step scaling policies and target tracking policies\.
-+ You can create 20 step adjustments per scaling policy\.
 
 ## Scaling Adjustment Types<a name="as-scaling-adjustment"></a>
 
@@ -16,10 +18,10 @@ When a step scaling policy is performed, it changes the current capacity of your
 Application Auto Scaling supports the following adjustment types for step scaling policies:
 + **ChangeInCapacity**—Increase or decrease the current capacity of the scalable target by the specified value\. A positive value increases the capacity and a negative value decreases the capacity\.
 
-  Example: Consider a Spot Fleet with a current capacity of 3\. If the adjustment is 5, then Application Auto Scaling adds 5 to the capacity for a total of 8\.
+  Example: If the current capacity is 3 and the adjustment is 5, then Application Auto Scaling adds 5 to the capacity for a total of 8\.
 + **ExactCapacity**—Change the current capacity of the scalable target to the specified value\. Specify a positive value with this adjustment type\.
 
-  Example: If the current capacity of a Spot Fleet is 3 and the adjustment is 5, then Application Auto Scaling changes the capacity to 5\.
+  Example: If the current capacity is 3 and the adjustment is 5, then Application Auto Scaling changes the capacity to 5\.
 + **PercentChangeInCapacity**—Increase or decrease the current capacity of the scalable target by the specified percentage\. A positive value increases the capacity and a negative value decreases the capacity\. If the resulting value is not an integer, Application Auto Scaling rounds it as follows:
   + Values greater than 1 are rounded down\. For example, `12.7` is rounded to `12`\.
   + Values between 0 and 1 are rounded to 1\. For example, `.67` is rounded to `1`\.
@@ -28,7 +30,7 @@ Application Auto Scaling supports the following adjustment types for step scalin
 
   Example: If the current capacity is 10 and the adjustment is 10 percent, then Application Auto Scaling adds 1 to the capacity for a total of 11\.
 
-With **PercentChangeInCapacity**, you can also specify the minimum amount to scale \(using the `MinAdjustmentMagnitude` parameter\. For example, suppose that you create a policy that adds 25 percent and you specify a minimum amount of 2\. If the scalable target has a capacity of 4 and the scaling policy is performed, 25 percent of 4 is 1\. However, because you specified a minimum increment of 2, Application Auto Scaling adds 2\.
+With **PercentChangeInCapacity**, you can also specify the minimum amount to scale \(using the `MinAdjustmentMagnitude` parameter\)\. For example, suppose that you create a policy that adds 25 percent and you specify a minimum amount of 2\. If the scalable target has a capacity of 4 and the scaling policy is performed, 25 percent of 4 is 1\. However, because you specified a minimum increment of 2, Application Auto Scaling adds 2\.
 
 ## Step Adjustments<a name="as-scaling-steps"></a>
 
@@ -44,7 +46,7 @@ There are a few rules for the step adjustments for your policy:
 + The upper and lower bound can't be null in the same step adjustment\.
 + If the metric value is above the breach threshold, the lower bound is inclusive and the upper bound is exclusive\. If the metric value is below the breach threshold, the lower bound is exclusive and the upper bound is inclusive\.
 
-Application Auto Scaling applies the aggregation type to the metric data points from all scalable targets\. It compares the aggregated metric value against the upper and lower bounds defined by the step adjustments to determine which step adjustment to perform\.
+CloudWatch aggregates metric data points based on the statistic for the metric associated with your CloudWatch alarm\. When the alarm is breached, the appropriate scaling policy is triggered\. Application Auto Scaling applies your specified aggregation type to the most recent metric data points from CloudWatch \(as opposed to the raw metric data\)\. It compares this aggregated metric value against the upper and lower bounds defined by the step adjustments to determine which step adjustment to perform\. 
 
 You specify the upper and lower bounds relative to the breach threshold\. For example, suppose that you have an alarm with a breach threshold of 50 and a scaling adjustment of type `PercentChangeInCapacity`\. You also have scale\-out and scale\-in policies with the following step adjustments:
 
@@ -76,38 +78,44 @@ While the cooldown period is in effect, capacity added by the initiating scale\-
 
 For scale in policies, the cooldown period is used to block subsequent scale in events until it has expired\. The intention is to scale in conservatively to protect your application's availability\. However, if another alarm triggers a scale\-out policy during the cooldown period after a scale in event, Application Auto Scaling scales out your scalable target immediately\.
 
-## Create a Step Scaling Policy<a name="create-step-scaling-policy"></a>
+## Configure Step Scaling Policies Using the AWS CLI<a name="create-step-scaling-policy"></a>
 
 You can create scaling policies that tell Application Auto Scaling what to do when the specified conditions change\. Before you can create a scaling policy, you must register the scalable target\.
 
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command to register a scalable target\.
 
 ```
-aws application-autoscaling register-scalable-target --service-namespace ec2 \
---scalable-dimension ec2:spot-fleet-request:TargetCapacity \
---resource-id spot-fleet-request/sfr-73fbd2ce-aa30-494c-8788-1cee4EXAMPLE \
+aws application-autoscaling register-scalable-target --service-namespace ecs \
+--scalable-dimension ecs:service:DesiredCount \
+--resource-id service/default/sample-app-service \
 --min-capacity 2 --max-capacity 10
 ```
 
-The following is an example step configuration with three step adjustments\. Save this configuration in a file named `config.json`\.
+The following is an example step configuration with an adjustment type of `ChangeInCapacity` that increases the capacity of the scalable target based on the following step adjustments \(assuming a CloudWatch alarm threshold of 70%\): 
++ Increase capacity by 1 when the value of the metric is greater than or equal to 70% but less than 85% 
++ Increase capacity by 2 when the value of the metric is greater than or equal to 85% but less than 95% 
++ Increase capacity by 3 when the value of the metric is greater than or equal to 95% 
+
+Save this configuration in a file named `config.json`\.
 
 ```
 {
   "AdjustmentType": "ChangeInCapacity",
+  "MetricAggregationType": "Average",
   "Cooldown": 60,
   "StepAdjustments": [ 
     {
       "MetricIntervalLowerBound": 0,
-      "MetricIntervalUpperBound": 10,
-      "ScalingAdjustment": 0
-    },
-    {
-      "MetricIntervalLowerBound": 10,
-      "MetricIntervalUpperBound": 20,
+      "MetricIntervalUpperBound": 15,
       "ScalingAdjustment": 1
     },
     {
-      "MetricIntervalLowerBound": 20,
+      "MetricIntervalLowerBound": 15,
+      "MetricIntervalUpperBound": 25,
+      "ScalingAdjustment": 2
+    },
+    {
+      "MetricIntervalLowerBound": 25,
       "ScalingAdjustment": 3
     }
   ]
@@ -117,11 +125,30 @@ The following is an example step configuration with three step adjustments\. Sav
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scaling-policy.html) command, along with the `config.json` file that you created, to create a scaling policy named `my-step-scaling-policy`:
 
 ```
-aws application-autoscaling put-scaling-policy --service-namespace ec2 \ 
---scalable-dimension ec2:spot-fleet-request:TargetCapacity \
---resource-id spot-fleet-request/sfr-73fbd2ce-aa30-494c-8788-1cee4EXAMPLE \
+aws application-autoscaling put-scaling-policy --service-namespace ecs \
+--scalable-dimension ecs:service:DesiredCount \
+--resource-id service/default/sample-app-service \
 --policy-name my-step-scaling-policy --policy-type StepScaling \
 --step-scaling-policy-configuration file://config.json
+```
+
+The output includes the ARN that serves as a unique name for the policy\. You need it to create CloudWatch alarms\.
+
+```
+{
+    "PolicyARN": "arn:aws:autoscaling::123456789012:scalingPolicy:ac542982-cbeb-4294-891c-a5a941dfa787:resource/ecs/service/default/sample-app-service:policyName/my-step-scaling-policy
+}
+```
+
+Finally, use the following CloudWatch [https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html) command to create an alarm to use with your step scaling policy\. In this example, you have an alarm based on average CPU utilization\. The alarm is configured to be in an ALARM state if it reaches a threshold of 70% for at least two consecutive evaluation periods of 60 seconds\. To specify a different CloudWatch metric or use your own custom metric, specify its name in `--metric-name` and its namespace in `--namespace`\. 
+
+```
+aws cloudwatch put-metric-alarm --alarm-name Step-Scaling-AlarmHigh-ECS:service/default/sample-app-service \
+--metric-name CPUUtilization --namespace AWS/ECS --statistic Average \
+--period 60 --evaluation-periods 2 --threshold 70 \
+--comparison-operator GreaterThanOrEqualToThreshold \
+--dimensions "Name=ClusterName,Value=default,Name=ServiceName,Value=sample-app-service" \
+--alarm-actions PolicyARN
 ```
 
 ## Describe Step Scaling Policies<a name="describe-step-scaling-policy"></a>
@@ -129,13 +156,13 @@ aws application-autoscaling put-scaling-policy --service-namespace ec2 \
 You can describe all scaling policies for the specified service namespace using the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-policies.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-policies.html) command\.
 
 ```
-aws application-autoscaling describe-scaling-policies --service-namespace ec2
+aws application-autoscaling describe-scaling-policies --service-namespace ecs
 ```
 
 You can filter the results to just the step scaling policies using the `--query` parameter\. This syntax for `query` works on Linux or macOS\. On Windows, change the single quotes to double quotes\.
 
 ```
-aws application-autoscaling describe-scaling-policies --service-namespace ec2 \
+aws application-autoscaling describe-scaling-policies --service-namespace ecs \
 --query 'ScalingPolicies[?PolicyType==`StepScaling`]'
 ```
 
@@ -144,33 +171,39 @@ The following is example output\.
 ```
 [
     {
-        "PolicyARN": "<arn>",
+        "PolicyARN": "PolicyARN",
         "StepScalingPolicyConfiguration": {
+            "MetricAggregationType": "Average",
             "Cooldown": 60,
             "StepAdjustments": [
                 {
                     "MetricIntervalLowerBound": 0.0,
-                    "ScalingAdjustment": 0,
-                    "MetricIntervalUpperBound": 10.0
+                    "MetricIntervalUpperBound": 15.0,
+                    "ScalingAdjustment": 1
                 },
                 {
-                    "MetricIntervalLowerBound": 10.0,
-                    "ScalingAdjustment": 10,
-                    "MetricIntervalUpperBound": 20.0
+                    "MetricIntervalLowerBound": 15.0,
+                    "MetricIntervalUpperBound": 25.0,
+                    "ScalingAdjustment": 2
                 },
                 {
-                    "MetricIntervalLowerBound": 20.0,
-                    "ScalingAdjustment": 30
+                    "MetricIntervalLowerBound": 25.0,
+                    "ScalingAdjustment": 3
                 }
             ],
             "AdjustmentType": "ChangeInCapacity"
         },
         "PolicyType": "StepScaling",
-        "ResourceId": "spot-fleet-request/sfr-73fbd2ce-aa30-494c-8788-1cee4EXAMPLE",
-        "ServiceNamespace": "ec2",
-        "Alarms": [],
+        "ResourceId": "service/default/sample-app-service",
+        "ServiceNamespace": "ecs",
+        "Alarms": [
+            {
+                "AlarmName": "Step-Scaling-AlarmHigh-ECS:service/default/sample-app-service",
+                "AlarmARN": "arn:aws:cloudwatch:us-west-2:012345678910:alarm:Step-Scaling-AlarmHigh-ECS:service/default/sample-app-service"
+            }
+        ],
         "PolicyName": "my-step-scaling-policy",
-        "ScalableDimension": "ec2:spot-fleet-request:TargetCapacity",
+        "ScalableDimension": "ecs:service:DesiredCount",
         "CreationTime": 1515024099.901
     }
 ]
@@ -178,13 +211,11 @@ The following is example output\.
 
 ## Delete a Step Scaling Policy<a name="delete-step-scaling-policy"></a>
 
-When you are finished with a step tracking scaling policy, you can delete it using the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scaling-policy.html) command\.
-
-The following command deletes the specified step scaling policy for the specified Spot Fleet request\.
+When you are finished with a step scaling policy, you can delete it using the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scaling-policy.html) command\.
 
 ```
-aws application-autoscaling delete-scaling-policy --service-namespace ec2 \
---scalable-dimension ec2:spot-fleet-request:TargetCapacity \
---resource-id spot-fleet-request/sfr-73fbd2ce-aa30-494c-8788-1cee4EXAMPLE \
+aws application-autoscaling delete-scaling-policy --service-namespace ecs \
+--scalable-dimension ecs:service:DesiredCount \
+--resource-id service/default/sample-app-service \
 --policy-name my-step-scaling-policy
 ```
