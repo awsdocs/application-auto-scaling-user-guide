@@ -6,8 +6,8 @@ You can have one or more target tracking scaling policies, one or more step scal
 
 **Limits**
 + You cannot create target tracking scaling policies for Amazon EMR clusters or AppStream 2\.0 fleets\.
-+ You cannot use Application Auto Scaling to create or update a scaling policy that's used with the AWS Auto Scaling service\. For information about the AWS Auto Scaling console, CLI, or API, see the [AWS Auto Scaling](https://docs.aws.amazon.com/autoscaling/index.html#lang/en_us) documentation\.
-+ You can use the Application Auto Scaling CLI or API to apply a target tracking scaling policy based on a predefined or CloudWatch customized metric\. Not all resources allow you to manage customized metrics through the console, however\. To see if a resource supports customized metrics in the console, consult the documentation for that resource's service\.
++ You cannot use Application Auto Scaling to create or update a scaling policy that's used with the AWS Auto Scaling service\. For information about the AWS Auto Scaling console, CLI, or API actions, see the [AWS Auto Scaling](https://docs.aws.amazon.com/autoscaling/index.html#lang/en_us) documentation\.
++ You can use Application Auto Scaling to apply a target tracking scaling policy based on a predefined or CloudWatch customized metric\. Not all services allow you to manage customized metrics through the console, however\. To see if a service supports customized metrics in the console, consult the documentation for that service\.
 
 ## Considerations<a name="target-tracking-considerations"></a>
 
@@ -29,18 +29,25 @@ The *scale\-out cooldown period* is the amount of time, in seconds, after a scal
 
 The *scale\-in cooldown period* is the amount of time, in seconds, after a scale\-in activity completes before another scale\-in activity can start\. This cooldown period is used to block subsequent scale\-in events until it has expired\. The intention is to scale in conservatively to protect your application's availability\. However, if another alarm triggers a scale\-out policy during the cooldown period after a scale\-in event, Application Auto Scaling scales out your scalable target immediately\.
 
-## Create a Target Tracking Scaling Policy<a name="create-target-tracking-policy"></a>
+## Register Scalable Target<a name="target-tracking-register-scalable-target"></a>
 
-You can create scaling policies that tell Application Auto Scaling what to do when the specified conditions change\. Before you can create a scaling policy, you must register a scalable target\. 
+Before you can create a scaling policy, you must register the scalable target\. Use the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command to register a new scalable target\. 
 
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command to register a scalable target\.
+The following example registers a Spot Fleet request with Application Auto Scaling\. Application Auto Scaling can scale the number of instances in the Spot Fleet at a minimum of 2 instances and a maximum of 10\. 
 
 ```
 aws application-autoscaling register-scalable-target --service-namespace ec2 \
---scalable-dimension ec2:spot-fleet-request:TargetCapacity \
---resource-id spot-fleet-request/sfr-73fbd2ce-aa30-494c-8788-1cee4EXAMPLE \
---min-capacity 2 --max-capacity 10
+  --scalable-dimension ec2:spot-fleet-request:TargetCapacity \
+  --resource-id spot-fleet-request/sfr-73fbd2ce-aa30-494c-8788-1cee4EXAMPLE \
+  --min-capacity 2 --max-capacity 10
 ```
+
+**Note**  
+When you configure scaling policies in the console, this automatically registers the resource as a scalable target with Application Auto Scaling\. For more information, see the documentation in the [Getting Started](what-is-application-auto-scaling.md#getting-started) section\. 
+
+## Create a Target Tracking Scaling Policy<a name="create-target-tracking-policy"></a>
+
+You can create target tracking scaling policies that tell Application Auto Scaling to scale out or scale in automatically when the load on the application changes\. 
 
 The following is an example target tracking configuration that keeps the average CPU utilization at 40 percent\. Save this configuration in a file named `config.json`\.
 
@@ -74,14 +81,14 @@ Alternatively, you can customize the metric used for scaling by creating a custo
 }
 ```
 
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scaling-policy.html) command, along with the `config.json` file you created, to create a scaling policy named `cpu40-target-tracking-scaling-policy`:
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scaling-policy.html) command, along with the `config.json` file you created, to create a scaling policy named `cpu40-target-tracking-scaling-policy`\.
 
 ```
 aws application-autoscaling put-scaling-policy --service-namespace ec2 \
---scalable-dimension ec2:spot-fleet-request:TargetCapacity \
---resource-id spot-fleet-request/sfr-73fbd2ce-aa30-494c-8788-1cee4EXAMPLE \
---policy-name cpu40-target-tracking-scaling-policy --policy-type TargetTrackingScaling \
---target-tracking-scaling-policy-configuration file://config.json
+  --scalable-dimension ec2:spot-fleet-request:TargetCapacity \
+  --resource-id spot-fleet-request/sfr-73fbd2ce-aa30-494c-8788-1cee4EXAMPLE \
+  --policy-name cpu40-target-tracking-scaling-policy --policy-type TargetTrackingScaling \
+  --target-tracking-scaling-policy-configuration file://config.json
 ```
 
 The following is example output\. It contains the ARNs and names of the two CloudWatch alarms created on your behalf\.
@@ -114,7 +121,7 @@ You can filter the results to just the target tracking scaling policies using th
 
 ```
 aws application-autoscaling describe-scaling-policies --service-namespace ec2 \
---query 'ScalingPolicies[?PolicyType==`TargetTrackingScaling`]'
+  --query 'ScalingPolicies[?PolicyType==`TargetTrackingScaling`]'
 ```
 
 The following is example output\.
@@ -157,7 +164,7 @@ The following command deletes the specified target tracking scaling policy for t
 
 ```
 aws application-autoscaling delete-scaling-policy --service-namespace ec2 \
---scalable-dimension ec2:spot-fleet-request:TargetCapacity \
---resource-id spot-fleet-request/sfr-73fbd2ce-aa30-494c-8788-1cee4EXAMPLE \
---policy-name cpu40-target-tracking-scaling-policy
+  --scalable-dimension ec2:spot-fleet-request:TargetCapacity \
+  --resource-id spot-fleet-request/sfr-73fbd2ce-aa30-494c-8788-1cee4EXAMPLE \
+  --policy-name cpu40-target-tracking-scaling-policy
 ```

@@ -4,6 +4,7 @@ The following table describes important additions to the Application Auto Scalin
 
 | Change | Description | Date | 
 | --- |--- |--- |
+| [New section](#doc-history) | The [Setting Up](https://docs.aws.amazon.com/autoscaling/application/userguide/setting-up.html) section has been added to the Application Auto Scaling documentation\. Minor improvements and fixes have been made throughout the user guide\. | June 28, 2019 | 
 | [Guide changes](#doc-history) | Improved Application Auto Scaling documentation in the [Scheduled Scaling](https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-scheduled-scaling.html), [Step Scaling Policies](https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-step-scaling-policies.html), and [Target Tracking Scaling Policies](https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-target-tracking.html) sections\.  | March 11, 2019 | 
 | [Add support for custom resources](#doc-history) | Use Application Auto Scaling to scale custom resources provided by your own applications or services\. For more information, see our [GitHub repository](https://github.com/aws/aws-auto-scaling-custom-resource)\. | July 9, 2018 | 
 | [Add support for Amazon SageMaker endpoint variants](#doc-history) | Use Application Auto Scaling to scale the number of endpoint instances provisioned for a variant\. | February 28, 2018 | 

@@ -48,7 +48,7 @@ Application Auto Scaling has no service\-defined resources that can be used as t
 
 When you grant permissions, you can use IAM policy language to specify the conditions when a policy should take effect\. For example, you might want a policy to be applied only after a specific date\. To express conditions, use predefined condition keys\.
 
-For a list of context keys supported by each AWS service and a list of AWS\-wide policy keys, see [Actions, Resources, and Condition Keys for AWS Services](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_actions-resources-contextkeys.html) and [AWS Global Condition Context Keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html) in the *IAM User Guide*\.
+For a list of condition keys supported by each AWS service, see [Actions, Resources, and Condition Keys for AWS Services](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_actions-resources-contextkeys.html) in the *IAM User Guide*\. For a list of condition keys that can be used in multiple AWS services, see [AWS Global Condition Context Keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html) in the *IAM User Guide*\.
 
 Application Auto Scaling does not provide additional condition keys\.
 

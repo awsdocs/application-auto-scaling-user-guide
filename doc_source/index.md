@@ -15,6 +15,10 @@ Amazon's trademarks and trade dress may not be used in
 -----
 ## Contents
 + [What Is Application Auto Scaling?](what-is-application-auto-scaling.md)
++ [Setting Up](setting-up.md)
+   + [Sign Up for AWS](sign-up-for-aws.md)
+   + [Set Up the AWS CLI](setup-awscli.md)
+   + [Getting Started Using the AWS CLI](get-started-exercise.md)
 + [Target Tracking Scaling Policies for Application Auto Scaling](application-auto-scaling-target-tracking.md)
 + [Step Scaling Policies for Application Auto Scaling](application-auto-scaling-step-scaling-policies.md)
 + [Scheduled Scaling for Application Auto Scaling](application-auto-scaling-scheduled-scaling.md)
