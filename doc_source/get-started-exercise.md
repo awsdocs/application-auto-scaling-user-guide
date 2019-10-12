@@ -1,10 +1,13 @@
 # Getting Started Using the AWS CLI<a name="get-started-exercise"></a>
 
-In these exercises, you use the AWS CLI to explore Application Auto Scaling\. Before you begin, make sure that you have an AWS account and that you've set up the AWS CLI\. For more information, see [Setting Up](setting-up.md)\. In this exercise, you create scheduled actions to scale your scalable resources based on a schedule\. With scheduled scaling, you can specify either a one\-time action or a recurring action\. 
+In this tutorial, you use the AWS CLI to explore Application Auto Scaling\. Before you begin, make sure that you have an AWS account and that you've set up the AWS CLI\. For more information, see [Setting Up](setting-up.md)\. In this tutorial, you create scheduled actions to scale your scalable resources based on a schedule\. With scheduled scaling, you can specify either a one\-time action or a recurring action\. 
 
-The getting started exercises in this guide assume that you are using administrator credentials \(`adminuser` profile\) that you set up in [Set Up the AWS CLI](setup-awscli.md)\. If you don't provide this profile, the default profile is assumed\. Note that to create, update, delete, or list Application Auto Scaling resources, you need permissions to perform the action, and you need permission to access the corresponding resources\. For more information, see [Authentication and Access Control for Application Auto Scaling](auth-and-access-control.md)\.
+The exercises in this tutorial assume that you are using administrator credentials \(`adminuser` profile\) that you set up in [Set Up the AWS CLI](setup-awscli.md)\. If you don't provide this profile, the default profile is assumed\. Note that to create, update, delete, or list Application Auto Scaling resources, you need permissions to perform the action, and you need permission to access the corresponding resources\. For more information, see [Authentication and Access Control for Application Auto Scaling](auth-and-access-control.md)\.
 
-The CLI commands in this exercise were tested on Linux\. To use the samples with Microsoft Windows, change the line breaks from backslashes \(\\\) to carets \(^\)\. For information about using the CLI commands on Windows, see [Specifying Parameter Values for the AWS Command Line Interface](https://docs.aws.amazon.com/cli/latest/userguide/cli-using-param.html) in the *AWS Command Line Interface User Guide*\.
+The CLI commands in this tutorial were tested on Linux\. To use the samples with Microsoft Windows, change the line breaks from backslashes \(\\\) to carets \(^\)\. For information about using the CLI commands on Windows, see [Specifying Parameter Values for the AWS Command Line Interface](https://docs.aws.amazon.com/cli/latest/userguide/cli-using-param.html) in the *AWS Command Line Interface User Guide*\.
+
+**Note**  
+You may incur AWS charges as part of this tutorial\. Please monitor your [Free Tier](https://aws.amazon.com/free/) usage and make sure that you understand the AWS charges involved\.
 
 **Topics**
 + [Step 1: Register Your Scalable Target](#gs-register-scalable-target)
@@ -281,6 +284,7 @@ Now that you have familiarized yourself with Application Auto Scaling and some o
 
 When you are done working with the getting started exercises, you can clean up the associated resources as follows\.
 
+**To delete the scheduled actions**  
 The following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scheduled-action.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scheduled-action.html) command deletes a specified scheduled action\. You can skip this step if you want to keep the scheduled action for future use\.
 
 ```
@@ -292,6 +296,7 @@ aws application-autoscaling delete-scheduled-action \
   --profile adminuser
 ```
 
+**To deregister the scalable target**  
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/deregister-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/deregister-scalable-target.html) command to deregister the scalable target\. If you have any scaling policies that you created or any scheduled actions that have not yet been deleted, they are deleted by this command\. You can skip this step if you want to keep the scalable target registered for future use\.
 
 ```
@@ -302,4 +307,10 @@ aws application-autoscaling deregister-scalable-target \
   --profile adminuser
 ```
 
-These commands do not return any output if they are successful\.
+**To delete the DynamoDB table**  
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/dynamodb/delete-table.html](https://docs.aws.amazon.com/cli/latest/reference/dynamodb/delete-table.html) command to delete the table that you used in this tutorial\. You can skip this step if you want to keep the table for future use\.
+
+```
+aws dynamodb delete-table --table-name my-table \
+  --profile adminuser
+```

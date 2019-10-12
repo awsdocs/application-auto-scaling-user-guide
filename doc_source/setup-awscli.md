@@ -46,4 +46,4 @@ The AWS Command Line Interface \(AWS CLI\) is a unified developer tool for manag
    Default output format [json]:
    ```
 
-After you set up an AWS account and the AWS CLI, you can try the next exercise, in which you configure sample scheduled scaling actions\. 
+After you set up an AWS account and the AWS CLI, you can try the next tutorial, in which you configure sample scheduled scaling actions\. 

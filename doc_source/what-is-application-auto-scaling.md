@@ -27,12 +27,12 @@ Application Auto Scaling integrates with all of the following services, so that 
 + [Service Auto Scaling](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-auto-scaling.html) in the *Amazon Elastic Container Service Developer Guide*
 + [Automatic Scaling for Spot Fleet](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet-automatic-scaling.html) in the *Amazon EC2 User Guide*
 + [Using Automatic Scaling in Amazon EMR](https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-automatic-scaling.html) in the *Amazon EMR Management Guide*
-+ [Fleet Auto Scaling for AppStream 2\.0](https://docs.aws.amazon.com/appstream2/latest/developerguide/autoscaling.html) in the *Amazon AppStream 2\.0 Developer Guide*
++ [Fleet Auto Scaling for AppStream 2\.0](https://docs.aws.amazon.com/appstream2/latest/developerguide/autoscaling.html) in the *Amazon AppStream 2\.0 Administration Guide*
 + [Managing Throughput Capacity with DynamoDB Auto Scaling](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/AutoScaling.html) in the *Amazon DynamoDB Developer Guide*
 + [Using Amazon Aurora Auto Scaling with Aurora Replicas](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Integrating.AutoScaling.html) in the *Amazon RDS User Guide*
 + [Automatically Scaling Amazon SageMaker Models](https://docs.aws.amazon.com/sagemaker/latest/dg/endpoint-auto-scaling.html) in the *Amazon SageMaker Developer Guide*
 
-To see the regional availability for any of the AWS services listed above, see the [AWS Region Table](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/)\.
+To see the regional availability for any of the AWS services listed above, see the [Region Table](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/)\.
 
 If you would like the Application Auto Scaling API actions to be specified using command line options, you also have option of using this user guide\. To get started, complete the exercises in [Getting Started Using the AWS CLI](get-started-exercise.md)\. In this tutorial, we show you how to use the AWS Command Line Interface \(AWS CLI\) to programmatically access Application Auto Scaling\. However, if, at any time, you need information not included in this user guide, including examples of scaling policies that you can try, see the above service documentation\. 
 
@@ -52,4 +52,4 @@ Provides commands for a broad set of AWS products, and is supported on Windows, 
 **AWS Tools for Windows PowerShell**  
 Provides commands for a broad set of AWS products for those who script in the PowerShell environment\. To get started, see the [AWS Tools for Windows PowerShell User Guide](https://docs.aws.amazon.com/powershell/latest/userguide/)\. For more information, see the [AWS Tools for PowerShell Cmdlet Reference](https://docs.aws.amazon.com/powershell/latest/reference/)\.
 
-For information about your credentials for accessing AWS, see [AWS Security Credentials](https://docs.aws.amazon.com/general/latest/gr/aws-security-credentials.html) in the *Amazon Web Services General Reference*\. For information about regions and endpoints for Application Auto Scaling, see [AWS Regions and Endpoints](https://docs.aws.amazon.com/general/latest/gr/rande.html#autoscaling_region) in the *AWS General Reference*\. 
+For information about your credentials for accessing AWS, see [AWS Security Credentials](https://docs.aws.amazon.com/general/latest/gr/aws-security-credentials.html) in the *Amazon Web Services General Reference*\. For information about regions and endpoints for Application Auto Scaling, see [AWS Regions and Endpoints](https://docs.aws.amazon.com/general/latest/gr/rande.html#as-app_region) in the *AWS General Reference*\. 

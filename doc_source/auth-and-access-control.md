@@ -54,7 +54,27 @@ Application Auto Scaling does not provide additional condition keys\.
 
 ## Example Policies<a name="application-auto-scaling-example-policies"></a>
 
-To configure step scaling policies or target tracking policies for a scalable resource, users must have permissions to use the actions in the following example policy:
+The following policies grant the permissions for common use cases\. You can attach these policies to your IAM users, based on the access that they need\. Each policy grants access to all or some of the API actions for Application Auto Scaling\. 
+
+To configure scaling policies and scheduled scaling for a scalable resource, users must have permissions to use the actions in the following example policy:
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+              "application-autoscaling:*",
+              "iam:CreateServiceLinkedRole"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+To configure scaling policies for a scalable resource, users must have permissions to use the actions in the following example policy:
 
 ```
 {
@@ -102,7 +122,7 @@ To configure scheduled scaling for a scalable resource, users must have permissi
 }
 ```
 
-## Additional IAM Permissions<a name="application-auto-scaling-additional-permissions"></a>
+## Additional Required IAM Permissions<a name="application-auto-scaling-additional-permissions"></a>
 
 Users must have additional permissions for each type of resource for which they will configure scaling policies\. You specify the following actions in the `Action` element of an IAM policy statement\. 
 
@@ -164,3 +184,5 @@ Users must have additional permissions for each type of resource for which they 
 + `cloudwatch:DeleteAlarms `
 + `cloudwatch:DescribeAlarms `
 + `cloudwatch:PutMetricAlarm `
+
+For services that support step scaling, users may require additional permissions to create and manage CloudWatch alarms\. For more information, see [Permissions Required to Use the CloudWatch Console](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/iam-identity-based-access-control-cw.html#console-permissions-cw) in the *Amazon CloudWatch User Guide*\. 

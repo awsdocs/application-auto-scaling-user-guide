@@ -143,7 +143,7 @@ The output includes the ARN that serves as a unique name for the policy\. You ne
 
 ```
 {
-    "PolicyARN": "arn:aws:autoscaling:region:123456789012:scalingPolicy:ac542982-cbeb-4294-891c-a5a941dfa787:resource/ecs/service/default/sample-app-service:policyName/my-step-scaling-policy
+    "PolicyARN": "arn:aws:autoscaling:region:123456789012:scalingPolicy:ac542982-cbeb-4294-891c-a5a941dfa787:resource/ecs/service/default/sample-app-service:policyName/my-step-scaling-policy"
 }
 ```
 

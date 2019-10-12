@@ -7,7 +7,7 @@ Your AWS account has the following limits related to Application Auto Scaling\. 
 
 | Item | Default Limit | Notes | 
 | --- | --- | --- | 
-| Maximum number of scalable targets per resource type |  Amazon DynamoDB: 2000 All other resource types: 500  | Make sure that you specify the type of resource with your request for a limit increase, for example, Amazon ECS or DynamoDB\. | 
+| Maximum number of scalable targets per resource type |  Amazon DynamoDB: 3000 All other resource types: 500  | Make sure that you specify the type of resource with your request for a limit increase, for example, Amazon ECS or DynamoDB\. | 
 | Maximum number of scaling policies per scalable target  | 50 | This includes both step scaling policies and target tracking policies\. | 
 | Maximum number of scheduled actions per scalable target | 200 |  | 
 | Maximum number of step adjustments per step scaling policy | 20 |  | 
