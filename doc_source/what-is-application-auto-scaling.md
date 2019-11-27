@@ -9,6 +9,7 @@ Application Auto Scaling is a web service for developers and system administrato
 + Aurora replicas
 + Amazon SageMaker endpoint variants
 + Custom resources provided by your own applications or services\. For more information, see the [GitHub repository](https://github.com/aws/aws-auto-scaling-custom-resource)\. 
++ Amazon Comprehend document classification endpoints
 
 You have several options for scaling with AWS\. For information about scaling your fleet of Amazon EC2 instances, see the [Amazon EC2 Auto Scaling User Guide](https://docs.aws.amazon.com/autoscaling/ec2/userguide/)\. 
 
@@ -34,7 +35,7 @@ Application Auto Scaling integrates with all of the following services, so that 
 
 To see the regional availability for any of the AWS services listed above, see the [Region Table](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/)\.
 
-If you would like the Application Auto Scaling API actions to be specified using command line options, you also have option of using this user guide\. To get started, complete the exercises in [Getting Started Using the AWS CLI](get-started-exercise.md)\. In this tutorial, we show you how to use the AWS Command Line Interface \(AWS CLI\) to programmatically access Application Auto Scaling\. However, if, at any time, you need information not included in this user guide, including examples of scaling policies that you can try, see the above service documentation\. 
+If you would like the Application Auto Scaling API actions to be specified using command line options, you also have the option of using this user guide\. To get started, complete the exercises in [Getting Started Using the AWS CLI](get-started-exercise.md)\. In this tutorial, we show you how to use the AWS Command Line Interface \(AWS CLI\) to programmatically access Application Auto Scaling\. However, if, at any time, you need information not included in this user guide, including examples of scaling policies that you can try, see the above service documentation\. 
 
 ## Accessing Application Auto Scaling<a name="access"></a>
 

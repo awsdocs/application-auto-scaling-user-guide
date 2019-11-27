@@ -133,6 +133,13 @@ Users must have additional permissions for each type of resource for which they 
 + `cloudwatch:DescribeAlarms`
 + `cloudwatch:PutMetricAlarm`
 
+**Amazon Comprehend document classification endpoints**
++ `comprehend:UpdateEndpoint`
++ `comprehend:DescribeEndpoint`
++ `cloudwatch:DeleteAlarms`
++ `cloudwatch:DescribeAlarms`
++ `cloudwatch:PutMetricAlarm`
+
 **DynamoDB tables and global secondary indexes**
 + `dynamodb:DescribeTable`
 + `dynamodb:UpdateTable`

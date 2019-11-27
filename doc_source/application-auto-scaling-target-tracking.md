@@ -5,7 +5,7 @@ With target tracking scaling policies, you choose a scaling metric and set a tar
 You can have one or more target tracking scaling policies, one or more step scaling policies, or both\. Application Auto Scaling scales based on the policy that provides the largest capacity for both scale in and scale out\. This provides greater flexibility to cover multiple scenarios and ensures that there is always enough capacity to process your application workloads\.
 
 **Limits**
-+ You cannot create target tracking scaling policies for Amazon EMR clusters or AppStream 2\.0 fleets\.
++ Target tracking scaling policies are not supported for Amazon EMR\.
 + You cannot use Application Auto Scaling to create or update a scaling policy that's used with the AWS Auto Scaling service\. For information about the AWS Auto Scaling console, CLI, or API actions, see the [AWS Auto Scaling](https://docs.aws.amazon.com/autoscaling/index.html#lang/en_us) documentation\.
 + You can use Application Auto Scaling to apply a target tracking scaling policy based on a predefined or CloudWatch customized metric\. Not all services allow you to manage customized metrics through the console, however\. To see if a service supports customized metrics in the console, consult the documentation for that service\.
 

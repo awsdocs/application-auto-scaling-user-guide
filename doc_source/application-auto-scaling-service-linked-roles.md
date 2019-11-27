@@ -21,6 +21,17 @@ Actions:
 
 Service principal: `appstream.application-autoscaling.amazonaws.com`
 
+**`AWSServiceRoleForApplicationAutoScaling_Comprehend`**
+
+Actions:
++ `comprehend:UpdateEndpoint`
++ `comprehend:DescribeEndpoint`
++ `cloudwatch:DeleteAlarms`
++ `cloudwatch:DescribeAlarms`
++ `cloudwatch:PutMetricAlarm`
+
+Service principal: `comprehend.application-autoscaling.amazonaws.com`
+
 **`AWSServiceRoleForApplicationAutoScaling_DynamoDBTable`**
 
 Actions:

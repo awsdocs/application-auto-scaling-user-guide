@@ -25,5 +25,6 @@ Amazon's trademarks and trade dress may not be used in
 + [Suspending and Resuming Scaling for Application Auto Scaling](application-auto-scaling-suspend-resume-scaling.md)
 + [Authentication and Access Control for Application Auto Scaling](auth-and-access-control.md)
    + [Service-Linked Roles for Application Auto Scaling](application-auto-scaling-service-linked-roles.md)
++ [Application Auto Scaling and Interface VPC Endpoints](application-auto-scaling-vpc-endpoints.md)
 + [Application Auto Scaling Limits](application-auto-scaling-limits.md)
 + [Document History](doc-history.md)
