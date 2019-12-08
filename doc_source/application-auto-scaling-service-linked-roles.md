@@ -91,6 +91,18 @@ Actions:
 
 Service principal: `sagemaker.application-autoscaling.amazonaws.com`
 
+**`AWSServiceRoleForApplicationAutoScaling_Lambda`**
+
+Actions:
++ `lambda:PutProvisionedConcurrencyConfig`
++ `lambda:GetProvisionedConcurrencyConfig`
++ `lambda:DeleteProvisionedConcurrencyConfig`
++ `cloudwatch:DeleteAlarms`
++ `cloudwatch:DescribeAlarms`
++ `cloudwatch:PutMetricAlarm`
+
+Service principal: `lambda.application-autoscaling.amazonaws.com`
+
 **`AWSServiceRoleForApplicationAutoScaling_CustomResource`**
 
 Actions:

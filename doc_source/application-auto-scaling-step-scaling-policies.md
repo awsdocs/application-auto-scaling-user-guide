@@ -9,7 +9,7 @@ After a scaling activity is started, the policy continues to respond to addition
 If your scaling metric is a utilization metric that increases or decreases proportionally to the capacity of the scalable target, we recommend that you use a target tracking scaling policy\. For more information, see [Target Tracking Scaling Policies for Application Auto Scaling](application-auto-scaling-target-tracking.md)\. You still have the option to use target tracking scaling with step scaling for a more advanced scaling policy configuration\. For example, if you want, you can configure a more aggressive response when utilization reaches a certain level\. 
 
 **Limits**
-+ Step scaling policies are not supported for DynamoDB or Amazon Comprehend\.
++ Step scaling policies are not supported for DynamoDB, Amazon Comprehend, or Lambda\.
 
 ## Scaling Adjustment Types<a name="as-scaling-adjustment"></a>
 

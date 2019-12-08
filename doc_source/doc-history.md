@@ -4,6 +4,7 @@ The following table describes important additions to the Application Auto Scalin
 
 | Change | Description | Date | 
 | --- |--- |--- |
+| [Add support for AWS Lambda functions](#doc-history) | Use Application Auto Scaling to scale the provisioned concurrency of a Lambda function\. | December 3, 2019 | 
 | [Add support for Amazon Comprehend document classification endpoints](#doc-history) | Use Application Auto Scaling to scale the throughput capacity of an Amazon Comprehend document classification endpoint\. | November 25, 2019 | 
 | [Add AppStream 2\.0 support for target tracking scaling policies ](#doc-history) | Use target tracking scaling policies to scale the size of an AppStream 2\.0 fleet\.  | November 25, 2019 | 
 | [Support for Amazon VPC endpoints](#doc-history) | You can now establish a private connection between your VPC and Application Auto Scaling\. For migration considerations and instructions, see [Application Auto Scaling and Interface VPC Endpoints](https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-vpc-endpoints.html)\. | November 22, 2019 | 

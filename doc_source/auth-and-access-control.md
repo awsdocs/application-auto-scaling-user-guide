@@ -186,6 +186,14 @@ Users must have additional permissions for each type of resource for which they 
 + `cloudwatch:DescribeAlarms`
 + `cloudwatch:PutMetricAlarm`
 
+**AWS Lambda functions**
++ `lambda:PutProvisionedConcurrencyConfig`
++ `lambda:GetProvisionedConcurrencyConfig`
++ `lambda:DeleteProvisionedConcurrencyConfig`
++ `cloudwatch:DeleteAlarms`
++ `cloudwatch:DescribeAlarms`
++ `cloudwatch:PutMetricAlarm`
+
 **Custom Resources**
 + `execute-api:Invoke`
 + `cloudwatch:DeleteAlarms `

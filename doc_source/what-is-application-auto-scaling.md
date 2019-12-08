@@ -10,6 +10,7 @@ Application Auto Scaling is a web service for developers and system administrato
 + Amazon SageMaker endpoint variants
 + Custom resources provided by your own applications or services\. For more information, see the [GitHub repository](https://github.com/aws/aws-auto-scaling-custom-resource)\. 
 + Amazon Comprehend document classification endpoints
++ Lambda function provisioned concurrency
 
 You have several options for scaling with AWS\. For information about scaling your fleet of Amazon EC2 instances, see the [Amazon EC2 Auto Scaling User Guide](https://docs.aws.amazon.com/autoscaling/ec2/userguide/)\. 
 
@@ -32,6 +33,8 @@ Application Auto Scaling integrates with all of the following services, so that 
 + [Managing Throughput Capacity with DynamoDB Auto Scaling](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/AutoScaling.html) in the *Amazon DynamoDB Developer Guide*
 + [Using Amazon Aurora Auto Scaling with Aurora Replicas](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Integrating.AutoScaling.html) in the *Amazon RDS User Guide*
 + [Automatically Scaling Amazon SageMaker Models](https://docs.aws.amazon.com/sagemaker/latest/dg/endpoint-auto-scaling.html) in the *Amazon SageMaker Developer Guide*
++ [Autoscaling with Endpoints](https://docs.aws.amazon.com/comprehend/latest/dg/comprehend-autoscaling.html) in the *Amazon Comprehend Developer Guide*
++ [Managing Concurrency for a Lambda Function](https://docs.aws.amazon.com/lambda/latest/dg/configuration-concurrency.html) in the *AWS Lambda Developer Guide*
 
 To see the regional availability for any of the AWS services listed above, see the [Region Table](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/)\.
 
