@@ -29,7 +29,7 @@ The AWS Command Line Interface \(AWS CLI\) is a unified developer tool for manag
    default output format = json
    ```
 
-   For a list of available AWS Regions, see [Regions and Endpoints](https://docs.aws.amazon.com/general/latest/gr/rande.html) in the *Amazon Web Services General Reference*\.
+   For a list of available AWS Regions, see [Application Auto Scaling Endpoints and Quotas](https://docs.aws.amazon.com/general/latest/gr/as-app.html) in the *Amazon Web Services General Reference*\.
 
 1. To confirm that the AWS CLI profile is configured correctly, run the following command in a command window\.
 

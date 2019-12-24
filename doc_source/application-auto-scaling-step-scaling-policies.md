@@ -92,7 +92,7 @@ aws application-autoscaling register-scalable-target --service-namespace ecs \
 ```
 
 **Note**  
-When you configure scaling policies in the console, this automatically registers the resource as a scalable target with Application Auto Scaling\. For more information, see the documentation in the [Getting Started](what-is-application-auto-scaling.md#getting-started) section\.
+When you configure scaling policies in the console, this automatically registers the resource as a scalable target with Application Auto Scaling\. For more information, see the documentation in the [Getting Started with Application Auto Scaling](getting-started.md) section\.
 
 ## Configure Step Scaling Policies Using the AWS CLI<a name="create-step-scaling-policy"></a>
 

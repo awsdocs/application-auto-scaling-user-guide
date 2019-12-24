@@ -122,6 +122,20 @@ Under most circumstances, you don't need to manually create a service\-linked ro
 **Important**  
 The IAM user calling the `RegisterScalableTarget` action must have the appropriate IAM permissions to create the service\-linked role\. Otherwise, the automatic creation fails\. For more information, see [Service\-Linked Role Permissions](https://docs.aws.amazon.com/IAM/latest/UserGuide/using-service-linked-roles.html#service-linked-role-permissions) in the *IAM User Guide* or the information about [required user permissions](auth-and-access-control.md) in this guide\.
 
+You automatically create a service\-linked role using an AWS CloudFormation template by specifying the `RoleARN` property\. To specify the service\-linked role in the `RoleARN` property, you must use its Amazon Resource Name \(ARN\)\. The ARN has the following general syntax:
+
+```
+arn:aws:[service]:[region]:[account]:resourceType/resourcePath
+```
+
+For example, if you set up automatic scaling for an Aurora DB cluster, you can indicate the service\-linked role in your YAML template using its ARN as follows\. 
+
+```
+RoleARN: arn:aws:iam::012345678910:role/aws-service-role/rds.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_RDSCluster
+```
+
+For more information, see [AWS::ApplicationAutoScaling::ScalableTarget](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-applicationautoscaling-scalabletarget.html) in the *AWS CloudFormation User Guide*\. 
+
 ## Create Service\-Linked Roles \(Manual\)<a name="create-service-linked-role-manual"></a>
 
 To create the service\-linked role, you can use the IAM console, AWS CLI, or IAM API\. For more information, see [Creating a Service\-Linked Role](https://docs.aws.amazon.com/IAM/latest/UserGuide/using-service-linked-roles.html#create-service-linked-role) in the *IAM User Guide*\. 
@@ -140,4 +154,4 @@ After you delete a service\-linked role, Application Auto Scaling creates the ro
 
 ## Supported Regions for Application Auto Scaling Service\-Linked Roles<a name="slr-regions"></a>
 
-Application Auto Scaling supports using service\-linked roles in all of the Regions where the service is available\. For more information, see [AWS Regions and Endpoints](https://docs.aws.amazon.com/general/latest/gr/rande.html)\.
+Application Auto Scaling supports using service\-linked roles in all of the Regions where the service is available\.
