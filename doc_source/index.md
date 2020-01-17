@@ -1,7 +1,7 @@
 # Application Auto Scaling User Guide
 
 -----
-*****Copyright &copy; 2019 Amazon Web Services, Inc. and/or its affiliates. All rights reserved.*****
+*****Copyright &copy; 2020 Amazon Web Services, Inc. and/or its affiliates. All rights reserved.*****
 
 -----
 Amazon's trademarks and trade dress may not be used in 
@@ -28,8 +28,16 @@ Amazon's trademarks and trade dress may not be used in
    + [Application Auto Scaling Events and EventBridge](monitoring-eventbridge.md)
    + [Personal Health Dashboard Notifications for Application Auto Scaling](monitoring-personal-health-dashboard.md)
    + [Building Dashboards with CloudWatch](monitoring-cloudwatch.md)
-+ [Authentication and Access Control for Application Auto Scaling](auth-and-access-control.md)
-   + [Service-Linked Roles for Application Auto Scaling](application-auto-scaling-service-linked-roles.md)
-+ [Application Auto Scaling and Interface VPC Endpoints](application-auto-scaling-vpc-endpoints.md)
++ [Security in Application Auto Scaling](security.md)
+   + [Application Auto Scaling and Data Protection](application-auto-scaling-data-protection.md)
+   + [Identity and Access Management for Application Auto Scaling](auth-and-access-control.md)
+      + [How Application Auto Scaling Works with IAM](security_iam_service-with-iam.md)
+      + [Service-Linked Roles for Application Auto Scaling](application-auto-scaling-service-linked-roles.md)
+      + [Example Policies for Working with the AWS CLI or an AWS SDK](security_iam_id-based-policy-examples.md)
+      + [Example Policies for Working in the AWS Management Console](security_iam_id-based-policy-examples-console.md)
+   + [Application Auto Scaling and Interface VPC Endpoints](application-auto-scaling-vpc-endpoints.md)
+   + [Compliance Validation for Application Auto Scaling](application-auto-scaling-compliance.md)
+   + [Resilience in Application Auto Scaling](disaster-recovery-resiliency.md)
+   + [Infrastructure Security in Application Auto Scaling](infrastructure-security.md)
 + [Application Auto Scaling Service Quotas](application-auto-scaling-limits.md)
 + [Document History](doc-history.md)

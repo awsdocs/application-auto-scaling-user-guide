@@ -2,35 +2,12 @@
 
 With step scaling, you choose scaling metrics and threshold values for the CloudWatch alarms that trigger the scaling process as well as define how your scalable target should be scaled when a threshold is in breach for a specified number of evaluation periods\. 
 
-Step scaling policies increase or decrease the current capacity of a scalable target based on a set of scaling adjustments, known as *step adjustments*\. The adjustments vary based on the size of the alarm breach\.
-
-After a scaling activity is started, the policy continues to respond to additional alarms, even while a scaling activity is in progress\. Therefore, all alarms that are breached are evaluated by Application Auto Scaling as it receives the alarm messages\.
-
 If your scaling metric is a utilization metric that increases or decreases proportionally to the capacity of the scalable target, we recommend that you use a target tracking scaling policy\. For more information, see [Target Tracking Scaling Policies for Application Auto Scaling](application-auto-scaling-target-tracking.md)\. You still have the option to use target tracking scaling with step scaling for a more advanced scaling policy configuration\. For example, if you want, you can configure a more aggressive response when utilization reaches a certain level\. 
+
+Step scaling policies increase or decrease the current capacity of a scalable target based on a set of scaling adjustments, known as *step adjustments*\. The adjustments vary based on the size of the alarm breach\. All alarms that are breached are evaluated by Application Auto Scaling as it receives the alarm messages\.
 
 **Limits**
 + Step scaling policies are not supported for DynamoDB, Amazon Comprehend, or Lambda\.
-
-## Scaling Adjustment Types<a name="as-scaling-adjustment"></a>
-
-When a step scaling policy is performed, it changes the current capacity of your scalable target using the scaling adjustment specified in the policy\. A scaling adjustment can't change the capacity of the scalable target above the maximum capacity or below the minimum capacity\.
-
-Application Auto Scaling supports the following adjustment types for step scaling policies:
-+ **ChangeInCapacity**—Increase or decrease the current capacity of the scalable target by the specified value\. A positive value increases the capacity and a negative value decreases the capacity\.
-
-  Example: If the current capacity is 3 and the adjustment is 5, then Application Auto Scaling adds 5 to the capacity for a total of 8\.
-+ **ExactCapacity**—Change the current capacity of the scalable target to the specified value\. Specify a positive value with this adjustment type\.
-
-  Example: If the current capacity is 3 and the adjustment is 5, then Application Auto Scaling changes the capacity to 5\.
-+ **PercentChangeInCapacity**—Increase or decrease the current capacity of the scalable target by the specified percentage\. A positive value increases the capacity and a negative value decreases the capacity\. If the resulting value is not an integer, Application Auto Scaling rounds it as follows:
-  + Values greater than 1 are rounded down\. For example, `12.7` is rounded to `12`\.
-  + Values between 0 and 1 are rounded to 1\. For example, `.67` is rounded to `1`\.
-  + Values between 0 and \-1 are rounded to \-1\. For example, `-.58` is rounded to `-1`\.
-  + Values less than \-1 are rounded up\. For example, `-6.67` is rounded to `-6`\.
-
-  Example: If the current capacity is 10 and the adjustment is 10 percent, then Application Auto Scaling adds 1 to the capacity for a total of 11\.
-
-With **PercentChangeInCapacity**, you can also specify the minimum amount to scale \(using the `MinAdjustmentMagnitude` parameter\)\. For example, suppose that you create a policy that adds 25 percent and you specify a minimum amount of 2\. If the scalable target has a capacity of 4 and the scaling policy is performed, 25 percent of 4 is 1\. However, because you specified a minimum increment of 2, Application Auto Scaling adds 2\.
 
 ## Step Adjustments<a name="as-scaling-steps"></a>
 
@@ -39,36 +16,67 @@ When you create a step scaling policy, you add one or more step adjustments that
 + An upper bound for the metric value
 + The amount by which to scale, based on the scaling adjustment type
 
-There are a few rules for the step adjustments for your policy:
+CloudWatch aggregates metric data points based on the statistic for the metric associated with your CloudWatch alarm\. When the alarm is breached, the appropriate scaling policy is triggered\. Application Auto Scaling applies your specified aggregation type to the most recent metric data points from CloudWatch \(as opposed to the raw metric data\)\. It compares this aggregated metric value against the upper and lower bounds defined by the step adjustments to determine which step adjustment to perform\. 
+
+You specify the upper and lower bounds relative to the breach threshold\. For example, let's say that you have a scalable target that has both a current capacity and a desired capacity of 10\. You have a CloudWatch alarm with a breach threshold of 50 percent\. You have an adjustment type of `PercentChangeInCapacity` and scale\-out and scale\-in policies with the following step adjustments:
+
+
+**Example: Step adjustments for scale\-out policy**  
+
+| **Lower Bound** | **Upper Bound** | **Adjustment** | 
+| --- | --- | --- | 
+|  0  |  10  |  0  | 
+|  10  |  20  |  10  | 
+|  20  |  null  |  30  | 
+
+
+**Example: Step adjustments for scale\-in policy**  
+
+| **Lower Bound** | **Upper Bound** | **Adjustment** | 
+| --- | --- | --- | 
+|  \-10  |  0  |  0  | 
+|  \-20  |  \-10  |  \-10  | 
+|  null  |  \-20  |  \-30  | 
+
+This creates the following scaling configuration\.
+
+```
+Metric value
+
+-infinity          30%    40%          60%     70%             infinity
+-----------------------------------------------------------------------
+          -30%      | -10% | Unchanged  | +10%  |       +30%        
+-----------------------------------------------------------------------
+```
+
+The following points summarize the behavior of the scaling configuration in relation to the desired and current capacity of the scalable target:
++ The current and desired capacity is maintained while the aggregated metric value is greater than 40 and less than 60\.
++ If the metric value gets to 60, Application Auto Scaling increases the desired capacity of the scalable target by 1, to 11\. That's based on the second step adjustment of the scale\-out policy \(add 10 percent of 10\)\. After the new capacity is added, Application Auto Scaling increases the current capacity to 11\. If the metric value rises to 70 even after this increase in capacity, Application Auto Scaling increases the target capacity by 3, to 14\. That's based on the third step adjustment of the scale\-out policy \(add 30 percent of 11, 3\.3, rounded down to 3\)\.
++ If the metric value gets to 40, Application Auto Scaling decreases the target capacity by 1, to 13, based on the second step adjustment of the scale\-in policy \(remove 10 percent of 14, 1\.4, rounded down to 1\)\. If the metric value falls to 30 even after this decrease in capacity, Application Auto Scaling decreases the target capacity by 3, to 10, based on the third step adjustment of the scale\-in policy \(remove 30 percent of 13, 3\.9, rounded down to 3\)\.
+
+When you specify the step adjustments for your scaling policy, note the following:
 + The ranges of your step adjustments can't overlap or have a gap\.
 + Only one step adjustment can have a null lower bound \(negative infinity\)\. If one step adjustment has a negative lower bound, then there must be a step adjustment with a null lower bound\.
 + Only one step adjustment can have a null upper bound \(positive infinity\)\. If one step adjustment has a positive upper bound, then there must be a step adjustment with a null upper bound\.
 + The upper and lower bound can't be null in the same step adjustment\.
 + If the metric value is above the breach threshold, the lower bound is inclusive and the upper bound is exclusive\. If the metric value is below the breach threshold, the lower bound is exclusive and the upper bound is inclusive\.
 
-CloudWatch aggregates metric data points based on the statistic for the metric associated with your CloudWatch alarm\. When the alarm is breached, the appropriate scaling policy is triggered\. Application Auto Scaling applies your specified aggregation type to the most recent metric data points from CloudWatch \(as opposed to the raw metric data\)\. It compares this aggregated metric value against the upper and lower bounds defined by the step adjustments to determine which step adjustment to perform\. 
+## Scaling Adjustment Types<a name="as-scaling-adjustment"></a>
 
-You specify the upper and lower bounds relative to the breach threshold\. For example, suppose that you have an alarm with a breach threshold of 50 and a scaling adjustment of type `PercentChangeInCapacity`\. You also have scale\-out and scale\-in policies with the following step adjustments:
+You can define a scaling policy that performs the optimal scaling action, based on the scaling adjustment type that you choose\. You can specify the adjustment type as a percentage of the current capacity of your scalable target or in absolute numbers\.
 
+Application Auto Scaling supports the following adjustment types for step scaling policies:
++ **ChangeInCapacity**—Increase or decrease the current capacity of the scalable target by the specified value\. A positive value increases the capacity and a negative value decreases the capacity\. For example: If the current capacity is 3 and the adjustment is 5, then Application Auto Scaling adds 5 to the capacity for a total of 8\.
++ **ExactCapacity**—Change the current capacity of the scalable target to the specified value\. Specify a positive value with this adjustment type\. For example: If the current capacity is 3 and the adjustment is 5, then Application Auto Scaling changes the capacity to 5\.
++ **PercentChangeInCapacity**—Increase or decrease the current capacity of the scalable target by the specified percentage\. A positive value increases the capacity and a negative value decreases the capacity\. For example: If the current capacity is 10 and the adjustment is 10 percent, then Application Auto Scaling adds 1 to the capacity for a total of 11\. 
+**Note**  
+If the resulting value is not an integer, Application Auto Scaling rounds it as follows:  
+Values greater than 1 are rounded down\. For example, `12.7` is rounded to `12`\.
+Values between 0 and 1 are rounded to 1\. For example, `.67` is rounded to `1`\.
+Values between 0 and \-1 are rounded to \-1\. For example, `-.58` is rounded to `-1`\.
+Values less than \-1 are rounded up\. For example, `-6.67` is rounded to `-6`\.
 
-|  | 
-| --- |
-|  Scale out policy  | 
-| Lower bound | Upper bound | Adjustment | Metric value | 
-|  0  |  10  |  0  |  50 <= *value* < 60  | 
-|  10  |  20  |  10  |  60 <= *value* < 70  | 
-|  20  |  null  |  30  |  70 <= *value* < \+infinity  | 
-|   Scale in policy   | 
-| Lower bound | Upper bound | Adjustment | Metric value | 
-|  \-10  |  0  |  0  |  40 < *value* <= 50  | 
-|  \-20  |  \-10  |  \-10  |  30 < *value* <= 40  | 
-|  null  |  \-20  |  \-30  |  \-infinity < *value* <= 30  | 
-
-Your scalable target has both a current capacity and a desired capacity of 10\. The current and desired capacity is maintained while the aggregated metric value is greater than 40 and less than 60\.
-
-If the metric value gets to 60, Application Auto Scaling increases the desired capacity of the group by 1, to 11\. That's based on the second step adjustment of the scale\-out policy \(add 10 percent of 10\)\. After the new capacity is added, Application Auto Scaling increases the current capacity to 11\. If the metric value rises to 70 even after this increase in capacity, Application Auto Scaling increases the target capacity by 3, to 14\. That's based on the third step adjustment of the scale\-out policy \(add 30 percent of 11, 3\.3, rounded down to 3\)\.
-
-If the metric value gets to 40, Application Auto Scaling decreases the target capacity by 1, to 13, based on the second step adjustment of the scale\-in policy \(remove 10 percent of 14, 1\.4, rounded down to 1\)\. If the metric value falls to 30 even after this decrease in capacity, Application Auto Scaling decreases the target capacity by 3, to 10, based on the third step adjustment of the scale\-in policy \(remove 30 percent of 13, 3\.9, rounded down to 3\)\.
+  With **PercentChangeInCapacity**, you can also specify the minimum amount to scale using the `MinAdjustmentMagnitude` parameter\. For example, suppose that you create a policy that adds 25 percent and you specify a minimum amount of 2\. If the scalable target has a capacity of 4 and the scaling policy is performed, 25 percent of 4 is 1\. However, because you specified a minimum increment of 2, Application Auto Scaling adds 2\.
 
 ## Cooldown Period<a name="step-scaling-cooldown"></a>
 
@@ -76,7 +84,7 @@ The *cooldown period* is the amount of time, in seconds, after a scaling activit
 
 While the cooldown period is in effect, capacity added by the initiating scale\-out event is calculated as part of the desired capacity for the next scale\-out event\. The intention is to continuously \(but not excessively\) scale out\. For example, when an alarm triggers a step scaling policy to increase the capacity by 2, the scaling activity completes successfully and a cooldown period starts\. If the alarm triggers again during the cooldown period but at a more aggressive step adjustment of 3, the previous increase of 2 is considered part of the current capacity\. Therefore, only 1 is added to the capacity\.
 
-For scale in policies, the cooldown period is used to block subsequent scale in events until it has expired\. The intention is to scale in conservatively to protect your application's availability\. However, if another alarm triggers a scale\-out policy during the cooldown period after a scale in event, Application Auto Scaling scales out your scalable target immediately\.
+For scale\-in policies, the cooldown period is used to block subsequent scale\-in events until it has expired\. The intention is to scale in conservatively to protect your application's availability\. However, if another alarm triggers a scale\-out policy during the cooldown period after a scale\-in event, Application Auto Scaling scales out your scalable target immediately\.
 
 ## Register Scalable Target<a name="step-scaling-register-scalable-target"></a>
 
@@ -98,10 +106,10 @@ When you configure scaling policies in the console, this automatically registers
 
 You can create step scaling policies that tell Application Auto Scaling what to do when the load on the application changes\.
 
-The following is an example step configuration with an adjustment type of `ChangeInCapacity` that increases the capacity of the scalable target based on the following step adjustments \(assuming a CloudWatch alarm threshold of 70%\): 
-+ Increase capacity by 1 when the value of the metric is greater than or equal to 70% but less than 85% 
-+ Increase capacity by 2 when the value of the metric is greater than or equal to 85% but less than 95% 
-+ Increase capacity by 3 when the value of the metric is greater than or equal to 95% 
+The following is an example step configuration with an adjustment type of `ChangeInCapacity` that increases the capacity of the scalable target based on the following step adjustments \(assuming a CloudWatch alarm threshold of 70 percent\): 
++ Increase capacity by 1 when the value of the metric is greater than or equal to 70 percent but less than 85 percent 
++ Increase capacity by 2 when the value of the metric is greater than or equal to 85 percent but less than 95 percent 
++ Increase capacity by 3 when the value of the metric is greater than or equal to 95 percent 
 
 Save this configuration in a file named `config.json`\.
 
@@ -147,14 +155,14 @@ The output includes the ARN that serves as a unique name for the policy\. You ne
 }
 ```
 
-Finally, use the following CloudWatch [https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html) command to create an alarm to use with your step scaling policy\. In this example, you have an alarm based on average CPU utilization\. The alarm is configured to be in an ALARM state if it reaches a threshold of 70% for at least two consecutive evaluation periods of 60 seconds\. To specify a different CloudWatch metric or use your own custom metric, specify its name in `--metric-name` and its namespace in `--namespace`\. 
+Finally, use the following CloudWatch [https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html) command to create an alarm to use with your step scaling policy\. In this example, you have an alarm based on average CPU utilization\. The alarm is configured to be in an ALARM state if it reaches a threshold of 70 percent for at least two consecutive evaluation periods of 60 seconds\. To specify a different CloudWatch metric or use your own custom metric, specify its name in `--metric-name` and its namespace in `--namespace`\. 
 
 ```
 aws cloudwatch put-metric-alarm --alarm-name Step-Scaling-AlarmHigh-ECS:service/default/sample-app-service \
   --metric-name CPUUtilization --namespace AWS/ECS --statistic Average \
   --period 60 --evaluation-periods 2 --threshold 70 \
   --comparison-operator GreaterThanOrEqualToThreshold \
-  --dimensions "Name=ClusterName,Value=default,Name=ServiceName,Value=sample-app-service" \
+  --dimensions Name=ClusterName,Value=default Name=ServiceName,Value=sample-app-service \
   --alarm-actions PolicyARN
 ```
 
