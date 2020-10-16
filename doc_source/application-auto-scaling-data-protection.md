@@ -1,4 +1,4 @@
-# Application Auto Scaling and Data Protection<a name="application-auto-scaling-data-protection"></a>
+# Application Auto Scaling and data protection<a name="application-auto-scaling-data-protection"></a>
 
 Application Auto Scaling conforms to the AWS [shared responsibility model](http://aws.amazon.com/compliance/shared-responsibility-model/), which includes regulations and guidelines for data protection\. AWS is responsible for protecting the global infrastructure that runs all of the AWS services\. AWS maintains control over data hosted on this infrastructure, including the security configuration controls for handling customer content and personal data\. AWS customers and APN Partners, acting either as data controllers or data processors, are responsible for any personal data that they put in the AWS Cloud\. 
 
@@ -11,4 +11,4 @@ For data protection purposes, we recommend that you protect AWS account credenti
 
 We strongly recommend that you never put sensitive identifying information, such as your customers' account numbers, into free\-form fields or metadata, such as names and tags\. Any data that you enter into metadata might get picked up for inclusion in diagnostic logs\. When you provide a URL to an external server, don't include credentials information in the URL to validate your request to that server\.
 
-For more information about data protection, see the [AWS Shared Responsibility Model and GDPR](http://aws.amazon.com/blogs/security/the-aws-shared-responsibility-model-and-gdpr/) blog post on the *AWS Security Blog*\.
+For more information about data protection, see the [AWS shared responsibility model and GDPR](http://aws.amazon.com/blogs/security/the-aws-shared-responsibility-model-and-gdpr/) blog post on the *AWS Security Blog*\.

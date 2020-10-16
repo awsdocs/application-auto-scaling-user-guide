@@ -1,8 +1,10 @@
-# Suspending and Resuming Scaling for Application Auto Scaling<a name="application-auto-scaling-suspend-resume-scaling"></a>
+# Suspending and resuming scaling for Application Auto Scaling<a name="application-auto-scaling-suspend-resume-scaling"></a>
 
 This topic explains how to suspend and then resume one or more of the scaling activities for the scalable targets in your application\. The suspend\-resume feature is used to temporarily pause scaling activities triggered by your scaling policies and scheduled actions\. This can be useful, for example, when you don't want automatic scaling to potentially interfere while you are making a change or investigating a configuration issue\. Your scaling policies and scheduled actions can be retained, and when you are ready, scaling activities can be resumed\.
 
-## Scaling Activities<a name="process-types"></a>
+In the example commands that follow, you pass the JSON\-formatted parameters in a config\.json file\. You can also pass these parameters on the command line by using quotation marks to enclose the JSON data structure\. For more information, see [Using quotation marks with strings in the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-parameters-quoting-strings.html) in the *AWS Command Line Interface User Guide*\.
+
+## Scaling activities<a name="process-types"></a>
 
 Application Auto Scaling supports putting the following scaling activities in a suspended state:
 + All scale\-in activities that are triggered by a scaling policy\.
@@ -20,7 +22,7 @@ The following descriptions explain what happens when individual scaling activiti
 `ScheduledScalingSuspended`
 + Application Auto Scaling does not initiate the scaling actions that are scheduled to run during the suspension period\. When you resume scheduled scaling, Application Auto Scaling only evaluates scheduled actions whose execution time has not yet passed\.
 
-## Suspend and Resume Scaling Activities Using the AWS CLI<a name="aas-suspend-aws-cli"></a>
+## Suspend and resume scaling activities using the AWS CLI<a name="aas-suspend-aws-cli"></a>
 
 You can suspend and resume individual scaling activities or all scaling activities for your Application Auto Scaling scalable target\.
 
@@ -30,10 +32,18 @@ For brevity, these examples illustrate how to suspend and resume scaling for a D
 **To suspend a scaling activity**  
 Open a command\-line window and use the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command with the `--suspendedstate` option as follows\. 
 
+On local Linux, macOS, or Unix machines:
+
 ```
 aws application-autoscaling register-scalable-target --service-namespace dynamodb \
   --scalable-dimension dynamodb:table:ReadCapacityUnits --resource-id table/my-table \
   --suspended-state file://config.json
+```
+
+On local Windows machines:
+
+```
+aws application-autoscaling register-scalable-target --service-namespace dynamodb --scalable-dimension dynamodb:table:ReadCapacityUnits --resource-id table/my-table --suspended-state file://config.json
 ```
 
 To only suspend scale\-in activities that are triggered by a scaling policy, specify the following in config\.json\.
@@ -63,10 +73,18 @@ To only suspend scaling activities that involve scheduled actions, specify the f
 **To suspend all scaling activities**  
 Use the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command with the `--suspendedstate` option as follows\.
 
+On local Linux, macOS, or Unix machines:
+
 ```
 aws application-autoscaling register-scalable-target --service-namespace dynamodb \
   --scalable-dimension dynamodb:table:ReadCapacityUnits --resource-id table/my-table \
   --suspended-state file://config.json
+```
+
+On local Windows machines:
+
+```
+aws application-autoscaling register-scalable-target --service-namespace dynamodb --scalable-dimension dynamodb:table:ReadCapacityUnits --resource-id table/my-table --suspended-state file://config.json
 ```
 
 This example assumes that the file config\.json contains the following JSON\-formatted parameters\. 
@@ -79,13 +97,21 @@ This example assumes that the file config\.json contains the following JSON\-for
 }
 ```
 
-### View Suspended Scaling Activities<a name="aas-check-suspend-state-aws-cli"></a>
+### View suspended scaling activities<a name="aas-check-suspend-state-aws-cli"></a>
 
 Use the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scalable-targets.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scalable-targets.html) command to determine which scaling activities are in a suspended state for a scalable target\.
+
+On local Linux, macOS, or Unix machines:
 
 ```
 aws application-autoscaling describe-scalable-targets --service-namespace dynamodb \
   --scalable-dimension dynamodb:table:ReadCapacityUnits --resource-id table/my-table
+```
+
+On local Windows machines:
+
+```
+aws application-autoscaling describe-scalable-targets --service-namespace dynamodb --scalable-dimension dynamodb:table:ReadCapacityUnits --resource-id table/my-table
 ```
 
 The following is example output\.
@@ -111,16 +137,24 @@ The following is example output\.
 }
 ```
 
-### Resume Scaling Activities<a name="aas-resume-aws-cli"></a>
+### Resume scaling activities<a name="aas-resume-aws-cli"></a>
 
 When you are ready to resume the scaling activity, you can resume it using the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command\.
 
 The following example command resumes all scaling activities for the specified scalable target\. 
 
+On local Linux, macOS, or Unix machines:
+
 ```
 aws application-autoscaling register-scalable-target --service-namespace dynamodb \
   --scalable-dimension dynamodb:table:ReadCapacityUnits --resource-id table/my-table \
   --suspended-state file://config.json
+```
+
+On local Windows machines:
+
+```
+aws application-autoscaling register-scalable-target --service-namespace dynamodb --scalable-dimension dynamodb:table:ReadCapacityUnits --resource-id table/my-table --suspended-state file://config.json
 ```
 
 This example assumes that the file config\.json contains the following JSON\-formatted parameters\. 

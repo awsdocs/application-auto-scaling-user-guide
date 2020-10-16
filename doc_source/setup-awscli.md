@@ -1,4 +1,4 @@
-# Set Up the AWS CLI<a name="setup-awscli"></a>
+# Set up the AWS CLI<a name="setup-awscli"></a>
 
 The AWS Command Line Interface \(AWS CLI\) is a unified developer tool for managing AWS services, including Application Auto Scaling\. Follow the steps to download and configure the AWS CLI\.
 
@@ -14,7 +14,7 @@ The AWS Command Line Interface \(AWS CLI\) is a unified developer tool for manag
    aws application-autoscaling help
    ```
 
-1. Add a named profile for the administrator user in the AWS CLI config file\. You can use this profile when executing AWS CLI commands\. For more information about named profiles, see [Named Profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html) in the *AWS Command Line Interface User Guide*\.
+1. Add a named profile for the administrator user in the AWS CLI config file\. You can use this profile when executing AWS CLI commands\. For more information about named profiles, see [Named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html) in the *AWS Command Line Interface User Guide*\.
 
    ```
    aws configure --profile adminuser
@@ -29,7 +29,7 @@ The AWS Command Line Interface \(AWS CLI\) is a unified developer tool for manag
    default output format = json
    ```
 
-   For a list of available AWS Regions, see [Application Auto Scaling Regions and Endpoints](https://docs.aws.amazon.com/general/latest/gr/as-app.html) in the *Amazon Web Services General Reference*\.
+   For a list of available AWS Regions, see [Application Auto Scaling regions and endpoints](https://docs.aws.amazon.com/general/latest/gr/as-app.html) in the *Amazon Web Services General Reference*\.
 
 1. To confirm that the AWS CLI profile is configured correctly, run the following command in a command window\.
 

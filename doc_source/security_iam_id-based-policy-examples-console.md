@@ -1,4 +1,4 @@
-# Example Policies for Working in the AWS Management Console<a name="security_iam_id-based-policy-examples-console"></a>
+# Example policies for working in the AWS Management Console<a name="security_iam_id-based-policy-examples-console"></a>
 
 There is no standalone Application Auto Scaling console\. Most services that integrate with Application Auto Scaling have features that are dedicated to helping you configure scaling with their console\. 
 
@@ -55,6 +55,6 @@ This policy allows users to view and modify scaling policies in the Amazon EC2 c
 
 You can adjust the API actions to limit user access\. For example, replacing `application-autoscaling:*` with `application-autoscaling:Describe*` means that the user has read\-only access\. 
 
-You can also adjust the CloudWatch permissions as required to limit user access to CloudWatch features\. For more information, see [Permissions Required to Use the CloudWatch Console](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/iam-identity-based-access-control-cw.html#console-permissions-cw) in the *Amazon CloudWatch User Guide*\.
+You can also adjust the CloudWatch permissions as required to limit user access to CloudWatch features\. For more information, see [Permissions required to use the CloudWatch console](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/iam-identity-based-access-control-cw.html#console-permissions-cw) in the *Amazon CloudWatch User Guide*\.
 
 Keep in mind that Application Auto Scaling requires permission to create a service\-linked role the first time that you configure scaling for a given service\. For example, after this role has been created for the first scaling configuration you add to a Spot Fleet, you do not need to add this permission to other users of the same AWS account who use Spot Fleet\.

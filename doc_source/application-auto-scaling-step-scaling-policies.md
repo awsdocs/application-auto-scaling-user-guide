@@ -1,15 +1,15 @@
-# Step Scaling Policies for Application Auto Scaling<a name="application-auto-scaling-step-scaling-policies"></a>
+# Step scaling policies for Application Auto Scaling<a name="application-auto-scaling-step-scaling-policies"></a>
 
 With step scaling, you choose scaling metrics and threshold values for the CloudWatch alarms that trigger the scaling process as well as define how your scalable target should be scaled when a threshold is in breach for a specified number of evaluation periods\. 
 
-If your scaling metric is a utilization metric that increases or decreases proportionally to the capacity of the scalable target, we recommend that you use a target tracking scaling policy\. For more information, see [Target Tracking Scaling Policies for Application Auto Scaling](application-auto-scaling-target-tracking.md)\. You still have the option to use target tracking scaling with step scaling for a more advanced scaling policy configuration\. For example, if you want, you can configure a more aggressive response when utilization reaches a certain level\. 
+If your scaling metric is a utilization metric that increases or decreases proportionally to the capacity of the scalable target, we recommend that you use a target tracking scaling policy\. For more information, see [Target tracking scaling policies for Application Auto Scaling](application-auto-scaling-target-tracking.md)\. You still have the option to use target tracking scaling with step scaling for a more advanced scaling policy configuration\. For example, if you want, you can configure a more aggressive response when utilization reaches a certain level\. 
 
 Step scaling policies increase or decrease the current capacity of a scalable target based on a set of scaling adjustments, known as *step adjustments*\. The adjustments vary based on the size of the alarm breach\. All alarms that are breached are evaluated by Application Auto Scaling as it receives the alarm messages\.
 
 **Limits**
-+ Step scaling policies are not supported for DynamoDB, Amazon Comprehend, or Lambda\.
++ Step scaling policies are not supported for DynamoDB, Amazon Comprehend, Lambda, Amazon Keyspaces, or Amazon MSK\.
 
-## Step Adjustments<a name="as-scaling-steps"></a>
+## Step adjustments<a name="as-scaling-steps"></a>
 
 When you create a step scaling policy, you add one or more step adjustments that enable you to scale based on the size of the alarm breach\. Each step adjustment specifies the following:
 + A lower bound for the metric value
@@ -23,7 +23,7 @@ You specify the upper and lower bounds relative to the breach threshold\. For ex
 
 **Example: Step adjustments for scale\-out policy**  
 
-| **Lower Bound** | **Upper Bound** | **Adjustment** | 
+| **Lower bound** | **Upper bound** | **Adjustment** | 
 | --- | --- | --- | 
 |  0  |  10  |  0  | 
 |  10  |  20  |  10  | 
@@ -32,7 +32,7 @@ You specify the upper and lower bounds relative to the breach threshold\. For ex
 
 **Example: Step adjustments for scale\-in policy**  
 
-| **Lower Bound** | **Upper Bound** | **Adjustment** | 
+| **Lower bound** | **Upper bound** | **Adjustment** | 
 | --- | --- | --- | 
 |  \-10  |  0  |  0  | 
 |  \-20  |  \-10  |  \-10  | 
@@ -61,7 +61,7 @@ When you specify the step adjustments for your scaling policy, note the followin
 + The upper and lower bound can't be null in the same step adjustment\.
 + If the metric value is above the breach threshold, the lower bound is inclusive and the upper bound is exclusive\. If the metric value is below the breach threshold, the lower bound is exclusive and the upper bound is inclusive\.
 
-## Scaling Adjustment Types<a name="as-scaling-adjustment"></a>
+## Scaling adjustment types<a name="as-scaling-adjustment"></a>
 
 You can define a scaling policy that performs the optimal scaling action, based on the scaling adjustment type that you choose\. You can specify the adjustment type as a percentage of the current capacity of your scalable target or in absolute numbers\.
 
@@ -78,31 +78,39 @@ Values less than \-1 are rounded up\. For example, `-6.67` is rounded to `-6`\.
 
   With **PercentChangeInCapacity**, you can also specify the minimum amount to scale using the `MinAdjustmentMagnitude` parameter\. For example, suppose that you create a policy that adds 25 percent and you specify a minimum amount of 2\. If the scalable target has a capacity of 4 and the scaling policy is performed, 25 percent of 4 is 1\. However, because you specified a minimum increment of 2, Application Auto Scaling adds 2\.
 
-## Cooldown Period<a name="step-scaling-cooldown"></a>
+## Cooldown period<a name="step-scaling-cooldown"></a>
 
-The *cooldown period* is the amount of time, in seconds, after a scaling activity completes where previous trigger\-related scaling activities can influence future scaling events\.
+The amount of time to wait for a previous scaling activity to take effect is called the cooldown period\. 
++ With scale\-out policies, the intention is to continuously \(but not excessively\) scale out\. After Application Auto Scaling successfully scales out using a step scaling policy, it starts to calculate the cooldown time\. The scaling policy won't increase the desired capacity again unless either a larger scale out is triggered or the cooldown period ends\. While the cooldown period is in effect, capacity added by the initiating scale\-out activity is calculated as part of the desired capacity for the next scale\-out activity\. For example, when an alarm triggers a step scaling policy to increase the capacity by 2, the scaling activity completes successfully, and a cooldown period starts\. If the alarm triggers again during the cooldown period but at a more aggressive step adjustment of 3, the previous increase of 2 is considered part of the current capacity\. Therefore, only 1 is added to the capacity\.
++ With scale\-in policies, the intention is to scale in conservatively to protect your application's availability, so scale\-in activities are blocked until the cooldown period has expired\. However, if another alarm triggers a scale\-out activity during the cooldown period after a scale\-in activity, Application Auto Scaling scales out the target immediately\. In this case, the cooldown period for the scale\-in activity stops and doesn't complete\.
 
-While the cooldown period is in effect, capacity added by the initiating scale\-out event is calculated as part of the desired capacity for the next scale\-out event\. The intention is to continuously \(but not excessively\) scale out\. For example, when an alarm triggers a step scaling policy to increase the capacity by 2, the scaling activity completes successfully and a cooldown period starts\. If the alarm triggers again during the cooldown period but at a more aggressive step adjustment of 3, the previous increase of 2 is considered part of the current capacity\. Therefore, only 1 is added to the capacity\.
+The cooldown period is measured in seconds and applies only to scaling policy\-related scaling activities\. During a cooldown period, when a scheduled action starts at the scheduled time, it can trigger a scaling activity immediately without waiting for the cooldown period to expire\.
 
-For scale\-in policies, the cooldown period is used to block subsequent scale\-in events until it has expired\. The intention is to scale in conservatively to protect your application's availability\. However, if another alarm triggers a scale\-out policy during the cooldown period after a scale\-in event, Application Auto Scaling scales out your scalable target immediately\.
-
-## Register Scalable Target<a name="step-scaling-register-scalable-target"></a>
+## Register scalable target<a name="step-scaling-register-scalable-target"></a>
 
 Before you can create a scaling policy, you must register the scalable target\. Use the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command to register a new scalable target\. 
 
 The following example registers an Amazon ECS service with Application Auto Scaling\. Application Auto Scaling can scale the number of tasks at a minimum of 2 tasks and a maximum of 10\. 
 
+On local Linux, macOS, or Unix machines:
+
 ```
 aws application-autoscaling register-scalable-target --service-namespace ecs \
---scalable-dimension ecs:service:DesiredCount \
---resource-id service/default/sample-app-service \
---min-capacity 2 --max-capacity 10
+  --scalable-dimension ecs:service:DesiredCount \
+  --resource-id service/default/sample-app-service \
+  --min-capacity 2 --max-capacity 10
+```
+
+On local Windows machines:
+
+```
+aws application-autoscaling register-scalable-target --service-namespace ecs --scalable-dimension ecs:service:DesiredCount --resource-id service/default/sample-app-service --min-capacity 2 --max-capacity 10
 ```
 
 **Note**  
-When you configure scaling policies in the console, this automatically registers the resource as a scalable target with Application Auto Scaling\. For more information, see the documentation in the [Getting Started with Application Auto Scaling](getting-started.md) section\.
+When you configure scaling policies in the console, this automatically registers the resource as a scalable target with Application Auto Scaling\. For more information, see the documentation in the [Getting started with Application Auto Scaling](getting-started.md) section\.
 
-## Configure Step Scaling Policies Using the AWS CLI<a name="create-step-scaling-policy"></a>
+## Configure step scaling policies using the AWS CLI<a name="create-step-scaling-policy"></a>
 
 You can create step scaling policies that tell Application Auto Scaling what to do when the load on the application changes\.
 
@@ -137,7 +145,9 @@ Save this configuration in a file named `config.json`\.
 }
 ```
 
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scaling-policy.html) command, along with the `config.json` file that you created, to create a scaling policy named `my-step-scaling-policy`:
+Use the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scaling-policy.html) command, along with the `config.json` file that you created, to create a scaling policy named `my-step-scaling-policy`\.
+
+On local Linux, macOS, or Unix machines:
 
 ```
 aws application-autoscaling put-scaling-policy --service-namespace ecs \
@@ -145,6 +155,12 @@ aws application-autoscaling put-scaling-policy --service-namespace ecs \
   --resource-id service/default/sample-app-service \
   --policy-name my-step-scaling-policy --policy-type StepScaling \
   --step-scaling-policy-configuration file://config.json
+```
+
+On local Windows machines:
+
+```
+aws application-autoscaling put-scaling-policy --service-namespace ecs --scalable-dimension ecs:service:DesiredCount --resource-id service/default/sample-app-service --policy-name my-step-scaling-policy --policy-type StepScaling --step-scaling-policy-configuration file://config.json
 ```
 
 The output includes the ARN that serves as a unique name for the policy\. You need it to create CloudWatch alarms\.
@@ -157,6 +173,8 @@ The output includes the ARN that serves as a unique name for the policy\. You ne
 
 Finally, use the following CloudWatch [https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html) command to create an alarm to use with your step scaling policy\. In this example, you have an alarm based on average CPU utilization\. The alarm is configured to be in an ALARM state if it reaches a threshold of 70 percent for at least two consecutive evaluation periods of 60 seconds\. To specify a different CloudWatch metric or use your own custom metric, specify its name in `--metric-name` and its namespace in `--namespace`\. 
 
+On local Linux, macOS, or Unix machines:
+
 ```
 aws cloudwatch put-metric-alarm --alarm-name Step-Scaling-AlarmHigh-ECS:service/default/sample-app-service \
   --metric-name CPUUtilization --namespace AWS/ECS --statistic Average \
@@ -166,7 +184,13 @@ aws cloudwatch put-metric-alarm --alarm-name Step-Scaling-AlarmHigh-ECS:service/
   --alarm-actions PolicyARN
 ```
 
-## Describe Step Scaling Policies<a name="describe-step-scaling-policy"></a>
+On local Windows machines:
+
+```
+aws cloudwatch put-metric-alarm --alarm-name Step-Scaling-AlarmHigh-ECS:service/default/sample-app-service --metric-name CPUUtilization --namespace AWS/ECS --statistic Average --period 60 --evaluation-periods 2 --threshold 70 --comparison-operator GreaterThanOrEqualToThreshold --dimensions Name=ClusterName,Value=default Name=ServiceName,Value=sample-app-service --alarm-actions PolicyARN
+```
+
+## Describe step scaling policies<a name="describe-step-scaling-policy"></a>
 
 You can describe all scaling policies for the specified service namespace using the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-policies.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-policies.html) command\.
 
@@ -174,11 +198,19 @@ You can describe all scaling policies for the specified service namespace using 
 aws application-autoscaling describe-scaling-policies --service-namespace ecs
 ```
 
-You can filter the results to just the step scaling policies using the `--query` parameter\. This syntax for `query` works on Linux or macOS\. On Windows, change the single quotes to double quotes\.
+You can filter the results to just the step scaling policies using the `--query` parameter\. For more information about the syntax for `query`, see [Controlling command output from the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-output.html) in the *AWS Command Line Interface User Guide*\.
+
+On local Linux, macOS, or Unix machines:
 
 ```
 aws application-autoscaling describe-scaling-policies --service-namespace ecs \
   --query 'ScalingPolicies[?PolicyType==`StepScaling`]'
+```
+
+On local Windows machines:
+
+```
+aws application-autoscaling describe-scaling-policies --service-namespace ecs --query "ScalingPolicies[?PolicyType==`StepScaling`]"
 ```
 
 The following is example output\.
@@ -224,18 +256,26 @@ The following is example output\.
 ]
 ```
 
-## Delete a Step Scaling Policy<a name="delete-step-scaling-policy"></a>
+## Delete a step scaling policy<a name="delete-step-scaling-policy"></a>
 
 When you no longer need a step scaling policy, you can delete it\. To delete both the scaling policy and the CloudWatch alarm, complete the following tasks\. 
 
 **To delete your scaling policy**  
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scaling-policy.html) command\.
 
+On local Linux, macOS, or Unix machines:
+
 ```
 aws application-autoscaling delete-scaling-policy --service-namespace ecs \
   --scalable-dimension ecs:service:DesiredCount \
   --resource-id service/default/sample-app-service \
   --policy-name my-step-scaling-policy
+```
+
+On local Windows machines:
+
+```
+aws application-autoscaling delete-scaling-policy --service-namespace ecs --scalable-dimension ecs:service:DesiredCount --resource-id service/default/sample-app-service --policy-name my-step-scaling-policy
 ```
 
 **To delete the CloudWatch alarm**  

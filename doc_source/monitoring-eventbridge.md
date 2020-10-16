@@ -1,4 +1,4 @@
-# Application Auto Scaling Events and EventBridge<a name="monitoring-eventbridge"></a>
+# Getting notifications of events preventing scaling through EventBridge<a name="monitoring-eventbridge"></a>
 
 Application Auto Scaling integrates with Amazon EventBridge to notify you of certain events that affect scaling\. Events from AWS services are delivered to EventBridge in near real time\. You can write simple rules to indicate which events are of interest to you, and what automated actions to take when an event matches a rule\. For example, you could be notified when a resource has scaled to its maximum capacity\. The actions that can be automatically triggered include the following:
 + Invoking an AWS Lambda function
@@ -7,9 +7,9 @@ Application Auto Scaling integrates with Amazon EventBridge to notify you of cer
 + Activating an AWS Step Functions state machine
 + Notifying an Amazon SNS topic or an AWS SMS queue
 
-For more information, see [Getting Started with Amazon EventBridge](https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-getting-set-up.html) in the *Amazon EventBridge User Guide*\. 
+For more information, see [Getting started with Amazon EventBridge](https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-getting-set-up.html) in the *Amazon EventBridge User Guide*\. 
 
-The following is the format of Application Auto Scaling events with monitoring support in Amazon EventBridge\.
+The following is the format of Application Auto Scaling events with monitoring support in Amazon EventBridge\. Only events that are specific to `scaledToMax` are currently available\. 
 
 **Event for State Change: Scaled to Max**  
 The following event is sent when you reach the maximum capacity limit that you specified in the scaling configuration for that resource\. 
