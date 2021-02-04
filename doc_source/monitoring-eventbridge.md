@@ -1,15 +1,21 @@
-# Getting notifications of events preventing scaling through EventBridge<a name="monitoring-eventbridge"></a>
+# Getting notified of events preventing scaling through EventBridge<a name="monitoring-eventbridge"></a>
 
-Application Auto Scaling integrates with Amazon EventBridge to notify you of certain events that affect scaling\. Events from AWS services are delivered to EventBridge in near real time\. You can write simple rules to indicate which events are of interest to you, and what automated actions to take when an event matches a rule\. For example, you could be notified when a resource has scaled to its maximum capacity\. The actions that can be automatically triggered include the following:
+Application Auto Scaling integrates with Amazon EventBridge to notify you of certain events that affect scaling\. Events from AWS services are delivered to EventBridge in near real time\. You can write simple rules to indicate which events are of interest to you, and what automated actions to take when an event matches a rule\. The actions that can be automatically triggered include the following:
 + Invoking an AWS Lambda function
 + Invoking an Amazon EC2 Run Command
 + Relaying the event to Amazon Kinesis Data Streams
 + Activating an AWS Step Functions state machine
-+ Notifying an Amazon SNS topic or an AWS SMS queue
++ Notifying an Amazon SNS topic or an Amazon SQS queue
 
-For more information, see [Getting started with Amazon EventBridge](https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-getting-set-up.html) in the *Amazon EventBridge User Guide*\. 
+You can also create a rule that triggers on an Application Auto Scaling API call\. For more information, see [Creating an EventBridge rule that triggers on an AWS API call using AWS CloudTrail](https://docs.aws.amazon.com/eventbridge/latest/userguide/create-eventbridge-cloudtrail-rule.html) in the *Amazon EventBridge User Guide*\. 
 
-The following is the format of Application Auto Scaling events with monitoring support in Amazon EventBridge\. Only events that are specific to `scaledToMax` are currently available\. 
+For more information, see [Getting started with Amazon EventBridge](https://docs.aws.amazon.com/eventbridge/latest/userguide/eventbridge-getting-set-up.html) in the *Amazon EventBridge User Guide*\.
+
+## Application Auto Scaling events<a name="event-types"></a>
+
+The following are example events from Application Auto Scaling\. Events are emitted on a best effort basis\. 
+
+Only events that are specific to `scaledToMax` are currently available\.
 
 **Event for State Change: Scaled to Max**  
 The following event is sent when you reach the maximum capacity limit that you specified in the scaling configuration for that resource\. 

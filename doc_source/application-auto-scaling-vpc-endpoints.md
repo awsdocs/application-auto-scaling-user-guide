@@ -9,17 +9,15 @@ You must explicitly enable each API that you want to access through an interface
 
 ## Create an interface VPC endpoint<a name="create-vpce-app-as"></a>
 
-Create an endpoint for Application Auto Scaling using the following service name:
+You can create a VPC endpoint for the Application Auto Scaling service using either the Amazon VPC console or the AWS Command Line Interface \(AWS CLI\)\. Create an endpoint for Application Auto Scaling using the following service name:
 + **com\.amazonaws\.*region*\.application\-autoscaling** — Creates an endpoint for the Application Auto Scaling API operations\.
++ **cn\.com\.amazonaws\.*region*\.application\-autoscaling** — Creates an endpoint for the Application Auto Scaling API operations in the AWS China \(Beijing\) Region and AWS China \(Ningxia\) Region\.
 
 For more information, see [Creating an interface endpoint](https://docs.aws.amazon.com/vpc/latest/userguide/vpce-interface.html#create-interface-endpoint) in the *Amazon VPC User Guide*\. 
 
-**Important**  
-Make sure that you're using the latest version of the CLI or SDK before creating an interface VPC endpoint\. For more information, see [Endpoint migration](#upgrading-cli-sdk-app-as)\.
-
 Enable private DNS for the endpoint to make API requests to the supported service using its default DNS hostname \(for example, `application-autoscaling.us-east-1.amazonaws.com`\)\. When creating an endpoint for AWS services, this setting is enabled by default\. For more information, see [Accessing a service through an interface endpoint](https://docs.aws.amazon.com/vpc/latest/userguide/vpce-interface.html#access-service-though-endpoint) in the *Amazon VPC User Guide*\. 
 
-You do not need to change any Application Auto Scaling settings\. Application Auto Scaling calls other AWS services using either public endpoints or private interface VPC endpoints, whichever are in use\. 
+You do not need to change any Application Auto Scaling settings\. Application Auto Scaling calls other AWS services using either service endpoints or private interface VPC endpoints, whichever are in use\. 
 
 ## Create a VPC endpoint policy<a name="create-vpce-policy-app-as"></a>
 

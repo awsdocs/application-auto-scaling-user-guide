@@ -10,7 +10,7 @@ This documentation helps you understand how to apply the shared responsibility m
 
 **Topics**
 + [Application Auto Scaling and data protection](application-auto-scaling-data-protection.md)
-+ [Identity and access management for Application Auto Scaling](auth-and-access-control.md)
++ [Identity and Access Management for Application Auto Scaling](auth-and-access-control.md)
 + [Compliance validation for Application Auto Scaling](application-auto-scaling-compliance.md)
 + [Resilience in Application Auto Scaling](disaster-recovery-resiliency.md)
 + [Infrastructure security in Application Auto Scaling](infrastructure-security.md)

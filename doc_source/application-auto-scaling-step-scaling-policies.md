@@ -92,7 +92,7 @@ Before you can create a scaling policy, you must register the scalable target\. 
 
 The following example registers an Amazon ECS service with Application Auto Scaling\. Application Auto Scaling can scale the number of tasks at a minimum of 2 tasks and a maximum of 10\. 
 
-On local Linux, macOS, or Unix machines:
+**Linux, macOS, or Unix**
 
 ```
 aws application-autoscaling register-scalable-target --service-namespace ecs \
@@ -101,14 +101,15 @@ aws application-autoscaling register-scalable-target --service-namespace ecs \
   --min-capacity 2 --max-capacity 10
 ```
 
-On local Windows machines:
+**Windows**
 
 ```
 aws application-autoscaling register-scalable-target --service-namespace ecs --scalable-dimension ecs:service:DesiredCount --resource-id service/default/sample-app-service --min-capacity 2 --max-capacity 10
 ```
 
 **Note**  
-When you configure scaling policies in the console, this automatically registers the resource as a scalable target with Application Auto Scaling\. For more information, see the documentation in the [Getting started with Application Auto Scaling](getting-started.md) section\.
+When you configure scaling policies in the console of the target service, this automatically registers the resource as a scalable target with Application Auto Scaling\.  
+For brevity, the examples in this topic illustrate CLI commands for an Amazon ECS service\. To specify a different scalable target, specify its namespace in `--service-namespace`, its scalable dimension in `--scalable-dimension`, and its resource ID in `--resource-id`\. For a list of valid values for each option, see [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html)\.
 
 ## Configure step scaling policies using the AWS CLI<a name="create-step-scaling-policy"></a>
 
@@ -147,7 +148,7 @@ Save this configuration in a file named `config.json`\.
 
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scaling-policy.html) command, along with the `config.json` file that you created, to create a scaling policy named `my-step-scaling-policy`\.
 
-On local Linux, macOS, or Unix machines:
+**Linux, macOS, or Unix**
 
 ```
 aws application-autoscaling put-scaling-policy --service-namespace ecs \
@@ -157,7 +158,7 @@ aws application-autoscaling put-scaling-policy --service-namespace ecs \
   --step-scaling-policy-configuration file://config.json
 ```
 
-On local Windows machines:
+**Windows**
 
 ```
 aws application-autoscaling put-scaling-policy --service-namespace ecs --scalable-dimension ecs:service:DesiredCount --resource-id service/default/sample-app-service --policy-name my-step-scaling-policy --policy-type StepScaling --step-scaling-policy-configuration file://config.json
@@ -173,7 +174,7 @@ The output includes the ARN that serves as a unique name for the policy\. You ne
 
 Finally, use the following CloudWatch [https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html) command to create an alarm to use with your step scaling policy\. In this example, you have an alarm based on average CPU utilization\. The alarm is configured to be in an ALARM state if it reaches a threshold of 70 percent for at least two consecutive evaluation periods of 60 seconds\. To specify a different CloudWatch metric or use your own custom metric, specify its name in `--metric-name` and its namespace in `--namespace`\. 
 
-On local Linux, macOS, or Unix machines:
+**Linux, macOS, or Unix**
 
 ```
 aws cloudwatch put-metric-alarm --alarm-name Step-Scaling-AlarmHigh-ECS:service/default/sample-app-service \
@@ -184,7 +185,7 @@ aws cloudwatch put-metric-alarm --alarm-name Step-Scaling-AlarmHigh-ECS:service/
   --alarm-actions PolicyARN
 ```
 
-On local Windows machines:
+**Windows**
 
 ```
 aws cloudwatch put-metric-alarm --alarm-name Step-Scaling-AlarmHigh-ECS:service/default/sample-app-service --metric-name CPUUtilization --namespace AWS/ECS --statistic Average --period 60 --evaluation-periods 2 --threshold 70 --comparison-operator GreaterThanOrEqualToThreshold --dimensions Name=ClusterName,Value=default Name=ServiceName,Value=sample-app-service --alarm-actions PolicyARN
@@ -200,14 +201,14 @@ aws application-autoscaling describe-scaling-policies --service-namespace ecs
 
 You can filter the results to just the step scaling policies using the `--query` parameter\. For more information about the syntax for `query`, see [Controlling command output from the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-output.html) in the *AWS Command Line Interface User Guide*\.
 
-On local Linux, macOS, or Unix machines:
+**Linux, macOS, or Unix**
 
 ```
 aws application-autoscaling describe-scaling-policies --service-namespace ecs \
   --query 'ScalingPolicies[?PolicyType==`StepScaling`]'
 ```
 
-On local Windows machines:
+**Windows**
 
 ```
 aws application-autoscaling describe-scaling-policies --service-namespace ecs --query "ScalingPolicies[?PolicyType==`StepScaling`]"
@@ -263,7 +264,7 @@ When you no longer need a step scaling policy, you can delete it\. To delete bot
 **To delete your scaling policy**  
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scaling-policy.html) command\.
 
-On local Linux, macOS, or Unix machines:
+**Linux, macOS, or Unix**
 
 ```
 aws application-autoscaling delete-scaling-policy --service-namespace ecs \
@@ -272,7 +273,7 @@ aws application-autoscaling delete-scaling-policy --service-namespace ecs \
   --policy-name my-step-scaling-policy
 ```
 
-On local Windows machines:
+**Windows**
 
 ```
 aws application-autoscaling delete-scaling-policy --service-namespace ecs --scalable-dimension ecs:service:DesiredCount --resource-id service/default/sample-app-service --policy-name my-step-scaling-policy

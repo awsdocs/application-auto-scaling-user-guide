@@ -1,7 +1,7 @@
 # Application Auto Scaling User Guide
 
 -----
-*****Copyright &copy; 2020 Amazon Web Services, Inc. and/or its affiliates. All rights reserved.*****
+*****Copyright &copy; 2021 Amazon Web Services, Inc. and/or its affiliates. All rights reserved.*****
 
 -----
 Amazon's trademarks and trade dress may not be used in 
@@ -24,15 +24,17 @@ Amazon's trademarks and trade dress may not be used in
 + [Target tracking scaling policies for Application Auto Scaling](application-auto-scaling-target-tracking.md)
 + [Step scaling policies for Application Auto Scaling](application-auto-scaling-step-scaling-policies.md)
 + [Scheduled scaling for Application Auto Scaling](application-auto-scaling-scheduled-scaling.md)
+   + [Example scheduled actions for Application Auto Scaling](examples-scheduled-actions.md)
+   + [Managing scheduled scaling](scheduled-scaling-additional-cli-commands.md)
 + [Suspending and resuming scaling for Application Auto Scaling](application-auto-scaling-suspend-resume-scaling.md)
 + [Application Auto Scaling monitoring](monitoring-overview.md)
    + [Monitoring with CloudWatch alarms](cloudwatch-alarm-notifications.md)
    + [Building dashboards with CloudWatch](monitoring-cloudwatch.md)
-   + [Getting notifications of events preventing scaling through EventBridge](monitoring-eventbridge.md)
+   + [Getting notified of events preventing scaling through EventBridge](monitoring-eventbridge.md)
    + [Personal Health Dashboard notifications for Application Auto Scaling](monitoring-personal-health-dashboard.md)
 + [Security in Application Auto Scaling](security.md)
    + [Application Auto Scaling and data protection](application-auto-scaling-data-protection.md)
-   + [Identity and access management for Application Auto Scaling](auth-and-access-control.md)
+   + [Identity and Access Management for Application Auto Scaling](auth-and-access-control.md)
       + [How Application Auto Scaling works with IAM](security_iam_service-with-iam.md)
       + [Service-linked roles for Application Auto Scaling](application-auto-scaling-service-linked-roles.md)
       + [Example policies for working with the AWS CLI or an AWS SDK](security_iam_id-based-policy-examples.md)

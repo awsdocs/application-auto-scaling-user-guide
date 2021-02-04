@@ -2,7 +2,7 @@
 
 In this tutorial, you use the AWS CLI to explore Application Auto Scaling\. Before you begin, make sure that you have an AWS account and that you've set up the AWS CLI\. For more information, see [Setting up](setting-up.md)\. In this tutorial, you create scheduled actions to scale your scalable resources based on a schedule\. With scheduled scaling, you can specify either a one\-time action or a recurring action\. 
 
-The exercises in this tutorial assume that you are using administrator credentials \(`adminuser` profile\) that you set up in [Set up the AWS CLI](setup-awscli.md)\. If you don't provide this profile, the default profile is assumed\. Note that to create, update, delete, or list Application Auto Scaling resources, you need permissions to perform the action, and you need permission to access the corresponding resources\. For more information, see [Identity and access management for Application Auto Scaling](auth-and-access-control.md)\.
+The exercises in this tutorial assume that you are using administrator credentials \(`adminuser` profile\) that you set up in [Set up the AWS CLI](setup-awscli.md)\. If you don't provide this profile, the default profile is assumed\. Note that to create, update, delete, or list Application Auto Scaling resources, you need permissions to perform the action, and you need permission to access the corresponding resources\. For more information, see [Identity and Access Management for Application Auto Scaling](auth-and-access-control.md)\.
 
 When using the AWS CLI, remember that your commands run in the AWS Region that's configured for your profile\. If you want to run the commands in a different Region, either change the default Region for your profile, or use the `--region` parameter with the command\. 
 
@@ -28,7 +28,7 @@ To use a DynamoDB global secondary index or a resource for a different service, 
 
 1. \(Optional\) Use the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scalable-targets.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scalable-targets.html) command to check whether any DynamoDB resources are already registered\. This helps you verify whether to register the `my-table` table\. For example, if you previously configured automatic scaling for this table from the DynamoDB console, it may already be registered with Application Auto Scaling\. 
 
-   On local Linux, macOS, or Unix machines:
+   **Linux, macOS, or Unix**
 
    ```
    aws application-autoscaling describe-scalable-targets \
@@ -36,7 +36,7 @@ To use a DynamoDB global secondary index or a resource for a different service, 
      --profile adminuser
    ```
 
-   On local Windows machines:
+   **Windows**
 
    ```
    aws application-autoscaling describe-scalable-targets --service-namespace dynamodb --profile adminuser
@@ -52,7 +52,7 @@ To use a DynamoDB global secondary index or a resource for a different service, 
 
 1. Use the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command to register or update the write capacity of a DynamoDB table called `my-table`\. Set a minimum desired capacity of 5 write capacity units and a maximum desired capacity of 10 write capacity units\.
 
-   On local Linux, macOS, or Unix machines:
+   **Linux, macOS, or Unix**
 
    ```
    aws application-autoscaling register-scalable-target \
@@ -63,7 +63,7 @@ To use a DynamoDB global secondary index or a resource for a different service, 
      --profile adminuser
    ```
 
-   On local Windows machines:
+   **Windows**
 
    ```
    aws application-autoscaling register-scalable-target --service-namespace dynamodb --scalable-dimension dynamodb:table:WriteCapacityUnits --resource-id table/my-table --min-capacity 5 --max-capacity 10 --profile adminuser
@@ -87,7 +87,7 @@ For this exercise, we create two one\-time actions for scale out and scale in\.
 
    At the date and time specified, Application Auto Scaling updates the `MinCapacity` and `MaxCapacity` values\. Assuming the table currently has 5 write capacity units, Application Auto Scaling scales out to `MinCapacity` to put the table within the new desired range of 15\-20 write capacity units\.
 
-   On local Linux, macOS, or Unix machines:
+   **Linux, macOS, or Unix**
 
    ```
    aws application-autoscaling put-scheduled-action \
@@ -100,7 +100,7 @@ For this exercise, we create two one\-time actions for scale out and scale in\.
      --profile adminuser
    ```
 
-   On local Windows machines:
+   **Windows**
 
    ```
    aws application-autoscaling put-scheduled-action --service-namespace dynamodb --scalable-dimension dynamodb:table:WriteCapacityUnits --resource-id table/my-table --scheduled-action-name my-first-scheduled-action --schedule "at(2019-05-20T17:05:00)" --scalable-target-action MinCapacity=15,MaxCapacity=20 --profile adminuser
@@ -114,7 +114,7 @@ For this exercise, we create two one\-time actions for scale out and scale in\.
 
    At the date and time specified, Application Auto Scaling updates the table's `MinCapacity` and `MaxCapacity`, and scales in to `MaxCapacity` to return the table to the original desired range of 5\-10 write capacity units\.
 
-   On local Linux, macOS, or Unix machines:
+   **Linux, macOS, or Unix**
 
    ```
    aws application-autoscaling put-scheduled-action \
@@ -127,7 +127,7 @@ For this exercise, we create two one\-time actions for scale out and scale in\.
      --profile adminuser
    ```
 
-   On local Windows machines:
+   **Windows**
 
    ```
    aws application-autoscaling put-scheduled-action --service-namespace dynamodb --scalable-dimension dynamodb:table:WriteCapacityUnits --resource-id table/my-table --scheduled-action-name my-second-scheduled-action --schedule "at(2019-05-20T17:10:00)" --scalable-target-action MinCapacity=5,MaxCapacity=10 --profile adminuser
@@ -135,7 +135,7 @@ For this exercise, we create two one\-time actions for scale out and scale in\.
 
 1. \(Optional\) Get a list of scheduled actions for the specified service namespace using the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scheduled-actions.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scheduled-actions.html) command\.
 
-   On local Linux, macOS, or Unix machines:
+   **Linux, macOS, or Unix**
 
    ```
    aws application-autoscaling describe-scheduled-actions \
@@ -143,7 +143,7 @@ For this exercise, we create two one\-time actions for scale out and scale in\.
      --profile adminuser
    ```
 
-   On local Windows machines:
+   **Windows**
 
    ```
    aws application-autoscaling describe-scheduled-actions --service-namespace dynamodb --profile adminuser
@@ -192,7 +192,7 @@ In this step, you view the scaling activities triggered by the scheduled actions
 
 1. Wait for the time you chose, and verify that your scheduled actions are working by using the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-activities.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-activities.html) command\. 
 
-   On local Linux, macOS, or Unix machines:
+   **Linux, macOS, or Unix**
 
    ```
    aws application-autoscaling describe-scaling-activities \
@@ -200,7 +200,7 @@ In this step, you view the scaling activities triggered by the scheduled actions
      --profile adminuser
    ```
 
-   On local Windows machines:
+   **Windows**
 
    ```
    aws application-autoscaling describe-scaling-activities --service-namespace dynamodb --profile adminuser
@@ -300,7 +300,7 @@ In this step, you view the scaling activities triggered by the scheduled actions
 
    Verify the table's current write capacity by using the DynamoDB [https://docs.aws.amazon.com/cli/latest/reference/dynamodb/describe-table.html](https://docs.aws.amazon.com/cli/latest/reference/dynamodb/describe-table.html) command\. Include the `--query` option to filter the output\. For more information about the output filtering capabilities of the AWS CLI, see [Controlling command output from the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-output.html) in the *AWS Command Line Interface User Guide*\.
 
-   On local Linux, macOS, or Unix machines:
+   **Linux, macOS, or Unix**
 
    ```
    aws dynamodb describe-table --table-name my-table \
@@ -308,7 +308,7 @@ In this step, you view the scaling activities triggered by the scheduled actions
      --profile adminuser
    ```
 
-   On local Windows machines:
+   **Windows**
 
    ```
    aws dynamodb describe-table --table-name my-table --query "Table.[TableName,TableStatus,ProvisionedThroughput]" --profile adminuser
@@ -343,7 +343,7 @@ When you are done working with the getting started exercises, you can clean up t
 **To delete the scheduled actions**  
 The following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scheduled-action.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scheduled-action.html) command deletes a specified scheduled action\. You can skip this step if you want to keep the scheduled action for future use\.
 
-On local Linux, macOS, or Unix machines:
+**Linux, macOS, or Unix**
 
 ```
 aws application-autoscaling delete-scheduled-action \
@@ -354,7 +354,7 @@ aws application-autoscaling delete-scheduled-action \
   --profile adminuser
 ```
 
-On local Windows machines:
+**Windows**
 
 ```
 aws application-autoscaling delete-scheduled-action --service-namespace dynamodb --scalable-dimension dynamodb:table:WriteCapacityUnits --resource-id table/my-table --scheduled-action-name my-second-scheduled-action --profile adminuser
@@ -363,7 +363,7 @@ aws application-autoscaling delete-scheduled-action --service-namespace dynamodb
 **To deregister the scalable target**  
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/deregister-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/deregister-scalable-target.html) command to deregister the scalable target\. If you have any scaling policies that you created or any scheduled actions that have not yet been deleted, they are deleted by this command\. You can skip this step if you want to keep the scalable target registered for future use\.
 
-On local Linux, macOS, or Unix machines:
+**Linux, macOS, or Unix**
 
 ```
 aws application-autoscaling deregister-scalable-target \
@@ -373,7 +373,7 @@ aws application-autoscaling deregister-scalable-target \
   --profile adminuser
 ```
 
-On local Windows machines:
+**Windows**
 
 ```
 aws application-autoscaling deregister-scalable-target --service-namespace dynamodb --scalable-dimension dynamodb:table:WriteCapacityUnits --resource-id table/my-table --profile adminuser
@@ -382,14 +382,14 @@ aws application-autoscaling deregister-scalable-target --service-namespace dynam
 **To delete the DynamoDB table**  
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/dynamodb/delete-table.html](https://docs.aws.amazon.com/cli/latest/reference/dynamodb/delete-table.html) command to delete the table that you used in this tutorial\. You can skip this step if you want to keep the table for future use\.
 
-On local Linux, macOS, or Unix machines:
+**Linux, macOS, or Unix**
 
 ```
 aws dynamodb delete-table --table-name my-table \
   --profile adminuser
 ```
 
-On local Windows machines:
+**Windows**
 
 ```
 aws dynamodb delete-table --table-name my-table --profile adminuser

@@ -53,7 +53,7 @@ Before you can create a scaling policy, you must register the scalable target\. 
 
 The following example registers a Spot Fleet request with Application Auto Scaling\. Application Auto Scaling can scale the number of instances in the Spot Fleet at a minimum of 2 instances and a maximum of 10\. 
 
-On local Linux, macOS, or Unix machines:
+**Linux, macOS, or Unix**
 
 ```
 aws application-autoscaling register-scalable-target --service-namespace ec2 \
@@ -62,14 +62,15 @@ aws application-autoscaling register-scalable-target --service-namespace ec2 \
   --min-capacity 2 --max-capacity 10
 ```
 
-On local Windows machines:
+**Windows**
 
 ```
 aws application-autoscaling register-scalable-target --service-namespace ec2 --scalable-dimension ec2:spot-fleet-request:TargetCapacity --resource-id spot-fleet-request/sfr-73fbd2ce-aa30-494c-8788-1cee4EXAMPLE --min-capacity 2 --max-capacity 10
 ```
 
 **Note**  
-When you configure scaling policies in the console, this automatically registers the resource as a scalable target with Application Auto Scaling\. For more information, see the documentation in the [Getting started with Application Auto Scaling](getting-started.md) section\. 
+When you configure scaling policies in the console of the target service, this automatically registers the resource as a scalable target with Application Auto Scaling\.   
+For brevity, the examples in this topic illustrate CLI commands for an Amazon EC2 Spot Fleet\. To specify a different scalable target, specify its namespace in `--service-namespace`, its scalable dimension in `--scalable-dimension`, and its resource ID in `--resource-id`\. For a list of valid values for each option, see [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html)\.
 
 ## Create a target tracking scaling policy<a name="create-target-tracking-policy"></a>
 
@@ -115,7 +116,7 @@ For more information, see [CustomizedMetricSpecification](https://docs.aws.amazo
 **Example: cpu40\-target\-tracking\-scaling\-policy**  
 Use the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scaling-policy.html) command, along with the `config.json` file you created, to create a scaling policy named `cpu40-target-tracking-scaling-policy`\.
 
-On local Linux, macOS, or Unix machines:
+**Linux, macOS, or Unix**
 
 ```
 aws application-autoscaling put-scaling-policy --service-namespace ec2 \
@@ -125,7 +126,7 @@ aws application-autoscaling put-scaling-policy --service-namespace ec2 \
   --target-tracking-scaling-policy-configuration file://config.json
 ```
 
-On local Windows machines:
+**Windows**
 
 ```
 aws application-autoscaling put-scaling-policy --service-namespace ec2 --scalable-dimension ec2:spot-fleet-request:TargetCapacity --resource-id spot-fleet-request/sfr-73fbd2ce-aa30-494c-8788-1cee4EXAMPLE --policy-name cpu40-target-tracking-scaling-policy --policy-type TargetTrackingScaling --target-tracking-scaling-policy-configuration file://config.json
@@ -159,14 +160,14 @@ aws application-autoscaling describe-scaling-policies --service-namespace ec2
 
 You can filter the results to just the target tracking scaling policies using the `--query` parameter\. For more information about the syntax for `query`, see [Controlling command output from the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-output.html) in the *AWS Command Line Interface User Guide*\.
 
-On local Linux, macOS, or Unix machines:
+**Linux, macOS, or Unix**
 
 ```
 aws application-autoscaling describe-scaling-policies --service-namespace ec2 \
   --query 'ScalingPolicies[?PolicyType==`TargetTrackingScaling`]'
 ```
 
-On local Windows machines:
+**Windows**
 
 ```
 aws application-autoscaling describe-scaling-policies --service-namespace ec2 --query "ScalingPolicies[?PolicyType==`TargetTrackingScaling`]"
@@ -210,7 +211,7 @@ When you are finished with a target tracking scaling policy, you can delete it u
 
 The following command deletes the specified target tracking scaling policy for the specified Spot Fleet request\. It also deletes the CloudWatch alarms that Application Auto Scaling created on your behalf\.
 
-On local Linux, macOS, or Unix machines:
+**Linux, macOS, or Unix**
 
 ```
 aws application-autoscaling delete-scaling-policy --service-namespace ec2 \
@@ -219,7 +220,7 @@ aws application-autoscaling delete-scaling-policy --service-namespace ec2 \
   --policy-name cpu40-target-tracking-scaling-policy
 ```
 
-On local Windows machines:
+**Windows**
 
 ```
 aws application-autoscaling delete-scaling-policy --service-namespace ec2 --scalable-dimension ec2:spot-fleet-request:TargetCapacity --resource-id spot-fleet-request/sfr-73fbd2ce-aa30-494c-8788-1cee4EXAMPLE --policy-name cpu40-target-tracking-scaling-policy
