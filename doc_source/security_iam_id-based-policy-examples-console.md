@@ -4,7 +4,7 @@ There is no standalone Application Auto Scaling console\. Most services that int
 
 In most cases, each service provides AWS managed \(predefined\) IAM policies that define access to their console, which includes permissions to the Application Auto Scaling API actions\. For more information, refer to the documentation for the service whose console you want to use\. 
 
-You can also create your own custom IAM policies to give users fine\-grained permissions to view and work with specific Application Auto Scaling actions in the AWS Management Console\. You can use the example policies in the previous section; however, they are designed for requests that are made with the AWS CLI or an AWS SDK\. The console uses additional API actions for its features, so these policies may not work as expected\. For example, to configure step scaling, users might require additional permissions to create and manage CloudWatch alarms\. 
+You can also create your own custom IAM policies to give users fine\-grained permissions to view and work with specific Application Auto Scaling actions in the AWS Management Console\. You can use the example policies in the previous section; however, they are designed for requests that are made with the AWS CLI or an SDK\. The console uses additional API actions for its features, so these policies may not work as expected\. For example, to configure step scaling, users might require additional permissions to create and manage CloudWatch alarms\. 
 
 **Tip**  
 To help you work out which API actions are required to perform tasks in the console, you can use a service such as AWS CloudTrail\. For more information, see the [AWS CloudTrail User Guide](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html)\. 

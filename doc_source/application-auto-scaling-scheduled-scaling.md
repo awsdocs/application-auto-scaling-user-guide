@@ -12,10 +12,6 @@ You can use scheduled scaling and scaling policies together on the same resource
 
 For a detailed example of using scheduled scaling, see the blog post [Scheduling AWS Lambda Provisioned Concurrency for recurring peak usage](http://aws.amazon.com/blogs/compute/scheduling-aws-lambda-provisioned-concurrency-for-recurring-peak-usage/) on the AWS Compute Blog\. For a tutorial that walks through how to create scheduled actions using sample AWS resources, see [Getting started using the AWS CLI](get-started-exercise.md)\.
 
-**Limits**
-+ Application Auto Scaling doesn't provide second\-level precision in schedule expressions\. The finest resolution using a cron expression is 1 minute\.
-+ Scheduled scaling is not supported for Amazon MSK\.
-
 ## Considerations<a name="scheduled-scaling-considerations"></a>
 
 When you create a scheduled action, keep the following in mind:
@@ -32,7 +28,7 @@ When you create a scheduled action, keep the following in mind:
 ## Commonly used commands for scheduled action creation, management, and deletion<a name="scheduled-scaling-commonly-used-commands"></a>
 
 The commonly used commands for working with schedule scaling include: 
-+ [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) to register AWS or custom resources as scalable targets \(a resource that Application Auto Scaling can scale\), and to suspend and resume scheduled scaling\. 
++ [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) to register AWS or custom resources as scalable targets \(a resource that Application Auto Scaling can scale\), and to suspend and resume scaling\. 
 + [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scheduled-action.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scheduled-action.html) to add or modify scheduled actions for an existing scalable target\.
 +  [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-activities.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-activities.html) to return information about scaling activities in an AWS Region\. 
 + [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scheduled-actions.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scheduled-actions.html) to return information about scheduled actions in an AWS Region\.
@@ -41,3 +37,9 @@ The commonly used commands for working with schedule scaling include:
 **Note**  
 When you configure scheduled actions in the console of the target service \(if supported by the service\), this automatically registers the resource as a scalable target with Application Auto Scaling\.  
 For brevity, the examples in this guide illustrate CLI commands for a few of the services that integrate with Application Auto Scaling\. To specify a different scalable target, specify its namespace in `--service-namespace`, its scalable dimension in `--scalable-dimension`, and its resource ID in `--resource-id`\. For a list of valid values for each option, see [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html)\.
+
+## Limitations<a name="scheduled-scaling-limitations"></a>
+
+The following are limitations when using scheduled scaling:
++ Application Auto Scaling doesn't provide second\-level precision in schedule expressions\. The finest resolution using a cron expression is 1 minute\.
++ The scalable target can't be an Amazon MSK cluster\. Scheduled scaling is not supported for Amazon MSK\.

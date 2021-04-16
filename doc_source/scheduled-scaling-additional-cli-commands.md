@@ -1,4 +1,4 @@
-# Managing scheduled scaling<a name="scheduled-scaling-additional-cli-commands"></a>
+# Managing scheduled scaling for Application Auto Scaling<a name="scheduled-scaling-additional-cli-commands"></a>
 
 The AWS CLI includes several other commands that help you manage your scheduled actions\. 
 

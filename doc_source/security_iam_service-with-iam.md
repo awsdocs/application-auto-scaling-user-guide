@@ -58,7 +58,7 @@ The `Condition` element is optional\.
 
 ### Examples<a name="security_iam_service-with-iam-id-based-policies-examples"></a>
 
-To view examples of Application Auto Scaling identity\-based policies, see [Example policies for working with the AWS CLI or an AWS SDK](security_iam_id-based-policy-examples.md)\.
+To view examples of Application Auto Scaling identity\-based policies, see [Example policies for working with the AWS CLI or an SDK](security_iam_id-based-policy-examples.md)\.
 
 ## Application Auto Scaling resource\-based policies<a name="security_iam_service-with-iam-resource-based-policies"></a>
 

@@ -4,6 +4,10 @@ This topic explains how to suspend and then resume one or more of the scaling ac
 
 In the example commands that follow, you pass the JSON\-formatted parameters in a config\.json file\. You can also pass these parameters on the command line by using quotation marks to enclose the JSON data structure\. For more information, see [Using quotation marks with strings in the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-parameters-quoting-strings.html) in the *AWS Command Line Interface User Guide*\.
 
+**Topics**
++ [Scaling activities](#process-types)
++ [Suspend and resume scaling activities using the AWS CLI](#aas-suspend-aws-cli)
+
 ## Scaling activities<a name="process-types"></a>
 
 Application Auto Scaling supports putting the following scaling activities in a suspended state:
