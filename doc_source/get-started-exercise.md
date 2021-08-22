@@ -333,7 +333,7 @@ In this step, you view the scaling activities triggered by the scheduled actions
 ## Step 4: Next steps<a name="gs-next-steps"></a>
 
 Now that you have familiarized yourself with Application Auto Scaling and some of its features, consider doing the following: 
-+ If you want to try scaling on a recurring schedule, see the tutorial in [Tutorial: Configuring scaling to increase the availability of your application](application-auto-scaling-tutorial.md)\.
++ If you want to try scaling on a recurring schedule, see the tutorial in [Tutorial: Configuring auto scaling to handle a heavy workload](application-auto-scaling-tutorial.md)\.
 + If you want to try scaling dynamically in response to changes in resource utilization \(for example, by using the `DynamoDBWriteCapacityUtilization` metric\), follow the steps in [Target tracking scaling policies for Application Auto Scaling](application-auto-scaling-target-tracking.md)\.
 
 ## Step 5: Clean up<a name="gs-clean-up"></a>

@@ -6,24 +6,48 @@ With target tracking scaling policies, you choose a scaling metric and set a tar
 
 The following predefined metrics are available for use when you create target tracking scaling policies\. You can optionally define which metric to monitor and use with your target tracking scaling policy by using a custom metric specification\. 
 
-**Predefined metric names**
-+ `DynamoDBReadCapacityUtilization`
-+ `DynamoDBWriteCapacityUtilization`
-+ `ALBRequestCountPerTarget`
+**AppStream 2\.0**
++ `AppStreamAverageCapacityUtilization`
+
+**Aurora**
 + `RDSReaderAverageCPUUtilization`
 + `RDSReaderAverageDatabaseConnections`
+
+**Amazon Comprehend**
++ `ComprehendInferenceUtilization`
+
+**DynamoDB**
++ `DynamoDBReadCapacityUtilization`
++ `DynamoDBWriteCapacityUtilization`
+
+**Amazon ECS**
++ `ALBRequestCountPerTarget` \(load balancer metric\)
++ `ECSServiceAverageCPUUtilization`
++ `ECSServiceAverageMemoryUtilization`
+
+**ElastiCache**
++ `ElastiCachePrimaryEngineCPUUtilization`
++ `ElastiCacheReplicaEngineCPUUtilization`
++ `ElastiCacheDatabaseMemoryUsageCountedForEvictPercentage`
+
+**Amazon Keyspaces \(for Apache Cassandra\)**
++ `CassandraReadCapacityUtilization`
++ `CassandraWriteCapacityUtilization`
+
+**Amazon Managed Streaming for Apache Kafka \(MSK\)**
++ `KafkaBrokerStorageUtilization`
+
+**Lambda**
++ `LambdaProvisionedConcurrencyUtilization`
+
+**Amazon EC2 Spot**
++ `ALBRequestCountPerTarget` \(load balancer metric\)
 + `EC2SpotFleetRequestAverageCPUUtilization`
 + `EC2SpotFleetRequestAverageNetworkIn`
 + `EC2SpotFleetRequestAverageNetworkOut`
+
+**SageMaker**
 + `SageMakerVariantInvocationsPerInstance`
-+ `ECSServiceAverageCPUUtilization`
-+ `ECSServiceAverageMemoryUtilization`
-+ `AppStreamAverageCapacityUtilization`
-+ `ComprehendInferenceUtilization`
-+ `LambdaProvisionedConcurrencyUtilization`
-+ `CassandraReadCapacityUtilization`
-+ `CassandraWriteCapacityUtilization`
-+ `KafkaBrokerStorageUtilization`
 
 Each metric represents a time\-ordered set of data points stored in Amazon CloudWatch\. While most of the metrics in AWS are reported every minute by default, Amazon EC2 metrics are reported every five minutes by default\. For an additional charge, you can enable detailed monitoring to get metric data for instances at a one minute frequency\. To ensure a faster response to utilization changes, we recommend that you enable detailed monitoring\. For more information, see [Enable or turn off detailed monitoring for your instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch-new.html) in the *Amazon EC2 User Guide for Linux Instances*\.
 

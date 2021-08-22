@@ -11,7 +11,7 @@ You must explicitly enable each API that you want to access through an interface
 
 You can create a VPC endpoint for the Application Auto Scaling service using either the Amazon VPC console or the AWS Command Line Interface \(AWS CLI\)\. Create an endpoint for Application Auto Scaling using the following service name:
 + **com\.amazonaws\.*region*\.application\-autoscaling** — Creates an endpoint for the Application Auto Scaling API operations\.
-+ **cn\.com\.amazonaws\.*region*\.application\-autoscaling** — Creates an endpoint for the Application Auto Scaling API operations in the AWS China \(Beijing\) Region and AWS China \(Ningxia\) Region\.
++ **cn\.com\.amazonaws\.*region*\.application\-autoscaling** — Creates an endpoint for the Application Auto Scaling API operations in the Amazon Web Services China \(Beijing\) Region and Amazon Web Services China \(Ningxia\) Region\.
 
 For more information, see [Creating an interface endpoint](https://docs.aws.amazon.com/vpc/latest/userguide/vpce-interface.html#create-interface-endpoint) in the *Amazon VPC User Guide*\. 
 

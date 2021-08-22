@@ -1,8 +1,8 @@
-# Personal Health Dashboard notifications for Application Auto Scaling<a name="monitoring-personal-health-dashboard"></a>
+# AWS Personal Health Dashboard notifications for Application Auto Scaling<a name="monitoring-personal-health-dashboard"></a>
 
-To help you manage failed scaling events, your Personal Health Dashboard provides support for notifications that are emitted by Application Auto Scaling\. Only scale out events that are specific to your DynamoDB resources are currently available\. 
+To help you manage failed scaling events, your AWS Personal Health Dashboard provides support for notifications that are emitted by Application Auto Scaling\. Only scale out events that are specific to your DynamoDB resources are currently available\. 
 
-The Personal Health Dashboard is part of the AWS Health service\. It requires no setup and can be viewed by any user that is authenticated in your account\. For more information, see [Getting started with the AWS Personal Health Dashboard](https://docs.aws.amazon.com/health/latest/ug/getting-started-phd.html)\. 
+The AWS Personal Health Dashboard is part of the AWS Health service\. It requires no setup and can be viewed by any user that is authenticated in your account\. For more information, see [Getting started with the AWS Personal Health Dashboard](https://docs.aws.amazon.com/health/latest/ug/getting-started-phd.html)\. 
 
 If your DynamoDB resources are not scaling out due to your DynamoDB service quota limits, you receive a message similar to the following\. If you receive this message, it should be treated as an alarm to take action\.
 

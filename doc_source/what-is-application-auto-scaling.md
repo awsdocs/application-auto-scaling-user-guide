@@ -8,6 +8,7 @@ Application Auto Scaling is a web service for developers and system administrato
 + Amazon Comprehend document classification and entity recognizer endpoints
 + DynamoDB tables and global secondary indexes
 + Amazon Elastic Container Service \(ECS\) services
++ ElastiCache for Redis clusters \(replication groups\)
 + Amazon EMR clusters
 + Amazon Keyspaces \(for Apache Cassandra\) tables
 + Lambda function provisioned concurrency

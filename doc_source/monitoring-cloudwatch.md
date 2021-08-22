@@ -39,7 +39,7 @@ These metrics can help you discover your application's capacity requirements\. Y
 | [CPUUtilization](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cloudwatch-metrics.html) | AWS/ECS | ClusterName, ServiceName | ECS | 
 | [MemoryUtilization](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cloudwatch-metrics.html) | AWS/ECS | ClusterName, ServiceName | ECS | 
 | [RequestCountPerTarget](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-cloudwatch-metrics.html) | AWS/ApplicationELB | TargetGroup | ECS | 
-| [YARNMemoryAvailablePercentage](https://docs.aws.amazon.com/emr/latest/ManagementGuide/UsingEMR_ViewingMetrics.html) | AWS/ElasticMapReduce  | ClusterId | EMR | 
+| [YARNMemoryAvailablePercentage](https://docs.aws.amazon.com/emr/latest/ManagementGuide/UsingEMR_ViewingMetrics.html) | AWS/ElasticMapReduce | ClusterId | EMR | 
 | [ProvisionedReadCapacityUnits](https://docs.aws.amazon.com/keyspaces/latest/devguide/metrics-dimensions.html) | AWS/Cassandra | Keyspace, TableName | Amazon Keyspaces | 
 | [ProvisionedWriteCapacityUnits](https://docs.aws.amazon.com/keyspaces/latest/devguide/metrics-dimensions.html) | AWS/Cassandra | Keyspace, TableName | Amazon Keyspaces | 
 | [ConsumedReadCapacityUnits](https://docs.aws.amazon.com/keyspaces/latest/devguide/metrics-dimensions.html) | AWS/Cassandra | Keyspace, TableName | Amazon Keyspaces | 

@@ -2,7 +2,7 @@
 
 This topic explains how to suspend and then resume one or more of the scaling activities for the scalable targets in your application\. The suspend\-resume feature is used to temporarily pause scaling activities triggered by your scaling policies and scheduled actions\. This can be useful, for example, when you don't want automatic scaling to potentially interfere while you are making a change or investigating a configuration issue\. Your scaling policies and scheduled actions can be retained, and when you are ready, scaling activities can be resumed\.
 
-In the example commands that follow, you pass the JSON\-formatted parameters in a config\.json file\. You can also pass these parameters on the command line by using quotation marks to enclose the JSON data structure\. For more information, see [Using quotation marks with strings in the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-parameters-quoting-strings.html) in the *AWS Command Line Interface User Guide*\.
+In the example CLI commands that follow, you pass the JSON\-formatted parameters in a config\.json file\. You can also pass these parameters on the command line by using quotation marks to enclose the JSON data structure\. For more information, see [Using quotation marks with strings in the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-parameters-quoting-strings.html) in the *AWS Command Line Interface User Guide*\.
 
 **Topics**
 + [Scaling activities](#process-types)

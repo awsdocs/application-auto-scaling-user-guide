@@ -1,19 +1,19 @@
-# Example policies for working with the AWS CLI or an SDK<a name="security_iam_id-based-policy-examples"></a>
+# Application Auto Scaling identity\-based policy examples<a name="security_iam_id-based-policy-examples"></a>
 
-By default, a brand new IAM user has no permissions to do anything\. An IAM administrator must create IAM policies that grant users and roles permission to perform Application Auto Scaling actions, such as configuring scaling policies\. The administrator must then attach those policies to the IAM users or roles that require the permissions\.
+By default, a brand new IAM user has no permissions to do anything\. An IAM administrator must create IAM policies that grant users and roles permission to perform Application Auto Scaling API actions, such as configuring scaling policies\. The administrator must then attach those policies to the IAM users or roles that require the permissions\.
 
 To learn how to create an IAM policy using the following example JSON policy documents, see [Creating policies on the JSON tab](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_create.html#access_policies_create-json-editor) in the *IAM User Guide*\.
 
 **Topics**
-+ [Permissions required for Application Auto Scaling actions](#application-auto-scaling-actions-permissions)
-+ [Permissions required for actions on target services and CloudWatch](#application-auto-scaling-additional-permissions)
-+ [Permissions required to create a service\-linked role](#application-auto-scaling-slr-permissions)
++ [Permissions required for Application Auto Scaling API actions](#application-auto-scaling-actions-permissions)
++ [Permissions required for API actions on target services and CloudWatch](#application-auto-scaling-additional-permissions)
++ [Permissions for working in the AWS Management Console](#security_iam_id-based-policy-examples-console)
 
-## Permissions required for Application Auto Scaling actions<a name="application-auto-scaling-actions-permissions"></a>
+## Permissions required for Application Auto Scaling API actions<a name="application-auto-scaling-actions-permissions"></a>
 
-The following policies grant permissions for common use cases\. Refer to this section when setting up [Access control](auth-and-access-control.md#access-control) and writing permissions policies that you can attach to an IAM user or role\. Each policy grants access to all or some of the Application Auto Scaling actions\. You also need to make sure that the IAM user or role has a permissions policy for the target service and CloudWatch \(see the next section for details\)\. 
+The following policies grant permissions for common use cases when calling Application Auto Scaling API\. Refer to this section when setting up [Access control](auth-and-access-control.md#access-control) and writing permissions policies that you can attach to an IAM user or role\. Each policy grants access to all or some of the Application Auto Scaling API actions\. You also need to make sure that the IAM user or role has a permissions policy for the target service and CloudWatch \(see the next section for details\)\. 
 
-The following permissions policy grants access to all Application Auto Scaling actions\.
+The following permissions policy grants access to all Application Auto Scaling API actions\.
 
 ```
 {
@@ -30,7 +30,7 @@ The following permissions policy grants access to all Application Auto Scaling a
 }
 ```
 
-The following permissions policy grants access to all Application Auto Scaling actions that are required to configure scaling policies and not scheduled actions\.
+The following permissions policy grants access to all Application Auto Scaling API actions that are required to configure scaling policies and not scheduled actions\.
 
 ```
 {
@@ -53,7 +53,7 @@ The following permissions policy grants access to all Application Auto Scaling a
 }
 ```
 
-The following permissions policy grants access to all Application Auto Scaling actions that are required to configure scheduled actions and not scaling policies\.
+The following permissions policy grants access to all Application Auto Scaling API actions that are required to configure scheduled actions and not scaling policies\.
 
 ```
 {
@@ -76,82 +76,28 @@ The following permissions policy grants access to all Application Auto Scaling a
 }
 ```
 
-## Permissions required for actions on target services and CloudWatch<a name="application-auto-scaling-additional-permissions"></a>
+## Permissions required for API actions on target services and CloudWatch<a name="application-auto-scaling-additional-permissions"></a>
 
 To successfully configure and use Application Auto Scaling with the target service, IAM users must be granted the required permissions for Amazon CloudWatch and for each target service for which they will configure scaling\. Use the following policies to give users the minimum permissions required to work with target services and CloudWatch\.
 
-**ECS services**
+**Topics**
++ [AppStream 2\.0 fleets](#permissions-for-appstream-fleets)
++ [Aurora replicas](#permissions-for-aurora-clusters)
++ [Amazon Comprehend document classification and entity recognizer endpoints](#permissions-for-comprehend-endpoints)
++ [DynamoDB tables and global secondary indexes](#permissions-for-dynamodb-tables-and-gsis)
++ [ECS services](#permissions-for-ecs-services)
++ [ElastiCache replication groups](#permissions-for-elasticache)
++ [Amazon EMR clusters](#permissions-for-emr-clusters)
++ [Amazon Keyspaces tables](#permissions-for-keyspaces-tables)
++ [Lambda functions](#permissions-for-lambda-functions)
++ [Amazon Managed Streaming for Apache Kafka \(MSK\) broker storage](#permissions-for-msk-broker-storage)
++ [SageMaker endpoints](#permissions-for-sagemaker-endpoints)
++ [Spot Fleet requests](#permissions-for-spot-fleet)
++ [Custom resources](#permissions-for-custom-resources)
 
-The following permissions policy grants access to all ECS and CloudWatch actions that are required\.
+### AppStream 2\.0 fleets<a name="permissions-for-appstream-fleets"></a>
 
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-              "ecs:DescribeServices",
-              "ecs:UpdateService",
-              "cloudwatch:DeleteAlarms",
-              "cloudwatch:DescribeAlarms",
-              "cloudwatch:PutMetricAlarm"
-            ],
-            "Resource": "*"
-        }
-    ]
-}
-```
-
-**EC2 Spot Fleet requests**
-
-The following permissions policy grants access to all Spot Fleet and CloudWatch actions that are required\.
-
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-              "ec2:DescribeSpotFleetRequests",
-              "ec2:ModifySpotFleetRequest",
-              "cloudwatch:DeleteAlarms",
-              "cloudwatch:DescribeAlarms",
-              "cloudwatch:PutMetricAlarm"
-            ],
-            "Resource": "*"
-        }
-    ]
-}
-```
-
-**Amazon EMR clusters**
-
-The following permissions policy grants access to all Amazon EMR and CloudWatch actions that are required\.
-
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-              "elasticmapreduce:ModifyInstanceGroups",
-              "elasticmapreduce:ListInstanceGroups",
-              "cloudwatch:DeleteAlarms",
-              "cloudwatch:DescribeAlarms",
-              "cloudwatch:PutMetricAlarm"
-            ],
-            "Resource": "*"
-        }
-    ]
-}
-```
-
-**AppStream 2\.0 fleets**
-
-The following permissions policy grants access to all AppStream 2\.0 and CloudWatch actions that are required\.
+The following permissions policy grants access to all AppStream 2\.0 and CloudWatch API actions that are required\.
 
 ```
 {
@@ -162,9 +108,9 @@ The following permissions policy grants access to all AppStream 2\.0 and CloudWa
             "Action": [
               "appstream:DescribeFleets",
               "appstream:UpdateFleet",
-              "cloudwatch:DeleteAlarms",
               "cloudwatch:DescribeAlarms",
-              "cloudwatch:PutMetricAlarm"
+              "cloudwatch:PutMetricAlarm",
+              "cloudwatch:DeleteAlarms"
             ],
             "Resource": "*"
         }
@@ -172,32 +118,9 @@ The following permissions policy grants access to all AppStream 2\.0 and CloudWa
 }
 ```
 
-**DynamoDB tables and global secondary indexes**
+### Aurora replicas<a name="permissions-for-aurora-clusters"></a>
 
-The following permissions policy grants access to all DynamoDB and CloudWatch actions that are required\.
-
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-              "dynamodb:DescribeTable",
-              "dynamodb:UpdateTable",
-              "cloudwatch:DeleteAlarms",
-              "cloudwatch:DescribeAlarms",
-              "cloudwatch:PutMetricAlarm"
-            ],
-            "Resource": "*"
-        }
-    ]
-}
-```
-
-**Aurora DB clusters**
-
-The following permissions policy grants access to all Aurora and CloudWatch actions that are required\.
+The following permissions policy grants access to all Aurora and CloudWatch API actions that are required\.
 
 ```
 {
@@ -211,9 +134,9 @@ The following permissions policy grants access to all Aurora and CloudWatch acti
               "rds:DeleteDBInstance",
               "rds:DescribeDBClusters",
               "rds:DescribeDBInstances",              
-              "cloudwatch:DeleteAlarms",
               "cloudwatch:DescribeAlarms",
-              "cloudwatch:PutMetricAlarm"
+              "cloudwatch:PutMetricAlarm",
+              "cloudwatch:DeleteAlarms"
             ],
             "Resource": "*"
         }
@@ -221,55 +144,9 @@ The following permissions policy grants access to all Aurora and CloudWatch acti
 }
 ```
 
-**SageMaker endpoints**
+### Amazon Comprehend document classification and entity recognizer endpoints<a name="permissions-for-comprehend-endpoints"></a>
 
-The following permissions policy grants access to all SageMaker and CloudWatch actions that are required\.
-
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-              "sagemaker:DescribeEndpoint",
-              "sagemaker:DescribeEndpointConfig",
-              "sagemaker:UpdateEndpointWeightsAndCapacities",             
-              "cloudwatch:DeleteAlarms",
-              "cloudwatch:DescribeAlarms",
-              "cloudwatch:PutMetricAlarm"
-            ],
-            "Resource": "*"
-        }
-    ]
-}
-```
-
-**Custom resources**
-
-The following permissions policy grants a user the required permission for the API Gateway API executing action\. This policy also grants access to all CloudWatch actions that are required\.
-
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-              "execute-api:Invoke",          
-              "cloudwatch:DeleteAlarms",
-              "cloudwatch:DescribeAlarms",
-              "cloudwatch:PutMetricAlarm"
-            ],
-            "Resource": "*"
-        }
-    ]
-}
-```
-
-**Amazon Comprehend document classification endpoints**
-
-The following permissions policy grants access to all Amazon Comprehend and CloudWatch actions that are required\.
+The following permissions policy grants access to all Amazon Comprehend and CloudWatch API actions that are required\.
 
 ```
 {
@@ -280,9 +157,9 @@ The following permissions policy grants access to all Amazon Comprehend and Clou
             "Action": [
               "comprehend:UpdateEndpoint",
               "comprehend:DescribeEndpoint",           
-              "cloudwatch:DeleteAlarms",
               "cloudwatch:DescribeAlarms",
-              "cloudwatch:PutMetricAlarm"
+              "cloudwatch:PutMetricAlarm",
+              "cloudwatch:DeleteAlarms"
             ],
             "Resource": "*"
         }
@@ -290,9 +167,128 @@ The following permissions policy grants access to all Amazon Comprehend and Clou
 }
 ```
 
-**Lambda functions**
+### DynamoDB tables and global secondary indexes<a name="permissions-for-dynamodb-tables-and-gsis"></a>
 
-The following permissions policy grants access to all Lambda and CloudWatch actions that are required\.
+The following permissions policy grants access to all DynamoDB and CloudWatch API actions that are required\.
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+              "dynamodb:DescribeTable",
+              "dynamodb:UpdateTable",
+              "cloudwatch:DescribeAlarms",
+              "cloudwatch:PutMetricAlarm",
+              "cloudwatch:DeleteAlarms"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+### ECS services<a name="permissions-for-ecs-services"></a>
+
+The following permissions policy grants access to all ECS and CloudWatch API actions that are required\.
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+              "ecs:DescribeServices",
+              "ecs:UpdateService",
+              "cloudwatch:DescribeAlarms",
+              "cloudwatch:PutMetricAlarm",
+              "cloudwatch:DeleteAlarms"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+### ElastiCache replication groups<a name="permissions-for-elasticache"></a>
+
+The following permissions policy grants access to all ElastiCache and CloudWatch API actions that are required\.
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+              "elasticache:ModifyReplicationGroupShardConfiguration",
+              "elasticache:IncreaseReplicaCount",
+              "elasticache:DecreaseReplicaCount",
+              "elasticache:DescribeReplicationGroups",
+              "elasticache:DescribeCacheClusters",
+              "elasticache:DescribeCacheParameters",
+              "cloudwatch:DescribeAlarms",
+              "cloudwatch:PutMetricAlarm",
+              "cloudwatch:DeleteAlarms"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+### Amazon EMR clusters<a name="permissions-for-emr-clusters"></a>
+
+The following permissions policy grants access to all Amazon EMR and CloudWatch API actions that are required\.
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+              "elasticmapreduce:ModifyInstanceGroups",
+              "elasticmapreduce:ListInstanceGroups",
+              "cloudwatch:DescribeAlarms",
+              "cloudwatch:PutMetricAlarm",
+              "cloudwatch:DeleteAlarms"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+### Amazon Keyspaces tables<a name="permissions-for-keyspaces-tables"></a>
+
+The following permissions policy grants access to all Amazon Keyspaces and CloudWatch API actions that are required\.
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+              "cassandra:Select",
+              "cassandra:Alter",             
+              "cloudwatch:DescribeAlarms",
+              "cloudwatch:PutMetricAlarm",
+              "cloudwatch:DeleteAlarms"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+### Lambda functions<a name="permissions-for-lambda-functions"></a>
+
+The following permissions policy grants access to all Lambda and CloudWatch API actions that are required\.
 
 ```
 {
@@ -304,9 +300,9 @@ The following permissions policy grants access to all Lambda and CloudWatch acti
               "lambda:PutProvisionedConcurrencyConfig",
               "lambda:GetProvisionedConcurrencyConfig",
               "lambda:DeleteProvisionedConcurrencyConfig",             
-              "cloudwatch:DeleteAlarms",
               "cloudwatch:DescribeAlarms",
-              "cloudwatch:PutMetricAlarm"
+              "cloudwatch:PutMetricAlarm",
+              "cloudwatch:DeleteAlarms"
             ],
             "Resource": "*"
         }
@@ -314,9 +310,9 @@ The following permissions policy grants access to all Lambda and CloudWatch acti
 }
 ```
 
-**Amazon Keyspaces tables**
+### Amazon Managed Streaming for Apache Kafka \(MSK\) broker storage<a name="permissions-for-msk-broker-storage"></a>
 
-The following permissions policy grants access to all Amazon Keyspaces and CloudWatch actions that are required\.
+The following permissions policy grants access to all Amazon MSK and CloudWatch API actions that are required\.
 
 ```
 {
@@ -325,11 +321,12 @@ The following permissions policy grants access to all Amazon Keyspaces and Cloud
         {
             "Effect": "Allow",
             "Action": [
-              "cassandra:Select",
-              "cassandra:Alter",             
-              "cloudwatch:DeleteAlarms",
+              "kafka:DescribeCluster",
+              "kafka:DescribeClusterOperation",
+              "kafka:UpdateBrokerStorage",
               "cloudwatch:DescribeAlarms",
-              "cloudwatch:PutMetricAlarm"
+              "cloudwatch:PutMetricAlarm",
+              "cloudwatch:DeleteAlarms"
             ],
             "Resource": "*"
         }
@@ -337,22 +334,114 @@ The following permissions policy grants access to all Amazon Keyspaces and Cloud
 }
 ```
 
-## Permissions required to create a service\-linked role<a name="application-auto-scaling-slr-permissions"></a>
+### SageMaker endpoints<a name="permissions-for-sagemaker-endpoints"></a>
 
-Application Auto Scaling requires permissions to create a service\-linked role the first time any user in your AWS account calls `RegisterScalableTarget` for a given service\. Application Auto Scaling creates a service\-linked role for the target service in your account, if the role does not exist already\. The service\-linked role grants permissions to Application Auto Scaling so that it can call the target service on your behalf\. 
-
-For automatic role creation to succeed, users must have permission for the `iam:CreateServiceLinkedRole` action\.
-
-```
-"Action": "iam:CreateServiceLinkedRole"
-```
-
-The following example is a permissions policy that allows an IAM user or role to create an Application Auto Scaling service\-linked role for Spot Fleet\. You can specify the service\-linked role in the policy's `Resource` field as an ARN, and the service principal for your service\-linked role as a condition, as shown\. For a complete list of ARNs for Application Auto Scaling, see [Service\-linked role ARN reference](application-auto-scaling-service-linked-roles.md#specify-service-linked-role)\.
+The following permissions policy grants access to all SageMaker and CloudWatch API actions that are required\.
 
 ```
 {
     "Version": "2012-10-17",
     "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+              "sagemaker:DescribeEndpoint",
+              "sagemaker:DescribeEndpointConfig",
+              "sagemaker:UpdateEndpointWeightsAndCapacities",             
+              "cloudwatch:DescribeAlarms",
+              "cloudwatch:PutMetricAlarm",
+              "cloudwatch:DeleteAlarms"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+### Spot Fleet requests<a name="permissions-for-spot-fleet"></a>
+
+The following permissions policy grants access to all Spot Fleet and CloudWatch API actions that are required\.
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+              "ec2:DescribeSpotFleetRequests",
+              "ec2:ModifySpotFleetRequest",
+              "cloudwatch:DescribeAlarms",
+              "cloudwatch:PutMetricAlarm",
+              "cloudwatch:DeleteAlarms"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+### Custom resources<a name="permissions-for-custom-resources"></a>
+
+The following permissions policy grants a user the required permission for the API Gateway API executing action\. This policy also grants access to all CloudWatch actions that are required\.
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+              "execute-api:Invoke",          
+              "cloudwatch:DescribeAlarms",
+              "cloudwatch:PutMetricAlarm",
+              "cloudwatch:DeleteAlarms"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+## Permissions for working in the AWS Management Console<a name="security_iam_id-based-policy-examples-console"></a>
+
+There is no standalone Application Auto Scaling console\. Most services that integrate with Application Auto Scaling have features that are dedicated to helping you configure scaling with their console\. 
+
+In most cases, each service provides AWS managed \(predefined\) IAM policies that define access to their console, which includes permissions to the Application Auto Scaling API actions\. For more information, refer to the documentation for the service whose console you want to use\. 
+
+You can also create your own custom IAM policies to give users fine\-grained permissions to view and work with specific Application Auto Scaling API actions in the AWS Management Console\. You can use the example policies in the previous sections; however, they are designed for requests that are made with the AWS CLI or an SDK\. The console uses additional API actions for its features, so these policies may not work as expected\. For example, to configure step scaling, users might require additional permissions to create and manage CloudWatch alarms\. 
+
+**Tip**  
+To help you work out which API actions are required to perform tasks in the console, you can use a service such as AWS CloudTrail\. For more information, see the [AWS CloudTrail User Guide](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html)\. 
+
+The following shows an example of a permissions policy that allows a user to configure scaling policies for Spot Fleet\. In addition to the [IAM permissions for Spot Fleet](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet-requests.html#spot-fleet-iam-users), the IAM user that accesses fleet scaling settings from the console must have the appropriate permissions for the services that support dynamic scaling\. 
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "application-autoscaling:*",
+                "ec2:DescribeSpotFleetRequests",
+                "ec2:ModifySpotFleetRequest",
+                "cloudwatch:DeleteAlarms",
+                "cloudwatch:DescribeAlarmHistory",
+                "cloudwatch:DescribeAlarms",
+                "cloudwatch:DescribeAlarmsForMetric",
+                "cloudwatch:GetMetricStatistics",
+                "cloudwatch:ListMetrics",
+                "cloudwatch:PutMetricAlarm",
+                "cloudwatch:DisableAlarmActions",
+                "cloudwatch:EnableAlarmActions",
+                "sns:CreateTopic",
+                "sns:Subscribe",
+                "sns:Get*",
+                "sns:List*"
+            ],
+            "Resource": "*"
+        },
         {
             "Effect": "Allow",
             "Action": "iam:CreateServiceLinkedRole",
@@ -367,5 +456,8 @@ The following example is a permissions policy that allows an IAM user or role to
 }
 ```
 
-**Note**  
-The `iam:AWSServiceName` IAM condition key specifies the service principal to which the role is attached, which is indicated in this example policy as `ec2.application-autoscaling.amazonaws.com`\. Do not try to guess the service principal\. To view the service principal for a service, see the [service\-linked role documentation](application-auto-scaling-service-linked-roles.md)\. 
+This policy allows users to view and modify scaling policies in the Amazon EC2 console, and to create and manage CloudWatch alarms in the CloudWatch console\. 
+
+You can adjust the API actions to limit user access\. For example, replacing `application-autoscaling:*` with `application-autoscaling:Describe*` means that the user has read\-only access\. 
+
+You can also adjust the CloudWatch permissions as required to limit user access to CloudWatch features\. For more information, see [Permissions required to use the CloudWatch console](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/iam-identity-based-access-control-cw.html#console-permissions-cw) in the *Amazon CloudWatch User Guide*\.

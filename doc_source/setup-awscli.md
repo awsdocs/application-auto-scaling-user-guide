@@ -20,7 +20,7 @@ The AWS Command Line Interface \(AWS CLI\) is a unified developer tool for manag
    aws configure --profile adminuser
    ```
 
-   When prompted, specify the AWS access key and AWS secret access key of the IAM user to use with Application Auto Scaling\.
+   When prompted, specify the AWS access key and secret access key of the IAM user to use with Application Auto Scaling\.
 
    ```
    aws_access_key_id = adminuser access key ID

@@ -1,6 +1,6 @@
 # Monitoring with CloudWatch alarms<a name="cloudwatch-alarm-notifications"></a>
 
-You can create alarms to notify you when Amazon CloudWatch has detected any problems that might require your attention\. CloudWatch helps you by automatically monitoring certain metrics for AWS services\. 
+You can create alarms to notify you when Amazon CloudWatch has detected any problems that might require your attention\. CloudWatch helps you by automatically monitoring certain metrics for AWS\. 
 
 A CloudWatch alarm watches a single metric\. It invokes one or more actions only when the alarm state changes, and has persisted for the period that you specify\. For example, you can set an alarm that notifies you when a metric value falls to or exceeds a certain level, ensuring that you are notified before a potential problem occurs\.
 

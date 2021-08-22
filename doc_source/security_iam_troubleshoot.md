@@ -14,6 +14,8 @@ An error occurred (AccessDeniedException) when calling the DescribeScalableTarge
 
 If you receive this or similar errors, then you must contact your administrator for assistance\. 
 
+An administrator for your account will need to make sure that your IAM user or role has permissions to access all of the API actions that Application Auto Scaling uses to access resources in the target service and CloudWatch\. There are different permissions required depending on which resources you are working with\. Application Auto Scaling also requires permission to create a service\-linked role the first time that a user configures scaling for a given resource\. 
+
 ## I'm an administrator and want to allow others to access Application Auto Scaling<a name="security_iam_troubleshoot-admin-delegate"></a>
 
 To allow others to access Application Auto Scaling, you must create an IAM entity \(user or role\) for the person or application that needs access\. They will use the credentials for that entity to access AWS\. You must then attach a policy to the entity that grants them the correct permissions in Application Auto Scaling\.
@@ -22,9 +24,9 @@ To get started, see [Creating your first IAM delegated user and group](https://d
 
 ## I'm an administrator and my IAM policy returned an error or isn't working as expected<a name="security_iam_troubleshoot-validation-errors"></a>
 
-In addition to the IAM permissions that are required for Application Auto Scaling actions, your IAM permissions policies must grant access to call the target service and CloudWatch\. 
+In addition to the IAM permissions that are required for Application Auto Scaling API actions, your IAM permissions policies must grant access to call the target service and CloudWatch\. 
 
-If a user or application doesn't have the proper IAM policy permissions, their access might be unexpectedly denied\. To write permissions policies for users and applications in your accounts, consult the information in [Example policies for working with the AWS CLI or an SDK](security_iam_id-based-policy-examples.md)\. 
+If a user or application doesn't have the proper IAM policy permissions, their access might be unexpectedly denied\. To write permissions policies for users and applications in your accounts, consult the information in [Application Auto Scaling identity\-based policy examples](security_iam_id-based-policy-examples.md)\. 
 
 For information about how validation is performed, see [Permissions validation for API calls on target resources](security_iam_permission_validation.md)\.
 

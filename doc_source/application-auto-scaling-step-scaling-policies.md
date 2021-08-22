@@ -95,4 +95,4 @@ The commonly used commands for working with scaling policies include:
 ## Limitations<a name="step-scaling-limitations"></a>
 
 The following are limitations when using step scaling policies:
-+ You cannot create step scaling policies for certain services\. Step scaling policies are not supported for DynamoDB, Amazon Comprehend, Lambda, Amazon Keyspaces, or Amazon MSK\.
++ You cannot create step scaling policies for certain services\. Step scaling policies are not supported for DynamoDB, Amazon Comprehend, Lambda, Amazon Keyspaces, Amazon MSK, or Amazon ElastiCache\.

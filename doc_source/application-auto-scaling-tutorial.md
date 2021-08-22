@@ -1,28 +1,29 @@
-# Tutorial: Configuring scaling to increase the availability of your application<a name="application-auto-scaling-tutorial"></a>
+# Tutorial: Configuring auto scaling to handle a heavy workload<a name="application-auto-scaling-tutorial"></a>
 
-In this tutorial, you learn how to scale out and in based on time windows when your application will have a higher than normal workload\. This is helpful when you have an application that can suddenly require a large amount of capacity on a predictable schedule\. You can configure scheduled scaling to add the required capacity to handle the load on your application, and then remove it when it's no longer required\. 
+In this tutorial, you learn how to scale out and in based on time windows when your application will have a heavier than normal workload\. This is helpful when you have an application that can suddenly have a large number of visitors on a regular schedule or on a seasonal basis\. 
 
-You can use a target tracking scaling policy together with scheduled scaling\. Scheduled scaling automatically initiates changes to your `MinCapacity` and `MaxCapacity` on your behalf, based on a schedule that you specify\. When a scaling policy is active on the resource, it can scale dynamically based on current resource utilization, within the new minimum and maximum capacity range\.
+You can use a target tracking scaling policy together with scheduled scaling to handle the extra load\. Scheduled scaling automatically initiates changes to your `MinCapacity` and `MaxCapacity` on your behalf, based on a schedule that you specify\. When a target tracking scaling policy is active on the resource, it can scale dynamically based on current resource utilization, within the new minimum and maximum capacity range\.
 
-**Note**  
-Before you explore this tutorial, we recommend that you first review the following introductory tutorial: [Getting started using the AWS CLI](get-started-exercise.md)\.
+After completing this tutorial, you’ll know how to: 
++ Use scheduled scaling to add extra capacity to meet a heavy load before it arrives, and then remove the extra capacity when it's no longer required\.
++ Use a target tracking scaling policy to scale your application based on current resource utilization\.
 
 **Topics**
 + [Prerequisites](#tutorial-prerequisites)
 + [Step 1: Register your scalable target](#tutorial-register-scalable-target)
-+ [Step 2: Create scheduled actions](#tutorial-create-scheduled-actions)
-+ [Step 3: Create a target tracking scaling policy](#tutorial-create-target-tracking-policy)
++ [Step 2: Set up scheduled actions according to your requirements](#tutorial-create-scheduled-actions)
++ [Step 3: Add a target tracking scaling policy](#tutorial-create-target-tracking-policy)
 + [Step 4: Clean up](#tutorial-scaling-clean-up)
 
 ## Prerequisites<a name="tutorial-prerequisites"></a>
 
 This tutorial assumes that you have already done the following:
 + You created an AWS account\.
-+ You installed and configured the AWS CLI\. 
++ You installed and configured the AWS CLI\. For more information, see [Set up the AWS CLI](setup-awscli.md)\.
 + Your account has all of the necessary permissions for registering and deregistering resources as a scalable target with Application Auto Scaling\. It also has all of the necessary permissions for creating scaling policies and scheduled actions\.
 + You have a scalable resource in a non\-production environment available to use for this tutorial\. If you don't already have one, create one before beginning the tutorial\.
 
-Before you begin, consider the following: 
+Before you begin, note the following: 
 
 While completing this tutorial, there are two steps in which you set or update your `MinCapacity` and `MaxCapacity` values to 0 to reset the current capacity to 0\. Depending on the resource that you've chosen to use, you might be unable to reset the current capacity to 0 during these steps\. To help you address the issue, a message in the output will indicate that minimum capacity cannot be less than the value specified and will provide the minimum capacity value that the resource can accept\.
 
@@ -53,7 +54,7 @@ Start by registering your resource as a scalable target with Application Auto Sc
 
   This command does not return any output if it is successful\.
 
-## Step 2: Create scheduled actions<a name="tutorial-create-scheduled-actions"></a>
+## Step 2: Set up scheduled actions according to your requirements<a name="tutorial-create-scheduled-actions"></a>
 
 You can use the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scheduled-action.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scheduled-action.html) command to create scheduled actions that are configured to meet your business needs\. In this tutorial, we focus on a configuration that turns off scaling outside of working hours\.
 
@@ -183,21 +184,23 @@ You can use the [https://docs.aws.amazon.com/cli/latest/reference/application-au
    ]
    ```
 
-## Step 3: Create a target tracking scaling policy<a name="tutorial-create-target-tracking-policy"></a>
+## Step 3: Add a target tracking scaling policy<a name="tutorial-create-target-tracking-policy"></a>
 
-Now that you have the basic schedule in place, add a target tracking scaling policy to scale based on target tracking\. 
+Now that you have the basic schedule in place, add a target tracking scaling policy to scale based on current resource utilization\. 
 
 With target tracking, Application Auto Scaling compares the target value in the policy to the current value of the specified metric\. When they are unequal for a period of time, Application Auto Scaling adds or removes capacity to maintain steady performance\. As the load on your application and the metric value increases, Application Auto Scaling adds capacity as fast as it can without going above `MaxCapacity`\. When Application Auto Scaling removes capacity because the load is minimal, it does so without going below `MinCapacity`\. By adjusting the capacity based on usage, you only pay for what your application needs\. For more information, see [Supporting application availability during high utilization periods](application-auto-scaling-target-tracking.md#target-tracking-high-utilization)\.
 
 If the metric has insufficient data because your application does not have any load, Application Auto Scaling does not add or remove capacity\. The intention of this behavior is to prioritize availability in situations where not enough information is available\.
 
+You can add multiple scaling policies, but make sure you do not add conflicting step scaling policies, which might cause undesirable behavior\. For example, if the step scaling policy initiates a scale\-in activity before the target tracking policy is ready to scale in, the scale\-in activity will not be blocked\. After the scale\-in activity completes, the target tracking policy could instruct Application Auto Scaling to scale out again\. 
+
 **To create a target tracking scaling policy**
 
 1. Use the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scaling-policy.html) command to create the policy\. 
 
-   The metrics that are most frequently used for target tracking are predefined, and you can use them without supplying the full metric specification from CloudWatch\. For more information about the available predefined metrics, see [PredefinedMetricSpecification](https://docs.aws.amazon.com/autoscaling/application/APIReference/API_PredefinedMetricSpecification.html) in the *Application Auto Scaling API Reference*\. 
+   The metrics that are most frequently used for target tracking are predefined, and you can use them without supplying the full metric specification from CloudWatch\. For more information about the available predefined metrics, see [Target tracking scaling policies for Application Auto Scaling](application-auto-scaling-target-tracking.md)\.
 
-   Before you run this command, make sure that your predefined metric expects the target value\. For example, to scale out when CPU reaches 50% utilization, specify a target value of 50\.0\. Or, to scale out Lambda provisioned concurrency when usage reaches 70% utilization, specify a target value of 0\.7\. For information about target values for a particular resource, refer to the documentation that is provided by the service about how to configure target tracking\. For more information, see [Getting started with Application Auto Scaling](getting-started.md)\.
+   Before you run this command, make sure that your predefined metric expects the target value\. For example, to scale out when CPU reaches 50% utilization, specify a target value of 50\.0\. Or, to scale out Lambda provisioned concurrency when usage reaches 70% utilization, specify a target value of 0\.7\. For information about target values for a particular resource, refer to the documentation that is provided by the service about how to configure target tracking\. For more information, see [AWS services that you can use with Application Auto Scaling](integrated-services-list.md)\.
 
    **Linux, macOS, or Unix**
 

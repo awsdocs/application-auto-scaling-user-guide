@@ -35,8 +35,7 @@ The commonly used commands for working with schedule scaling include:
 + [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scheduled-action.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scheduled-action.html) to delete a scheduled action\. 
 
 **Note**  
-When you configure scheduled actions in the console of the target service \(if supported by the service\), this automatically registers the resource as a scalable target with Application Auto Scaling\.  
-For brevity, the examples in this guide illustrate CLI commands for a few of the services that integrate with Application Auto Scaling\. To specify a different scalable target, specify its namespace in `--service-namespace`, its scalable dimension in `--scalable-dimension`, and its resource ID in `--resource-id`\. For a list of valid values for each option, see [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html)\.
+For brevity, the examples in this guide illustrate CLI commands for a few of the services that integrate with Application Auto Scaling\. To specify a different scalable target, specify its namespace in `--service-namespace`, its scalable dimension in `--scalable-dimension`, and its resource ID in `--resource-id`\. 
 
 ## Limitations<a name="scheduled-scaling-limitations"></a>
 

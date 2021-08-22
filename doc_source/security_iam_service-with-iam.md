@@ -40,13 +40,13 @@ You can specify multiple actions using wildcards \(\*\)\. For example, to specif
 "Action": "application-autoscaling:Describe*"
 ```
 
-To see a list of Application Auto Scaling actions, see [Actions](https://docs.aws.amazon.com/autoscaling/application/APIReference/API_Operations.html) in the *Application Auto Scaling API Reference*\.
+To see a list of Application Auto Scaling API actions, see [Actions](https://docs.aws.amazon.com/autoscaling/application/APIReference/API_Operations.html) in the *Application Auto Scaling API Reference*\.
 
 ### Resources<a name="security_iam_service-with-iam-id-based-policies-resources"></a>
 
 The `Resource` element specifies the object or objects to which the action applies\.
 
-Application Auto Scaling has no service\-defined resources that can be used as the `Resource` element of an IAM policy statement\. Therefore, there are no Amazon Resource Names \(ARNs\) for Application Auto Scaling for you to use in an IAM policy\. To control access to Application Auto Scaling actions, always use an \* \(asterisk\) as the resource when writing an IAM policy\. 
+Application Auto Scaling has no service\-defined resources that can be used as the `Resource` element of an IAM policy statement\. Therefore, there are no Amazon Resource Names \(ARNs\) for Application Auto Scaling for you to use in an IAM policy\. To control access to Application Auto Scaling API actions, always use an \* \(asterisk\) as the resource when writing an IAM policy\. 
 
 ### Condition keys<a name="security_iam_service-with-iam-id-based-policies-conditionkeys"></a>
 
@@ -58,7 +58,7 @@ The `Condition` element is optional\.
 
 ### Examples<a name="security_iam_service-with-iam-id-based-policies-examples"></a>
 
-To view examples of Application Auto Scaling identity\-based policies, see [Example policies for working with the AWS CLI or an SDK](security_iam_id-based-policy-examples.md)\.
+To view examples of Application Auto Scaling identity\-based policies, see [Application Auto Scaling identity\-based policy examples](security_iam_id-based-policy-examples.md)\.
 
 ## Application Auto Scaling resource\-based policies<a name="security_iam_service-with-iam-resource-based-policies"></a>
 

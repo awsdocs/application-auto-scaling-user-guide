@@ -27,8 +27,7 @@ aws application-autoscaling register-scalable-target --service-namespace ecs --s
 ```
 
 **Note**  
-When you configure scaling policies in the console of the target service, this automatically registers the resource as a scalable target with Application Auto Scaling\.  
-For brevity, the examples in this topic illustrate CLI commands for an Amazon ECS service\. To specify a different scalable target, specify its namespace in `--service-namespace`, its scalable dimension in `--scalable-dimension`, and its resource ID in `--resource-id`\. For a list of valid values for each option, see [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html)\.
+For brevity, the examples in this topic illustrate CLI commands for an Amazon ECS service\. To specify a different scalable target, specify its namespace in `--service-namespace`, its scalable dimension in `--scalable-dimension`, and its resource ID in `--resource-id`\.
 
 ## Create a step scaling policy<a name="create-step-scaling-policy"></a>
 
