@@ -26,7 +26,7 @@ If you configure auto scaling using the Amazon ECS console, then Amazon ECS auto
 If you want to configure auto scaling using the AWS CLI or one of the AWS SDKs, you can use the following options:
 + AWS CLI: 
 
-  Call the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command for an Amazon ECS service\. The following example registers a scalable target for a service called `sample-app-service`, running on the `default` cluster, with a minimum task count of one task and a maximum task count of 10 tasks\.
+  Call the [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command for an Amazon ECS service\. The following example registers a scalable target for a service called `sample-app-service`, running on the `default` cluster, with a minimum task count of one task and a maximum task count of 10 tasks\.
 
   ```
   aws application-autoscaling register-scalable-target \
@@ -38,4 +38,4 @@ If you want to configure auto scaling using the AWS CLI or one of the AWS SDKs, 
   ```
 + AWS SDK: 
 
-  Call the [https://docs.aws.amazon.com/autoscaling/application/APIReference/API_RegisterScalableTarget.html](https://docs.aws.amazon.com/autoscaling/application/APIReference/API_RegisterScalableTarget.html) operation and provide `ResourceId`, `ScalableDimension`, `ServiceNamespace`, `MinCapacity`, and `MaxCapacity` as parameters\. 
+  Call the [RegisterScalableTarget](https://docs.aws.amazon.com/autoscaling/application/APIReference/API_RegisterScalableTarget.html) operation and provide `ResourceId`, `ScalableDimension`, `ServiceNamespace`, `MinCapacity`, and `MaxCapacity` as parameters\. 

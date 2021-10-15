@@ -9,7 +9,7 @@ You can create a step scaling policy for Application Auto Scaling by using the A
 
 ## Register a scalable target<a name="step-scaling-register-scalable-target"></a>
 
-If you haven't already done so, register the scalable target\. Use the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command to register a specific resource in the target service as a scalable target\. The following example registers an Amazon ECS service with Application Auto Scaling\. Application Auto Scaling can scale the number of tasks at a minimum of 2 tasks and a maximum of 10\. 
+If you haven't already done so, register the scalable target\. Use the [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command to register a specific resource in the target service as a scalable target\. The following example registers an Amazon ECS service with Application Auto Scaling\. Application Auto Scaling can scale the number of tasks at a minimum of 2 tasks and a maximum of 10\. 
 
 **Linux, macOS, or Unix**
 
@@ -27,7 +27,7 @@ aws application-autoscaling register-scalable-target --service-namespace ecs --s
 ```
 
 **Note**  
-For brevity, the examples in this topic illustrate CLI commands for an Amazon ECS service\. To specify a different scalable target, specify its namespace in `--service-namespace`, its scalable dimension in `--scalable-dimension`, and its resource ID in `--resource-id`\.
+For brevity, the examples in this topic illustrate CLI commands for an Amazon ECS service\. To specify a different scalable target, specify its namespace in `--service-namespace`, its scalable dimension in `--scalable-dimension`, and its resource ID in `--resource-id`\. For more information, see [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html)\. 
 
 ## Create a step scaling policy<a name="create-step-scaling-policy"></a>
 
@@ -62,7 +62,7 @@ Save this configuration in a file named `config.json`\.
 }
 ```
 
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scaling-policy.html) command, along with the `config.json` file that you created, to create a scaling policy named `my-step-scaling-policy`\.
+Use the following [put\-scaling\-policy](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scaling-policy.html) command, along with the `config.json` file that you created, to create a scaling policy named `my-step-scaling-policy`\.
 
 **Linux, macOS, or Unix**
 
@@ -90,7 +90,7 @@ The output includes the ARN that serves as a unique name for the policy\. You ne
 
 ## Create an alarm that triggers the scaling policy<a name="step-scaling-create-alarm"></a>
 
-Finally, use the following CloudWatch [https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html) command to create an alarm to use with your step scaling policy\. In this example, you have an alarm based on average CPU utilization\. The alarm is configured to be in an ALARM state if it reaches a threshold of 70 percent for at least two consecutive evaluation periods of 60 seconds\. To specify a different CloudWatch metric or use your own custom metric, specify its name in `--metric-name` and its namespace in `--namespace`\. 
+Finally, use the following CloudWatch [put\-metric\-alarm](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/put-metric-alarm.html) command to create an alarm to use with your step scaling policy\. In this example, you have an alarm based on average CPU utilization\. The alarm is configured to be in an ALARM state if it reaches a threshold of 70 percent for at least two consecutive evaluation periods of 60 seconds\. To specify a different CloudWatch metric or use your own custom metric, specify its name in `--metric-name` and its namespace in `--namespace`\. 
 
 **Linux, macOS, or Unix**
 
@@ -111,7 +111,7 @@ aws cloudwatch put-metric-alarm --alarm-name Step-Scaling-AlarmHigh-ECS:service/
 
 ## Describe step scaling policies<a name="describe-step-scaling-policy"></a>
 
-You can describe all scaling policies for the specified service namespace using the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-policies.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-policies.html) command\.
+You can describe all scaling policies for the specified service namespace using the following [describe\-scaling\-policies](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-policies.html) command\.
 
 ```
 aws application-autoscaling describe-scaling-policies --service-namespace ecs
@@ -180,7 +180,7 @@ The following is example output\.
 When you no longer need a step scaling policy, you can delete it\. To delete both the scaling policy and the CloudWatch alarm, complete the following tasks\. 
 
 **To delete your scaling policy**  
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scaling-policy.html) command\.
+Use the following [delete\-scaling\-policy](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scaling-policy.html) command\.
 
 **Linux, macOS, or Unix**
 
@@ -198,7 +198,7 @@ aws application-autoscaling delete-scaling-policy --service-namespace ecs --scal
 ```
 
 **To delete the CloudWatch alarm**  
-Use the [https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/delete-alarms.html](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/delete-alarms.html) command\. You can delete one or more alarms at a time\. For example, use the following command to delete the `Step-Scaling-AlarmHigh-ECS:service/default/sample-app-service` and `Step-Scaling-AlarmLow-ECS:service/default/sample-app-service` alarms\.
+Use the [delete\-alarms](https://docs.aws.amazon.com/cli/latest/reference/cloudwatch/delete-alarms.html) command\. You can delete one or more alarms at a time\. For example, use the following command to delete the `Step-Scaling-AlarmHigh-ECS:service/default/sample-app-service` and `Step-Scaling-AlarmLow-ECS:service/default/sample-app-service` alarms\.
 
 ```
 aws cloudwatch delete-alarms --alarm-name Step-Scaling-AlarmHigh-ECS:service/default/sample-app-service Step-Scaling-AlarmLow-ECS:service/default/sample-app-service

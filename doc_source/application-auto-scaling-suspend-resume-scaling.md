@@ -31,10 +31,10 @@ The following descriptions explain what happens when individual scaling activiti
 You can suspend and resume individual scaling activities or all scaling activities for your Application Auto Scaling scalable target\.
 
 **Note**  
-For brevity, these examples illustrate how to suspend and resume scaling for a DynamoDB table\. To specify a different scalable target, specify its namespace in `--service-namespace`, its scalable dimension in `--scalable-dimension`, and its resource ID in `--resource-id`\. For a list of valid values for each option, see [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html)\.
+For brevity, these examples illustrate how to suspend and resume scaling for a DynamoDB table\. To specify a different scalable target, specify its namespace in `--service-namespace`, its scalable dimension in `--scalable-dimension`, and its resource ID in `--resource-id`\. For a list of valid values for each option, see [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html)\.
 
 **To suspend a scaling activity**  
-Open a command\-line window and use the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command with the `--suspended-state` option as follows\. 
+Open a command\-line window and use the [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command with the `--suspended-state` option as follows\. 
 
 **Linux, macOS, or Unix**
 
@@ -75,7 +75,7 @@ To only suspend scaling activities that involve scheduled actions, specify the f
 ```
 
 **To suspend all scaling activities**  
-Use the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command with the `--suspended-state` option as follows\.
+Use the [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command with the `--suspended-state` option as follows\.
 
 **Linux, macOS, or Unix**
 
@@ -103,7 +103,7 @@ This example assumes that the file config\.json contains the following JSON\-for
 
 ### View suspended scaling activities<a name="aas-check-suspend-state-aws-cli"></a>
 
-Use the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scalable-targets.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scalable-targets.html) command to determine which scaling activities are in a suspended state for a scalable target\.
+Use the [describe\-scalable\-targets](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scalable-targets.html) command to determine which scaling activities are in a suspended state for a scalable target\.
 
 **Linux, macOS, or Unix**
 
@@ -143,7 +143,7 @@ The following is example output\.
 
 ### Resume scaling activities<a name="aas-resume-aws-cli"></a>
 
-When you are ready to resume the scaling activity, you can resume it using the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command\.
+When you are ready to resume the scaling activity, you can resume it using the [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command\.
 
 The following example command resumes all scaling activities for the specified scalable target\. 
 

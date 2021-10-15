@@ -1,6 +1,6 @@
 # Example scheduled actions for Application Auto Scaling<a name="examples-scheduled-actions"></a>
 
-The following examples show how to create scheduled actions with the AWS CLI [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scheduled-action.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scheduled-action.html) command\. When you specify the new capacity, you can specify a minimum capacity, a maximum capacity, or both\.
+The following examples show how to create scheduled actions with the AWS CLI [put\-scheduled\-action](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scheduled-action.html) command\. When you specify the new capacity, you can specify a minimum capacity, a maximum capacity, or both\.
 
 **Topics**
 + [Creating a scheduled action that occurs only once](#one-time-schedule)
@@ -121,7 +121,7 @@ aws application-autoscaling put-scheduled-action --service-namespace appstream -
 
 ## Creating a one\-time scheduled action that specifies a time zone<a name="one-time-schedule-set-time-zone"></a>
 
-Scheduled actions are set to the UTC time zone by default\. To specify a different time zone, include the `--timezone` option and specify the canonical name for the time zone \(`America/New_York`, for example\)\. For more information, see [https://www\.joda\.org/joda\-time/timezones\.html](https://www.joda.org/joda-time/timezones.html), which provides information about the IANA time zones that are supported when calling [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scheduled-action.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scheduled-action.html)\.
+Scheduled actions are set to the UTC time zone by default\. To specify a different time zone, include the `--timezone` option and specify the canonical name for the time zone \(`America/New_York`, for example\)\. For more information, see [https://www\.joda\.org/joda\-time/timezones\.html](https://www.joda.org/joda-time/timezones.html), which provides information about the IANA time zones that are supported when calling [put\-scheduled\-action](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scheduled-action.html)\.
 
 The following is an example that uses the `--timezone` option when creating a scheduled action to scale capacity at a specific date and time\. 
 

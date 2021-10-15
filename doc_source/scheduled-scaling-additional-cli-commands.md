@@ -11,7 +11,7 @@ The AWS CLI includes several other commands that help you manage your scheduled 
 
 ## Viewing scaling activities for a specified service<a name="describe-scaling-activities-service-namespace"></a>
 
-To view the scaling activities for all of the scalable targets in a specified service namespace, use the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-activities.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-activities.html) command\. 
+To view the scaling activities for all of the scalable targets in a specified service namespace, use the [describe\-scaling\-activities](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-activities.html) command\. 
 
 The following example retrieves the scaling activities associated with the `dynamodb` service namespace\.
 
@@ -86,7 +86,7 @@ To change this command so that it retrieves the scaling activities for only one 
 
 ## Describing all scheduled actions for a specified service<a name="describe-scheduled-actions-service-namespace"></a>
 
-To describe the scheduled actions for all of the scalable targets in a specified service namespace, use the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scheduled-actions.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scheduled-actions.html) command\. 
+To describe the scheduled actions for all of the scalable targets in a specified service namespace, use the [describe\-scheduled\-actions](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scheduled-actions.html) command\. 
 
 The following example retrieves the scheduled actions associated with the `ec2` service namespace\.
 
@@ -155,7 +155,7 @@ If successful, this command returns output similar to the following\.
 
 ## Describing one or more scheduled actions for a scalable target<a name="describe-scheduled-actions-scalable-target"></a>
 
-To retrieve information about the scheduled actions for a specified scalable target, add the `--resource-id` option when describing scheduled actions using the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scheduled-actions.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scheduled-actions.html) command\.
+To retrieve information about the scheduled actions for a specified scalable target, add the `--resource-id` option when describing scheduled actions using the [describe\-scheduled\-actions](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scheduled-actions.html) command\.
 
 If you include the `--scheduled-action-names` option and specify the name of a scheduled action as its value, the command returns only the scheduled action whose name is a match, as shown in the following example\.
 
@@ -202,7 +202,7 @@ If more than one value is provided for the `--scheduled-action-names` option, al
 
 You can temporarily turn off scheduled scaling without deleting your scheduled actions\. For more information, see [Suspending and resuming scaling for Application Auto Scaling](application-auto-scaling-suspend-resume-scaling.md)\.
 
-Suspend scheduled scaling on a scalable target by using the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command with the `--suspended-state` option, and specifying `true` as the value of the `ScheduledScalingSuspended` attribute, as shown in the following example\.
+Suspend scheduled scaling on a scalable target by using the [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command with the `--suspended-state` option, and specifying `true` as the value of the `ScheduledScalingSuspended` attribute, as shown in the following example\.
 
 **Linux, macOS, or Unix**
 
@@ -224,7 +224,7 @@ To resume scheduled scaling, run this command again, specifying `false` as the v
 
 ## Deleting a scheduled action<a name="delete-scheduled-action"></a>
 
-When you are finished with a scheduled action, you can delete it using the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scheduled-action.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scheduled-action.html) command\.
+When you are finished with a scheduled action, you can delete it using the [delete\-scheduled\-action](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scheduled-action.html) command\.
 
 **Linux, macOS, or Unix**
 

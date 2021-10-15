@@ -4,7 +4,7 @@ To add permissions to users, groups, and roles, it is easier to use AWS managed 
 
 AWS services maintain and update AWS managed policies\. You can't change the permissions in AWS managed policies\. Services occasionally add additional permissions to an AWS managed policy to support new features\. This type of update affects all identities \(users, groups, and roles\) where the policy is attached\. Services are most likely to update an AWS managed policy when a new feature is launched or when new operations become available\. Services do not remove permissions from an AWS managed policy, so policy updates won't break your existing permissions\.
 
-Additionally, AWS supports managed policies for job functions that span multiple services\. For example, the **ReadOnlyAccess** AWS managed policy provides read\-only access to all AWS services and resources\. When a service launches a new feature, AWS adds read\-only permissions for new operations and resources\. For a list and descriptions of job function policies, see [AWS managed policies for job functions](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_job-functions.html) in the *IAM User Guide*\.
+Additionally, AWS supports managed policies for job functions that span multiple services\. For example, the **ViewOnlyAccess** AWS managed policy provides read\-only access to many AWS services and resources\. When a service launches a new feature, AWS adds read\-only permissions for new operations and resources\. For a list and descriptions of job function policies, see [AWS managed policies for job functions](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_job-functions.html) in the *IAM User Guide*\.
 
 **Topics**
 + [AWS managed policy granting access to AppStream 2\.0 and CloudWatch](#appstream-policy)
@@ -16,6 +16,7 @@ Additionally, AWS supports managed policies for job functions that span multiple
 + [AWS managed policy granting access to Amazon Keyspaces and CloudWatch](#keyspaces-policy)
 + [AWS managed policy granting access to Lambda and CloudWatch](#lambda-policy)
 + [AWS managed policy granting access to Amazon MSK and CloudWatch](#msk-policy)
++ [AWS managed policy granting access to Neptune and CloudWatch](#neptune-policy)
 + [AWS managed policy granting access to SageMaker and CloudWatch](#sagemaker-policy)
 + [AWS managed policy granting access to EC2 Spot Fleet and CloudWatch](#spot-policy)
 + [AWS managed policy granting access to your custom resources and CloudWatch](#custom-resources-policy)
@@ -105,6 +106,7 @@ The `AWSServiceRoleForApplicationAutoScaling_ElastiCacheRG` service\-linked role
 + Action: `cloudwatch:DescribeAlarms` on all resources
 + Action: `cloudwatch:PutMetricAlarm` on the resource `arn:*:cloudwatch:*:*:alarm:TargetTracking*`
 + Action: `cloudwatch:DeleteAlarms` on the resource `arn:*:cloudwatch:*:*:alarm:TargetTracking*`
++ Action: `cloudwatch:DeleteAlarms`
 
 ## AWS managed policy granting access to Amazon Keyspaces and CloudWatch<a name="keyspaces-policy"></a>
 
@@ -147,6 +149,25 @@ The `AWSServiceRoleForApplicationAutoScaling_KafkaCluster` service\-linked role 
 + Action: `kafka:UpdateBrokerStorage`
 + Action: `cloudwatch:DescribeAlarms`
 + Action: `cloudwatch:PutMetricAlarm`
++ Action: `cloudwatch:DeleteAlarms`
+
+## AWS managed policy granting access to Neptune and CloudWatch<a name="neptune-policy"></a>
+
+**Policy name: [AWSApplicationAutoscalingNeptuneClusterPolicy](https://console.aws.amazon.com/iam/home#policies/arn:aws:iam::aws:policy/aws-service-role/AWSApplicationAutoscalingNeptuneClusterPolicy)**  
+You can't attach `AWSApplicationAutoscalingNeptuneClusterPolicy` to your AWS Identity and Access Management \(IAM\) entities\. This policy is attached to a service\-linked role that allows Application Auto Scaling to call Neptune and CloudWatch and perform scaling on your behalf\.
+
+**Permission details**  
+The `AWSServiceRoleForApplicationAutoScaling_NeptuneCluster` service\-linked role permissions policy allows Application Auto Scaling to complete the following actions on the specified resources:
++ Action: `rds:AddTagsToResource` on resources with the prefix *autoscaled\-reader* in the Amazon Neptune database engine \(`"Condition":{"StringEquals":{"rds:DatabaseEngine":"neptune"}`\)
++ Action: `rds:ListTagsForResource` on all resources
++ Action: `rds:CreateDBInstance` on resources with the prefix *autoscaled\-reader* in all DB clusters \(`"Resource":"arn:*:rds:*:*:db:autoscaled-reader*", "arn:aws:rds:*:*:cluster:*"`\) in the Amazon Neptune database engine \(`"Condition":{"StringEquals":{"rds:DatabaseEngine":"neptune"}`\)
++ Action: `rds:DescribeDBInstances` on all resources
++ Action: `rds:DescribeDBClusters` on all resources
++ Action: `rds:DescribeDBClusterParameters` on all resources
++ Action: `rds:DeleteDBInstance` on the resource `arn:*:rds:*:*:db:autoscaled-reader*`
++ Action: `cloudwatch:DescribeAlarms` on all resources
++ Action: `cloudwatch:PutMetricAlarm` on the resource `arn:*:cloudwatch:*:*:alarm:TargetTracking*`
++ Action: `cloudwatch:DeleteAlarms` on the resource `arn:*:cloudwatch:*:*:alarm:TargetTracking*`
 + Action: `cloudwatch:DeleteAlarms`
 
 ## AWS managed policy granting access to SageMaker and CloudWatch<a name="sagemaker-policy"></a>
@@ -197,5 +218,6 @@ View details about updates to AWS managed policies for Application Auto Scaling 
 
 | Change | Description | Date | 
 | --- | --- | --- | 
+|  Application Auto Scaling adds Neptune policy  |  Application Auto Scaling added a new managed policy for Neptune\. This policy is attached to a service\-linked role that allows Application Auto Scaling to call Neptune and CloudWatch and perform scaling on your behalf\.  | October 6, 2021 | 
 |  Application Auto Scaling adds ElastiCache for Redis policy  |  Application Auto Scaling added a new managed policy for ElastiCache\. This policy is attached to a service\-linked role that allows Application Auto Scaling to call ElastiCache and CloudWatch and perform scaling on your behalf\.  | August 19, 2021 | 
 |  Application Auto Scaling started tracking changes  |  Application Auto Scaling started tracking changes for its AWS managed policies\.  | August 19, 2021 | 

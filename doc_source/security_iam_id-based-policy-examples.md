@@ -91,8 +91,9 @@ To successfully configure and use Application Auto Scaling with the target servi
 + [Amazon Keyspaces tables](#permissions-for-keyspaces-tables)
 + [Lambda functions](#permissions-for-lambda-functions)
 + [Amazon Managed Streaming for Apache Kafka \(MSK\) broker storage](#permissions-for-msk-broker-storage)
++ [Neptune clusters](#permissions-for-neptune-clusters)
 + [SageMaker endpoints](#permissions-for-sagemaker-endpoints)
-+ [Spot Fleet requests](#permissions-for-spot-fleet)
++ [Spot Fleets \(Amazon EC2\)](#permissions-for-spot-fleet)
 + [Custom resources](#permissions-for-custom-resources)
 
 ### AppStream 2\.0 fleets<a name="permissions-for-appstream-fleets"></a>
@@ -334,6 +335,33 @@ The following permissions policy grants access to all Amazon MSK and CloudWatch 
 }
 ```
 
+### Neptune clusters<a name="permissions-for-neptune-clusters"></a>
+
+The following permissions policy grants access to all Neptune and CloudWatch API actions that are required\.
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+              "rds:AddTagsToResource",
+              "rds:CreateDBInstance",
+              "rds:DescribeDBInstances",
+              "rds:DescribeDBClusters",
+              "rds:DescribeDBClusterParameters",
+              "rds:DeleteDBInstance",
+              "cloudwatch:DescribeAlarms",
+              "cloudwatch:PutMetricAlarm",
+              "cloudwatch:DeleteAlarms"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
 ### SageMaker endpoints<a name="permissions-for-sagemaker-endpoints"></a>
 
 The following permissions policy grants access to all SageMaker and CloudWatch API actions that are required\.
@@ -358,7 +386,7 @@ The following permissions policy grants access to all SageMaker and CloudWatch A
 }
 ```
 
-### Spot Fleet requests<a name="permissions-for-spot-fleet"></a>
+### Spot Fleets \(Amazon EC2\)<a name="permissions-for-spot-fleet"></a>
 
 The following permissions policy grants access to all Spot Fleet and CloudWatch API actions that are required\.
 

@@ -30,6 +30,7 @@ Amazon's trademarks and trade dress may not be used in
    + [Amazon Keyspaces (for Apache Cassandra) and Application Auto Scaling](services-that-can-integrate-keyspaces.md)
    + [AWS Lambda and Application Auto Scaling](services-that-can-integrate-lambda.md)
    + [Amazon Managed Streaming for Apache Kafka (MSK) and Application Auto Scaling](services-that-can-integrate-msk.md)
+   + [Amazon Neptune and Application Auto Scaling](services-that-can-integrate-neptune.md)
    + [Amazon SageMaker and Application Auto Scaling](services-that-can-integrate-sagemaker.md)
    + [Amazon EC2 Spot Fleet and Application Auto Scaling](services-that-can-integrate-ec2.md)
    + [Custom resources and Application Auto Scaling](services-that-can-integrate-custom.md)

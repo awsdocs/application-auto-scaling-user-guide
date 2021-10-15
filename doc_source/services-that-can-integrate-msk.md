@@ -1,10 +1,10 @@
 # Amazon Managed Streaming for Apache Kafka \(MSK\) and Application Auto Scaling<a name="services-that-can-integrate-msk"></a>
 
-You can scale Amazon MSK cluster storage using target tracking scaling policies\.
+You can scale out Amazon MSK cluster storage using target tracking scaling policies\. Scale in by the target tracking policy is disabled\. 
 
 Use the following information to help you integrate Amazon MSK with Application Auto Scaling\. 
 
-If you are just getting started with scaling Amazon MSK cluster storage, you can view sample configurations and details about using Amazon MSK with Application Auto Scaling in the following documentation:
+If you are just getting started with scaling Amazon MSK cluster storage, you can view details about using Amazon MSK with Application Auto Scaling in the following documentation:
 + [Auto\-expanding storage for an Amazon MSK cluster](https://docs.aws.amazon.com/msk/latest/developerguide/msk-autoexpand.html) in the *Amazon Managed Streaming for Apache Kafka Developer Guide*
 
 ## Service\-linked role created for Amazon MSK<a name="integrate-service-linked-role-msk"></a>
@@ -19,14 +19,14 @@ The service\-linked role in the previous section can be assumed only by the serv
 
 ## Registering Amazon MSK cluster storage as scalable targets with Application Auto Scaling<a name="integrate-register-msk"></a>
 
-Application Auto Scaling requires a scalable target before you can create a scaling policy for the storage volume size per broker of an Amazon MSK cluster\. A scalable target is a resource that Application Auto Scaling can scale out and scale in\. Scalable targets are uniquely identified by the combination of resource ID, scalable dimension, and namespace\. 
+Application Auto Scaling requires a scalable target before you can create a scaling policy for the storage volume size per broker of an Amazon MSK cluster\. A scalable target is a resource that Application Auto Scaling can scale\. Scalable targets are uniquely identified by the combination of resource ID, scalable dimension, and namespace\. 
 
 If you configure auto scaling using the Amazon MSK console, then Amazon MSK automatically registers a scalable target for you\. 
 
 If you want to configure auto scaling using the AWS CLI or one of the AWS SDKs, you can use the following options:
 + AWS CLI: 
 
-  Call the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command for an Amazon MSK cluster\. The following example registers the storage volume size per broker of an Amazon MSK cluster, with a minimum capacity of 100 GiB and a maximum capacity of 800 GiB\. 
+  Call the [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command for an Amazon MSK cluster\. The following example registers the storage volume size per broker of an Amazon MSK cluster, with a minimum capacity of 100 GiB and a maximum capacity of 800 GiB\. 
 
   ```
   aws application-autoscaling register-scalable-target \
@@ -38,4 +38,7 @@ If you want to configure auto scaling using the AWS CLI or one of the AWS SDKs, 
   ```
 + AWS SDK: 
 
-  Call the [https://docs.aws.amazon.com/autoscaling/application/APIReference/API_RegisterScalableTarget.html](https://docs.aws.amazon.com/autoscaling/application/APIReference/API_RegisterScalableTarget.html) operation and provide `ResourceId`, `ScalableDimension`, `ServiceNamespace`, `MinCapacity`, and `MaxCapacity` as parameters\. 
+  Call the [RegisterScalableTarget](https://docs.aws.amazon.com/autoscaling/application/APIReference/API_RegisterScalableTarget.html) operation and provide `ResourceId`, `ScalableDimension`, `ServiceNamespace`, `MinCapacity`, and `MaxCapacity` as parameters\. 
+
+**Note**  
+When an Amazon MSK cluster is the scalable target, scale in is disabled and cannot be enabled\. 

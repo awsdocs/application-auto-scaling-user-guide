@@ -26,7 +26,7 @@ If you configure auto scaling using the ElastiCache console, then ElastiCache au
 If you want to configure auto scaling using the AWS CLI or one of the AWS SDKs, you can use the following options:
 + AWS CLI: 
 
-  Call the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command for an ElastiCache replication group\. The following example registers the desired number of node groups for a replication group called `mycluster`, with a minimum capacity of one and a maximum capacity of five\.
+  Call the [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command for an ElastiCache replication group\. The following example registers the desired number of node groups for a replication group called `mycluster`, with a minimum capacity of one and a maximum capacity of five\.
 
   ```
   aws application-autoscaling register-scalable-target \
@@ -49,8 +49,4 @@ If you want to configure auto scaling using the AWS CLI or one of the AWS SDKs, 
   ```
 + AWS SDK: 
 
-  Call the [https://docs.aws.amazon.com/autoscaling/application/APIReference/API_RegisterScalableTarget.html](https://docs.aws.amazon.com/autoscaling/application/APIReference/API_RegisterScalableTarget.html) operation and provide `ResourceId`, `ScalableDimension`, `ServiceNamespace`, `MinCapacity`, and `MaxCapacity` as parameters\. 
-
-## Supported Regions<a name="elasticache-regions"></a>
-
-Application Auto Scaling currently supports integration with ElastiCache in the following regions: US East \(N\. Virginia\), EU \(Ireland\), South America \(Sao Paulo\), Asia Pacific \(Mumbai\)\.
+  Call the [RegisterScalableTarget](https://docs.aws.amazon.com/autoscaling/application/APIReference/API_RegisterScalableTarget.html) operation and provide `ResourceId`, `ScalableDimension`, `ServiceNamespace`, `MinCapacity`, and `MaxCapacity` as parameters\. 

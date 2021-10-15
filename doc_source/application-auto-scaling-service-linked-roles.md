@@ -104,8 +104,9 @@ Application Auto Scaling supports using service\-linked roles in all of the AWS 
 | Keyspaces | arn:aws:iam::012345678910:role/aws\-service\-role/cassandra\.application\-autoscaling\.amazonaws\.com/AWSServiceRoleForApplicationAutoScaling\_CassandraTable | 
 | Lambda | arn:aws:iam::012345678910:role/aws\-service\-role/lambda\.application\-autoscaling\.amazonaws\.com/AWSServiceRoleForApplicationAutoScaling\_LambdaConcurrency | 
 | MSK | arn:aws:iam::012345678910:role/aws\-service\-role/kafka\.application\-autoscaling\.amazonaws\.com/AWSServiceRoleForApplicationAutoScaling\_KafkaCluster | 
+| Neptune | arn:aws:iam::012345678910:role/aws\-service\-role/neptune\.application\-autoscaling\.amazonaws\.com/AWSServiceRoleForApplicationAutoScaling\_NeptuneCluster | 
 | SageMaker | arn:aws:iam::012345678910:role/aws\-service\-role/sagemaker\.application\-autoscaling\.amazonaws\.com/AWSServiceRoleForApplicationAutoScaling\_SageMakerEndpoint | 
-| Spot Fleet | arn:aws:iam::012345678910:role/aws\-service\-role/ec2\.application\-autoscaling\.amazonaws\.com/AWSServiceRoleForApplicationAutoScaling\_EC2SpotFleetRequest | 
+| Spot Fleets | arn:aws:iam::012345678910:role/aws\-service\-role/ec2\.application\-autoscaling\.amazonaws\.com/AWSServiceRoleForApplicationAutoScaling\_EC2SpotFleetRequest | 
 | Custom resources | arn:aws:iam::012345678910:role/aws\-service\-role/custom\-resource\.application\-autoscaling\.amazonaws\.com/AWSServiceRoleForApplicationAutoScaling\_CustomResource | 
 
 **Note**  

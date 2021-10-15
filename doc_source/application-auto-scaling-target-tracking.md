@@ -34,13 +34,16 @@ The following predefined metrics are available for use when you create target tr
 + `CassandraReadCapacityUtilization`
 + `CassandraWriteCapacityUtilization`
 
-**Amazon Managed Streaming for Apache Kafka \(MSK\)**
-+ `KafkaBrokerStorageUtilization`
-
 **Lambda**
 + `LambdaProvisionedConcurrencyUtilization`
 
-**Amazon EC2 Spot**
+**Amazon Managed Streaming for Apache Kafka \(MSK\)**
++ `KafkaBrokerStorageUtilization`
+
+**Neptune**
++ `NeptuneReaderAverageCPUUtilization`
+
+**Spot Fleet \(Amazon EC2\)**
 + `ALBRequestCountPerTarget` \(load balancer metric\)
 + `EC2SpotFleetRequestAverageCPUUtilization`
 + `EC2SpotFleetRequestAverageNetworkIn`
@@ -96,11 +99,11 @@ The combination of scheduled scaling and target tracking scaling can help reduce
 ## Commonly used commands for scaling policy creation, management, and deletion<a name="target-tracking-policy-commonly-used-commands"></a>
 
 The commonly used commands for working with scaling policies include: 
-+ [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) to register AWS or custom resources as scalable targets \(a resource that Application Auto Scaling can scale\), and to suspend and resume scaling\. 
-+ [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scaling-policy.html) to add or modify scaling policies for an existing scalable target\.
-+  [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-activities.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-activities.html) to return information about scaling activities in an AWS Region\. 
-+ [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-policies.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-policies.html) to return information about scaling policies in an AWS Region\.
-+ [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scaling-policy.html) to delete a scaling\-policy\. 
++ [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) to register AWS or custom resources as scalable targets \(a resource that Application Auto Scaling can scale\), and to suspend and resume scaling\. 
++ [put\-scaling\-policy](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scaling-policy.html) to add or modify scaling policies for an existing scalable target\.
++  [describe\-scaling\-activities](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-activities.html) to return information about scaling activities in an AWS Region\. 
++ [describe\-scaling\-policies](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-policies.html) to return information about scaling policies in an AWS Region\.
++ [delete\-scaling\-policy](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scaling-policy.html) to delete a scaling\-policy\. 
 
 ## Limitations<a name="target-tracking-limitations"></a>
 

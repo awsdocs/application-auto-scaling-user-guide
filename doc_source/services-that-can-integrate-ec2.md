@@ -4,7 +4,7 @@ You can scale Spot Fleets using target tracking scaling policies, step scaling p
 
 Use the following information to help you integrate Spot Fleet with Application Auto Scaling\. 
 
-If you are just getting started with scaling Spot Fleets, you can view sample configurations and details about using Spot Fleet with Application Auto Scaling in the following documentation:
+If you are just getting started with scaling Spot Fleets, you can view details about using Spot Fleet with Application Auto Scaling in the following documentation:
 + [Automatic scaling for Spot Fleet](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet-automatic-scaling.html) in the *Amazon EC2 User Guide*
 
 ## Service\-linked role created for Spot Fleet<a name="integrate-service-linked-role-ec2"></a>
@@ -26,7 +26,7 @@ If you configure auto scaling using the Spot Fleet console, then Spot Fleet auto
 If you want to configure auto scaling using the AWS CLI or one of the AWS SDKs, you can use the following options:
 + AWS CLI: 
 
-  Call the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command for a Spot Fleet\. The following example registers the target capacity of a Spot Fleet using its request ID, with a minimum capacity of two instances and a maximum capacity of 10 instances\.
+  Call the [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command for a Spot Fleet\. The following example registers the target capacity of a Spot Fleet using its request ID, with a minimum capacity of two instances and a maximum capacity of 10 instances\.
 
   ```
   aws application-autoscaling register-scalable-target \
@@ -38,4 +38,4 @@ If you want to configure auto scaling using the AWS CLI or one of the AWS SDKs, 
   ```
 + AWS SDK: 
 
-  Call the [https://docs.aws.amazon.com/autoscaling/application/APIReference/API_RegisterScalableTarget.html](https://docs.aws.amazon.com/autoscaling/application/APIReference/API_RegisterScalableTarget.html) operation and provide `ResourceId`, `ScalableDimension`, `ServiceNamespace`, `MinCapacity`, and `MaxCapacity` as parameters\. 
+  Call the [RegisterScalableTarget](https://docs.aws.amazon.com/autoscaling/application/APIReference/API_RegisterScalableTarget.html) operation and provide `ResourceId`, `ScalableDimension`, `ServiceNamespace`, `MinCapacity`, and `MaxCapacity` as parameters\. 

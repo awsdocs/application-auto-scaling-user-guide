@@ -27,14 +27,14 @@ Before you begin, note the following:
 
 While completing this tutorial, there are two steps in which you set or update your `MinCapacity` and `MaxCapacity` values to 0 to reset the current capacity to 0\. Depending on the resource that you've chosen to use, you might be unable to reset the current capacity to 0 during these steps\. To help you address the issue, a message in the output will indicate that minimum capacity cannot be less than the value specified and will provide the minimum capacity value that the resource can accept\.
 
-To monitor your scaling activities with Application Auto Scaling, you can use the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-activities.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-activities.html) command\. Each scaling event that is triggered by a scaling policy or a scheduled action generates a scaling activity\. 
+To monitor your scaling activities with Application Auto Scaling, you can use the [describe\-scaling\-activities](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-activities.html) command\. Each scaling event that is triggered by a scaling policy or a scheduled action generates a scaling activity\. 
 
 ## Step 1: Register your scalable target<a name="tutorial-register-scalable-target"></a>
 
 Start by registering your resource as a scalable target with Application Auto Scaling\. A scalable target is a resource that Application Auto Scaling can scale out or scale in\.
 
 **To register your scalable target with Application Auto Scaling**
-+ Use the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command to register a new scalable target\. Set the `MinCapacity` and `MaxCapacity` values to 0 to reset the current capacity to 0\. 
++ Use the following [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command to register a new scalable target\. Set the `MinCapacity` and `MaxCapacity` values to 0 to reset the current capacity to 0\. 
 
   **Linux, macOS, or Unix**
 
@@ -56,11 +56,11 @@ Start by registering your resource as a scalable target with Application Auto Sc
 
 ## Step 2: Set up scheduled actions according to your requirements<a name="tutorial-create-scheduled-actions"></a>
 
-You can use the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scheduled-action.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scheduled-action.html) command to create scheduled actions that are configured to meet your business needs\. In this tutorial, we focus on a configuration that turns off scaling outside of working hours\.
+You can use the [put\-scheduled\-action](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scheduled-action.html) command to create scheduled actions that are configured to meet your business needs\. In this tutorial, we focus on a configuration that stops consuming resources outside of working hours by reducing capacity to 0\.
 
 **To create a scheduled action that scales out in the morning**
 
-1. To scale out the scalable target, use the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scheduled-action.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scheduled-action.html) command\. Include the `--schedule` parameter with a recurring schedule, in UTC, using a cron expression\. 
+1. To scale out the scalable target, use the following [put\-scheduled\-action](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scheduled-action.html) command\. Include the `--schedule` parameter with a recurring schedule, in UTC, using a cron expression\. 
 
    On the specified schedule \(every day at 9:00 AM UTC\), Application Auto Scaling updates the `MinCapacity` and `MaxCapacity` values to the desired range of 1\-5 capacity units\.
 
@@ -84,7 +84,7 @@ You can use the [https://docs.aws.amazon.com/cli/latest/reference/application-au
 
    This command does not return any output if it is successful\.
 
-1. To confirm that your scheduled action exists, use the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scheduled-actions.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scheduled-actions.html) command\.
+1. To confirm that your scheduled action exists, use the following [describe\-scheduled\-actions](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scheduled-actions.html) command\.
 
    **Linux, macOS, or Unix**
 
@@ -121,7 +121,7 @@ You can use the [https://docs.aws.amazon.com/cli/latest/reference/application-au
 
 1. Repeat the preceding procedure to create another scheduled action that Application Auto Scaling uses to scale in at the end of the day\. 
 
-   On the specified schedule \(every day at 8:00 PM UTC\), Application Auto Scaling updates the target's `MinCapacity` and `MaxCapacity` to 0, as instructed by the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scheduled-action.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scheduled-action.html) command\.
+   On the specified schedule \(every day at 8:00 PM UTC\), Application Auto Scaling updates the target's `MinCapacity` and `MaxCapacity` to 0, as instructed by the following [put\-scheduled\-action](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scheduled-action.html) command\.
 
    **Linux, macOS, or Unix**
 
@@ -141,7 +141,7 @@ You can use the [https://docs.aws.amazon.com/cli/latest/reference/application-au
    aws application-autoscaling put-scheduled-action --service-namespace namespace --scalable-dimension dimension --resource-id identifier --scheduled-action-name my-second-scheduled-action --schedule "cron(0 20 * * ? *)" --scalable-target-action MinCapacity=0,MaxCapacity=0
    ```
 
-1. To confirm that your scheduled action exists, use the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scheduled-actions.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scheduled-actions.html) command\.
+1. To confirm that your scheduled action exists, use the following [describe\-scheduled\-actions](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scheduled-actions.html) command\.
 
    **Linux, macOS, or Unix**
 
@@ -196,7 +196,7 @@ You can add multiple scaling policies, but make sure you do not add conflicting 
 
 **To create a target tracking scaling policy**
 
-1. Use the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scaling-policy.html) command to create the policy\. 
+1. Use the following [put\-scaling\-policy](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scaling-policy.html) command to create the policy\. 
 
    The metrics that are most frequently used for target tracking are predefined, and you can use them without supplying the full metric specification from CloudWatch\. For more information about the available predefined metrics, see [Target tracking scaling policies for Application Auto Scaling](application-auto-scaling-target-tracking.md)\.
 
@@ -221,7 +221,7 @@ You can add multiple scaling policies, but make sure you do not add conflicting 
 
    If successful, this command returns the ARNs and names of the two CloudWatch alarms that were created on your behalf\.
 
-1. To confirm that your scheduled action exists, use the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-policies.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-policies.html) command\.
+1. To confirm that your scheduled action exists, use the following [describe\-scaling\-policies](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-policies.html) command\.
 
    **Linux, macOS, or Unix**
 
@@ -263,7 +263,7 @@ To prevent your account from accruing charges for resources created while active
 Deleting the scaling configuration does not delete your scalable resource\. It also does not return it to its original capacity\. You can use the console of the service where you created the scalable resource to delete it or adjust its capacity\.
 
 **To delete the scheduled actions**  
-The following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scheduled-action.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scheduled-action.html) command deletes a specified scheduled action\. You can skip this step if you want to keep the scheduled actions that you created\.
+The following [delete\-scheduled\-action](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scheduled-action.html) command deletes a specified scheduled action\. You can skip this step if you want to keep the scheduled actions that you created\.
 
 **Linux, macOS, or Unix**
 
@@ -282,7 +282,7 @@ aws application-autoscaling delete-scheduled-action --service-namespace namespac
 ```
 
 **To delete the scaling policy**  
-The following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scaling-policy.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scaling-policy.html) command deletes a specified target tracking scaling policy\. You can skip this step if you want to keep the scaling policy that you created\.
+The following [delete\-scaling\-policy](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scaling-policy.html) command deletes a specified target tracking scaling policy\. You can skip this step if you want to keep the scaling policy that you created\.
 
 **Linux, macOS, or Unix**
 
@@ -301,7 +301,7 @@ aws application-autoscaling delete-scaling-policy --service-namespace namespace 
 ```
 
 **To deregister the scalable target**  
-Use the following [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/deregister-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/deregister-scalable-target.html) command to deregister the scalable target\. If you have any scaling policies that you created or any scheduled actions that have not yet been deleted, they are deleted by this command\. You can skip this step if you want to keep the scalable target registered for future use\.
+Use the following [deregister\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/deregister-scalable-target.html) command to deregister the scalable target\. If you have any scaling policies that you created or any scheduled actions that have not yet been deleted, they are deleted by this command\. You can skip this step if you want to keep the scalable target registered for future use\.
 
 **Linux, macOS, or Unix**
 
