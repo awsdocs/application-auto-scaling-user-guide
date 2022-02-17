@@ -4,7 +4,7 @@ The following examples show how to create scheduled actions with the AWS CLI [pu
 
 **Topics**
 + [Creating a scheduled action that occurs only once](#one-time-schedule)
-+ [Creating a scheduled action that runs on a recurring interval](#recurrence-schedule-cron)
++ [Creating a scheduled action that runs on a recurring interval](#recurrence-schedule-rate)
 + [Creating a scheduled action that runs on a recurring schedule](#recurrence-schedule-cron)
 + [Creating a one\-time scheduled action that specifies a time zone](#one-time-schedule-set-time-zone)
 + [Creating a recurring scheduled action that specifies a time zone](#recurring-schedule-set-time-zone)
@@ -52,7 +52,7 @@ aws application-autoscaling put-scheduled-action --service-namespace custom-reso
 aws application-autoscaling put-scheduled-action --service-namespace custom-resource --scalable-dimension custom-resource:ResourceType:Property --resource-id file://~/custom-resource-id.txt --scheduled-action-name scale-in --schedule "at(2021-03-31T22:30:00)" --scalable-target-action MinCapacity=0,MaxCapacity=0
 ```
 
-## Creating a scheduled action that runs on a recurring interval<a name="recurrence-schedule-cron"></a>
+## Creating a scheduled action that runs on a recurring interval<a name="recurrence-schedule-rate"></a>
 
 To schedule scaling at a recurring interval, use the `--schedule "rate(value unit)"` option\. The value must be a positive integer\. The unit can be `minute`, `minutes`, `hour`, `hours`, `day`, or `days`\. For more information, see [Rate expressions](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#RateExpressions) in the *Amazon CloudWatch Events User Guide*\. 
 
