@@ -8,7 +8,7 @@ If you are just getting started with scaling DynamoDB tables and global secondar
 + [Managing throughput capacity with DynamoDB Auto Scaling](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/AutoScaling.html) in the *Amazon DynamoDB Developer Guide*
 
 **Tip**  
-We also provide a tutorial for scheduled scaling in [Getting started using the AWS CLI](get-started-exercise.md)\. In this tutorial, you learn the basic steps to configure scaling so your DynamoDB table scales at scheduled times\.
+We also provide a tutorial for scheduled scaling in [Tutorial: Getting started with scheduled scaling using the AWS CLI](get-started-exercise.md)\. In this tutorial, you learn the basic steps to configure scaling so your DynamoDB table scales at scheduled times\.
 
 ## Service\-linked role created for DynamoDB<a name="integrate-service-linked-role-dynamodb"></a>
 
@@ -29,7 +29,7 @@ If you configure auto scaling using the DynamoDB console, then DynamoDB automati
 If you want to configure auto scaling using the AWS CLI or one of the AWS SDKs, you can use the following options:
 + AWS CLI: 
 
-  Call the [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command for a table\. The following example registers the provisioned write capacity of a table called `my-table`, with a minimum capacity of five write capacity units and a maximum capacity of 10 write capacity units\.
+  Call the [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command for a table's write capacity\. The following example registers the provisioned write capacity of a table called `my-table`, with a minimum capacity of five write capacity units and a maximum capacity of 10 write capacity units\.
 
   ```
   aws application-autoscaling register-scalable-target \
@@ -40,12 +40,34 @@ If you want to configure auto scaling using the AWS CLI or one of the AWS SDKs, 
     --max-capacity 10
   ```
 
-  Call the [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command for a global secondary index\. The following example registers the provisioned write capacity of a global secondary index called `my-table-index`, with a minimum capacity of five write capacity units and a maximum capacity of 10 write capacity units\.
+  Call the [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command for a table's read capacity\. The following example registers the provisioned read capacity of a table called `my-table`, with a minimum capacity of five read capacity units and a maximum capacity of 10 read units\.
+
+  ```
+  aws application-autoscaling register-scalable-target \
+    --service-namespace dynamodb \
+    --scalable-dimension dynamodb:table:ReadCapacityUnits \
+    --resource-id table/my-table \
+    --min-capacity 5 \
+    --max-capacity 10
+  ```
+
+  Call the [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command for the write capacity of a global secondary index\. The following example registers the provisioned write capacity of a global secondary index called `my-table-index`, with a minimum capacity of five write capacity units and a maximum capacity of 10 write capacity units\.
 
   ```
   aws application-autoscaling register-scalable-target \
     --service-namespace dynamodb \
     --scalable-dimension dynamodb:index:WriteCapacityUnits \
+    --resource-id table/my-table/index/my-table-index \
+    --min-capacity 5 \
+    --max-capacity 10
+  ```
+
+  Call the [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command for the read capacity of a global secondary index\. The following example registers the provisioned read capacity of a global secondary index called `my-table-index`, with a minimum capacity of five read capacity units and a maximum capacity of 10 read capacity units\.
+
+  ```
+  aws application-autoscaling register-scalable-target \
+    --service-namespace dynamodb \
+    --scalable-dimension dynamodb:index:ReadCapacityUnits \
     --resource-id table/my-table/index/my-table-index \
     --min-capacity 5 \
     --max-capacity 10

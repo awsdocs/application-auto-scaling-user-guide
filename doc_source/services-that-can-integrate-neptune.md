@@ -37,7 +37,3 @@ To configure auto scaling using the AWS CLI or one of the AWS SDKs, you can use 
 + AWS SDK: 
 
   Call the [RegisterScalableTarget](https://docs.aws.amazon.com/autoscaling/application/APIReference/API_RegisterScalableTarget.html) operation and provide `ResourceId`, `ScalableDimension`, `ServiceNamespace`, `MinCapacity`, and `MaxCapacity` as parameters\. 
-
-## Supported regions<a name="neptune-regions"></a>
-
-Application Auto Scaling currently supports integration with Neptune in all commercial AWS Regions where Neptune is available, excluding AWS GovCloud \(US\) Regions\.

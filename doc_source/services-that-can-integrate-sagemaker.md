@@ -19,7 +19,7 @@ The service\-linked role in the previous section can be assumed only by the serv
 
 ## Registering SageMaker endpoint variants as scalable targets with Application Auto Scaling<a name="integrate-register-sagemaker"></a>
 
-Application Auto Scaling requires a scalable target before you can create scaling policies or scheduled actions for an SageMaker xxx\. A scalable target is a resource that Application Auto Scaling can scale out and scale in\. Scalable targets are uniquely identified by the combination of resource ID, scalable dimension, and namespace\. 
+Application Auto Scaling requires a scalable target before you can create scaling policies or scheduled actions for a SageMaker model \(variant\)\. A scalable target is a resource that Application Auto Scaling can scale out and scale in\. Scalable targets are uniquely identified by the combination of resource ID, scalable dimension, and namespace\. 
 
 If you configure auto scaling using the SageMaker console, then SageMaker automatically registers a scalable target for you\. 
 

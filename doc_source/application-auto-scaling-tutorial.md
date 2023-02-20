@@ -1,5 +1,8 @@
 # Tutorial: Configuring auto scaling to handle a heavy workload<a name="application-auto-scaling-tutorial"></a>
 
+**Important**  
+Before you explore this tutorial, we recommend that you first review the following introductory tutorial: [Tutorial: Getting started with scheduled scaling using the AWS CLI](get-started-exercise.md)\.
+
 In this tutorial, you learn how to scale out and in based on time windows when your application will have a heavier than normal workload\. This is helpful when you have an application that can suddenly have a large number of visitors on a regular schedule or on a seasonal basis\. 
 
 You can use a target tracking scaling policy together with scheduled scaling to handle the extra load\. Scheduled scaling automatically initiates changes to your `MinCapacity` and `MaxCapacity` on your behalf, based on a schedule that you specify\. When a target tracking scaling policy is active on the resource, it can scale dynamically based on current resource utilization, within the new minimum and maximum capacity range\.
@@ -13,43 +16,43 @@ After completing this tutorial, you’ll know how to:
 + [Step 1: Register your scalable target](#tutorial-register-scalable-target)
 + [Step 2: Set up scheduled actions according to your requirements](#tutorial-create-scheduled-actions)
 + [Step 3: Add a target tracking scaling policy](#tutorial-create-target-tracking-policy)
-+ [Step 4: Clean up](#tutorial-scaling-clean-up)
++ [Step 4: Next steps](#tutorial-next-steps)
++ [Step 5: Clean up](#tutorial-scaling-clean-up)
 
 ## Prerequisites<a name="tutorial-prerequisites"></a>
 
 This tutorial assumes that you have already done the following:
-+ You created an AWS account\.
++ You created an AWS account\. For more information, see [Setting up](setting-up.md)\.
 + You installed and configured the AWS CLI\. For more information, see [Set up the AWS CLI](setup-awscli.md)\.
-+ Your account has all of the necessary permissions for registering and deregistering resources as a scalable target with Application Auto Scaling\. It also has all of the necessary permissions for creating scaling policies and scheduled actions\.
-+ You have a scalable resource in a non\-production environment available to use for this tutorial\. If you don't already have one, create one before beginning the tutorial\.
++ Your account has all of the necessary permissions for registering and deregistering resources as scalable targets with Application Auto Scaling\. It also has all of the necessary permissions for creating scaling policies and scheduled actions\. For more information, see [Identity and Access Management for Application Auto Scaling](auth-and-access-control.md)\.
++ You have a supported resource in a non\-production environment available to use for this tutorial\. If you don't already have one, create one now\. For information about the AWS services and resources that work with Application Auto Scaling, see the [AWS services that you can use with Application Auto Scaling](integrated-services-list.md) section\.
 
-Before you begin, note the following: 
-
-While completing this tutorial, there are two steps in which you set or update your `MinCapacity` and `MaxCapacity` values to 0 to reset the current capacity to 0\. Depending on the resource that you've chosen to use, you might be unable to reset the current capacity to 0 during these steps\. To help you address the issue, a message in the output will indicate that minimum capacity cannot be less than the value specified and will provide the minimum capacity value that the resource can accept\.
-
-To monitor your scaling activities with Application Auto Scaling, you can use the [describe\-scaling\-activities](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-activities.html) command\. Each scaling event that is triggered by a scaling policy or a scheduled action generates a scaling activity\. 
+**Note**  
+While completing this tutorial, there are two steps in which you set your resource's minimum and maximum capacity values to 0 to reset the current capacity to 0\. Depending on which resource you're using with Application Auto Scaling, you might be unable to reset the current capacity to 0 during these steps\. To help you address the issue, a message in the output will indicate that minimum capacity cannot be less than the value specified and will provide the minimum capacity value that the AWS resource can accept\.
 
 ## Step 1: Register your scalable target<a name="tutorial-register-scalable-target"></a>
 
-Start by registering your resource as a scalable target with Application Auto Scaling\. A scalable target is a resource that Application Auto Scaling can scale out or scale in\.
+Start by registering your resource as a scalable target with Application Auto Scaling\. A scalable target is a resource that Application Auto Scaling can scale out and scale in\.
 
 **To register your scalable target with Application Auto Scaling**
-+ Use the following [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command to register a new scalable target\. Set the `MinCapacity` and `MaxCapacity` values to 0 to reset the current capacity to 0\. 
++ Use the following [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command to register a new scalable target\. Set the `--min-capacity` and `--max-capacity` values to 0 to reset the current capacity to 0\.
+
+  Replace the sample text for `--service-namespace` with the namespace of the AWS service you're using with Application Auto Scaling, `--scalable-dimension` with the scalable dimension associated with the resource you're registering, and `--resource-id` with an identifier for the resource\. These values vary based on which resource is used and how the resource ID is constructed\. See the topics in the [AWS services that you can use with Application Auto Scaling](integrated-services-list.md) section for more information\. These topics include example commands that show you how to register scalable targets with Application Auto Scaling\.
 
   **Linux, macOS, or Unix**
 
   ```
   aws application-autoscaling register-scalable-target \
-    --service-namespace service namespace \
-    --scalable-dimension scalable dimension of the scalable target \
-    --resource-id resource identifier to associate with this scalable target \
+    --service-namespace namespace \
+    --scalable-dimension dimension \
+    --resource-id identifier \
     --min-capacity 0 --max-capacity 0
   ```
 
   **Windows**
 
   ```
-  aws application-autoscaling register-scalable-target --service-namespace service namespace --scalable-dimension scalable dimension of the scalable target --resource-id resource identifier to associate with this scalable target --min-capacity 0 --max-capacity 0
+  aws application-autoscaling register-scalable-target --service-namespace namespace --scalable-dimension dimension --resource-id identifier --min-capacity 0 --max-capacity 0
   ```
 
   This command does not return any output if it is successful\.
@@ -188,9 +191,9 @@ You can use the [put\-scheduled\-action](https://docs.aws.amazon.com/cli/latest/
 
 Now that you have the basic schedule in place, add a target tracking scaling policy to scale based on current resource utilization\. 
 
-With target tracking, Application Auto Scaling compares the target value in the policy to the current value of the specified metric\. When they are unequal for a period of time, Application Auto Scaling adds or removes capacity to maintain steady performance\. As the load on your application and the metric value increases, Application Auto Scaling adds capacity as fast as it can without going above `MaxCapacity`\. When Application Auto Scaling removes capacity because the load is minimal, it does so without going below `MinCapacity`\. By adjusting the capacity based on usage, you only pay for what your application needs\. For more information, see [Supporting application availability during high utilization periods](application-auto-scaling-target-tracking.md#target-tracking-high-utilization)\.
+With target tracking, Application Auto Scaling compares the target value in the policy to the current value of the specified metric\. When they are unequal for a period of time, Application Auto Scaling adds or removes capacity to maintain steady performance\. As the load on your application and the metric value increases, Application Auto Scaling adds capacity as fast as it can without going above `MaxCapacity`\. When Application Auto Scaling removes capacity because the load is minimal, it does so without going below `MinCapacity`\. By adjusting the capacity based on usage, you only pay for what your application needs\.
 
-If the metric has insufficient data because your application does not have any load, Application Auto Scaling does not add or remove capacity\. The intention of this behavior is to prioritize availability in situations where not enough information is available\.
+If the metric has insufficient data because your application does not have any load, Application Auto Scaling does not add or remove capacity\. In other words, Application Auto Scaling prioritizes availability in situations where not enough information is available\.
 
 You can add multiple scaling policies, but make sure you do not add conflicting step scaling policies, which might cause undesirable behavior\. For example, if the step scaling policy initiates a scale\-in activity before the target tracking policy is ready to scale in, the scale\-in activity will not be blocked\. After the scale\-in activity completes, the target tracking policy could instruct Application Auto Scaling to scale out again\. 
 
@@ -256,11 +259,36 @@ You can add multiple scaling policies, but make sure you do not add conflicting 
    ]
    ```
 
-## Step 4: Clean up<a name="tutorial-scaling-clean-up"></a>
+## Step 4: Next steps<a name="tutorial-next-steps"></a>
+
+When a scaling activity occurs, you see a record of it in the output of the scaling activities for the scalable target, for example: 
+
+```
+Successfully set desired count to 1. Change successfully fulfilled by ecs.
+```
+
+To monitor your scaling activities with Application Auto Scaling, you can use the following [describe\-scaling\-activities](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scaling-activities.html) command\.
+
+**Linux, macOS, or Unix**
+
+```
+aws application-autoscaling describe-scaling-activities 
+  --service-namespace namespace \
+  --scalable-dimension dimension \
+  --resource-id identifier
+```
+
+**Windows**
+
+```
+aws application-autoscaling describe-scaling-activities --service-namespace namespace --scalable-dimension dimension --resource-id identifier
+```
+
+## Step 5: Clean up<a name="tutorial-scaling-clean-up"></a>
 
 To prevent your account from accruing charges for resources created while actively scaling, you can clean up the associated scaling configuration as follows\. 
 
-Deleting the scaling configuration does not delete your scalable resource\. It also does not return it to its original capacity\. You can use the console of the service where you created the scalable resource to delete it or adjust its capacity\.
+Deleting the scaling configuration does not delete the underlying AWS resource\. It also does not return it to its original capacity\. You can use the console of the service where you created the resource to delete it or adjust its capacity\.
 
 **To delete the scheduled actions**  
 The following [delete\-scheduled\-action](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/delete-scheduled-action.html) command deletes a specified scheduled action\. You can skip this step if you want to keep the scheduled actions that you created\.

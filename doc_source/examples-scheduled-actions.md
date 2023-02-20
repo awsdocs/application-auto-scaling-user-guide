@@ -2,14 +2,17 @@
 
 The following examples show how to create scheduled actions with the AWS CLI [put\-scheduled\-action](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scheduled-action.html) command\. When you specify the new capacity, you can specify a minimum capacity, a maximum capacity, or both\.
 
-**Topics**
-+ [Creating a scheduled action that occurs only once](#one-time-schedule)
-+ [Creating a scheduled action that runs on a recurring interval](#recurrence-schedule-rate)
-+ [Creating a scheduled action that runs on a recurring schedule](#recurrence-schedule-cron)
-+ [Creating a one\-time scheduled action that specifies a time zone](#one-time-schedule-set-time-zone)
-+ [Creating a recurring scheduled action that specifies a time zone](#recurring-schedule-set-time-zone)
+**Note**  
+For brevity, the examples in this topic illustrate CLI commands for a few of the services that integrate with Application Auto Scaling\. To specify a different scalable target, specify its namespace in `--service-namespace`, its scalable dimension in `--scalable-dimension`, and its resource ID in `--resource-id`\.
 
-## Creating a scheduled action that occurs only once<a name="one-time-schedule"></a>
+**Topics**
++ [Create a scheduled action that occurs only once](#one-time-schedule)
++ [Create a scheduled action that runs on a recurring interval](#recurrence-schedule-rate)
++ [Create a scheduled action that runs on a recurring schedule](#recurrence-schedule-cron)
++ [Create a one\-time scheduled action that specifies a time zone](#one-time-schedule-set-time-zone)
++ [Create a recurring scheduled action that specifies a time zone](#recurring-schedule-set-time-zone)
+
+## Create a scheduled action that occurs only once<a name="one-time-schedule"></a>
 
 To automatically scale your scalable target one time only, at a specified date and time, use the `--schedule "at(yyyy-mm-ddThh:mm:ss)"` option\.
 
@@ -52,7 +55,7 @@ aws application-autoscaling put-scheduled-action --service-namespace custom-reso
 aws application-autoscaling put-scheduled-action --service-namespace custom-resource --scalable-dimension custom-resource:ResourceType:Property --resource-id file://~/custom-resource-id.txt --scheduled-action-name scale-in --schedule "at(2021-03-31T22:30:00)" --scalable-target-action MinCapacity=0,MaxCapacity=0
 ```
 
-## Creating a scheduled action that runs on a recurring interval<a name="recurrence-schedule-rate"></a>
+## Create a scheduled action that runs on a recurring interval<a name="recurrence-schedule-rate"></a>
 
 To schedule scaling at a recurring interval, use the `--schedule "rate(value unit)"` option\. The value must be a positive integer\. The unit can be `minute`, `minutes`, `hour`, `hours`, `day`, or `days`\. For more information, see [Rate expressions](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#RateExpressions) in the *Amazon CloudWatch Events User Guide*\. 
 
@@ -79,24 +82,9 @@ aws application-autoscaling put-scheduled-action --service-namespace ecs \
 aws application-autoscaling put-scheduled-action --service-namespace ecs --scalable-dimension ecs:service:DesiredCount --resource-id service/default/web-app --scheduled-action-name my-recurring-action --schedule "rate(5 hours)" --start-time 2021-01-30T12:00:00 --end-time 2021-01-31T22:00:00 --scalable-target-action MinCapacity=3,MaxCapacity=10
 ```
 
-## Creating a scheduled action that runs on a recurring schedule<a name="recurrence-schedule-cron"></a>
+## Create a scheduled action that runs on a recurring schedule<a name="recurrence-schedule-cron"></a>
 
-To schedule scaling on a recurring schedule, use the `--schedule "cron(fields)"` option\. The cron format that's supported by Application Auto Scaling consists of six fields separated by white spaces: \[Minutes\] \[Hours\] \[Day\_of\_Month\] \[Month\] \[Day\_of\_Week\] \[Year\]\.
-
-Here are some examples of cron expressions\. 
-
-
-| Minutes | Hours | Day of month | Month | Day of week | Year | Meaning | 
-| --- | --- | --- | --- | --- | --- | --- | 
-|  0  |  10  |  \*  |  \*  |  ?  |  \*  |  Run at 10:00 am \(UTC\) every day  | 
-|  15  |  12  |  \*  |  \*  |  ?  |  \*  |  Run at 12:15 pm \(UTC\) every day  | 
-|  0  |  18  |  ?  |  \*  |  MON\-FRI  |  \*  |  Run at 6:00 pm \(UTC\) every Monday through Friday  | 
-|  0  |  8  |  1  |  \*  |  ?  |  \*  |  Run at 8:00 am \(UTC\) the 1st day of every month  | 
-|  0/15  |  \*  |  \*  |  \*  |  ?  |  \*  |  Run every 15 minutes  | 
-|  0/10  |  \*  |  ?  |  \*  |  MON\-FRI  |  \*  |  Run every 10 minutes Monday through Friday  | 
-|  0/5  |  8\-17  |  ?  |  \*  |  MON\-FRI  |  \*  |  Run every 5 minutes Monday through Friday between 8:00 am and 5:55 pm \(UTC\)   | 
-
-For more information about writing cron expressions, see [Cron expressions](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions) in the *Amazon CloudWatch Events User Guide*\.
+To schedule scaling on a recurring schedule, use the `--schedule "cron(fields)"` option\. For more information, see [Schedule recurring scaling actions using cron expressions](scheduled-scaling-using-cron-expressions.md)\.
 
 The following is an example of a scheduled action that uses a cron expression\. 
 
@@ -119,7 +107,7 @@ aws application-autoscaling put-scheduled-action --service-namespace appstream \
 aws application-autoscaling put-scheduled-action --service-namespace appstream --scalable-dimension appstream:fleet:DesiredCapacity --resource-id fleet/sample-fleet --scheduled-action-name my-recurring-action --schedule "cron(0 9 * * ? *)" --scalable-target-action MinCapacity=10,MaxCapacity=50
 ```
 
-## Creating a one\-time scheduled action that specifies a time zone<a name="one-time-schedule-set-time-zone"></a>
+## Create a one\-time scheduled action that specifies a time zone<a name="one-time-schedule-set-time-zone"></a>
 
 Scheduled actions are set to the UTC time zone by default\. To specify a different time zone, include the `--timezone` option and specify the canonical name for the time zone \(`America/New_York`, for example\)\. For more information, see [https://www\.joda\.org/joda\-time/timezones\.html](https://www.joda.org/joda-time/timezones.html), which provides information about the IANA time zones that are supported when calling [put\-scheduled\-action](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scheduled-action.html)\.
 
@@ -144,9 +132,9 @@ aws application-autoscaling put-scheduled-action --service-namespace comprehend 
 aws application-autoscaling put-scheduled-action --service-namespace comprehend --scalable-dimension comprehend:document-classifier-endpoint:DesiredInferenceUnits --resource-id arn:aws:comprehend:us-west-2:123456789012:document-classifier-endpoint/EXAMPLE --scheduled-action-name  my-one-time-action --schedule "at(2021-01-31T17:00:00)" --timezone "America/New_York" --scalable-target-action MinCapacity=1,MaxCapacity=3
 ```
 
-## Creating a recurring scheduled action that specifies a time zone<a name="recurring-schedule-set-time-zone"></a>
+## Create a recurring scheduled action that specifies a time zone<a name="recurring-schedule-set-time-zone"></a>
 
-The following is an example that uses the `--timezone` option when creating a recurring scheduled action to scale capacity\.
+The following is an example that uses the `--timezone` option when creating a recurring scheduled action to scale capacity\. For more information, see [Schedule recurring scaling actions using cron expressions](scheduled-scaling-using-cron-expressions.md)\.
 
 On the specified schedule \(every Monday through Friday at 6:00 PM local time\), if the value specified for `MinCapacity` is above the current capacity, Application Auto Scaling scales out to `MinCapacity`\. If the value specified for `MaxCapacity` is below the current capacity, Application Auto Scaling scales in to `MaxCapacity`\.
 

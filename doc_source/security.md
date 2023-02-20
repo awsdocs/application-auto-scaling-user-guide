@@ -9,9 +9,9 @@ Security is a shared responsibility between AWS and you\. The [shared responsibi
 This documentation helps you understand how to apply the shared responsibility model when using Application Auto Scaling\. The following topics show you how to configure Application Auto Scaling to meet your security and compliance objectives\. You also learn how to use other AWS services that help you to monitor and secure your Application Auto Scaling resources\. 
 
 **Topics**
++ [Application Auto Scaling and interface VPC endpoints](application-auto-scaling-vpc-endpoints.md)
 + [Application Auto Scaling and data protection](application-auto-scaling-data-protection.md)
 + [Identity and Access Management for Application Auto Scaling](auth-and-access-control.md)
 + [Compliance validation for Application Auto Scaling](application-auto-scaling-compliance.md)
 + [Resilience in Application Auto Scaling](disaster-recovery-resiliency.md)
 + [Infrastructure security in Application Auto Scaling](infrastructure-security.md)
-+ [Application Auto Scaling and interface VPC endpoints](application-auto-scaling-vpc-endpoints.md)

@@ -1,13 +1,11 @@
-# Getting started using the AWS CLI<a name="get-started-exercise"></a>
+# Tutorial: Getting started with scheduled scaling using the AWS CLI<a name="get-started-exercise"></a>
 
-In this tutorial, you use the AWS CLI to explore Application Auto Scaling\. Before you begin, make sure that you have an AWS account and that you've set up the AWS CLI\. For more information, see [Setting up](setting-up.md)\. In this tutorial, you create scheduled actions to scale your scalable resources based on a schedule\. With scheduled scaling, you can specify either a one\-time action or a recurring action\. 
-
-The exercises in this tutorial assume that you are using administrator credentials \(`adminuser` profile\) that you set up in [Set up the AWS CLI](setup-awscli.md)\. If you don't provide this profile, the default profile is assumed\. Note that to create, update, delete, or list Application Auto Scaling resources, you need permissions to perform the action, and you need permission to access the corresponding resources\. For more information, see [Identity and Access Management for Application Auto Scaling](auth-and-access-control.md)\.
+The following tutorial shows you how to use the AWS CLI to get started with scheduled scaling by helping you create scheduled actions that scale a sample DynamoDB table called `TestTable`\. If you don't already have a `TestTable` table in DynamoDB that you use for testing, you can create one now by running the create\-table command shown in [Step 1: Create a DynamoDB table](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/AutoScaling.CLI.html#AutoScaling.CLI.CreateTable) in the *Amazon DynamoDB Developer Guide*\.
 
 When using the AWS CLI, remember that your commands run in the AWS Region that's configured for your profile\. If you want to run the commands in a different Region, either change the default Region for your profile, or use the `--region` parameter with the command\. 
 
 **Note**  
-You may incur AWS charges as part of this tutorial\. Please monitor your [Free tier](https://aws.amazon.com/free/) usage and make sure that you understand the costs associated with the number of units of read and write capacity that your DynamoDB databases uses\. 
+You may incur AWS charges as part of this tutorial\. Please monitor your [Free tier](https://aws.amazon.com/free/) usage and make sure that you understand the costs associated with the number of units of read and write capacity that your DynamoDB database uses\. 
 
 **Topics**
 + [Step 1: Register your scalable target](#gs-register-scalable-target)
@@ -18,28 +16,23 @@ You may incur AWS charges as part of this tutorial\. Please monitor your [Free t
 
 ## Step 1: Register your scalable target<a name="gs-register-scalable-target"></a>
 
-Begin by registering your resource as a scalable target with Application Auto Scaling\. A scalable target is a resource that Application Auto Scaling can scale out or scale in\.
-
-You can use any resource that works with Application Auto Scaling and supports scheduled scaling, but for these examples, let's assume that you want to scale a DynamoDB table called `my-table`\. If you don't already have a DynamoDB table, you can create one now \([Step 1: Create a DynamoDB table](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/AutoScaling.CLI.html#AutoScaling.CLI.CreateTable) in the *Amazon DynamoDB Developer Guide*\)\.
-
-To use a DynamoDB global secondary index or a resource for a different service, update the examples accordingly\. Specify its namespace in `--service-namespace`, its scalable dimension in `--scalable-dimension`, and its resource ID in `--resource-id`\. For a list of valid values for each option, see [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html)\.
+Begin by registering your DynamoDB table as a scalable target with Application Auto Scaling\.
 
 **To register your scalable target with Application Auto Scaling**
 
-1. \(Optional\) Use the [describe\-scalable\-targets](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scalable-targets.html) command to check whether any DynamoDB resources are already registered\. This helps you verify whether to register the `my-table` table\. For example, if you previously configured automatic scaling for this table from the DynamoDB console, it may already be registered with Application Auto Scaling\. 
+1. First, use the [describe\-scalable\-targets](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scalable-targets.html) command to check whether any DynamoDB resources are already registered\. This lets you verify that the `TestTable` table is unregistered, in case it is not a new table\. 
 
    **Linux, macOS, or Unix**
 
    ```
    aws application-autoscaling describe-scalable-targets \
-     --service-namespace dynamodb \
-     --profile adminuser
+     --service-namespace dynamodb
    ```
 
    **Windows**
 
    ```
-   aws application-autoscaling describe-scalable-targets --service-namespace dynamodb --profile adminuser
+   aws application-autoscaling describe-scalable-targets --service-namespace dynamodb
    ```
 
    If there are no existing scalable targets, this is the response\.
@@ -50,7 +43,7 @@ To use a DynamoDB global secondary index or a resource for a different service, 
    }
    ```
 
-1. Use the following [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command to register or update the write capacity of a DynamoDB table called `my-table`\. Set a minimum desired capacity of 5 write capacity units and a maximum desired capacity of 10 write capacity units\.
+1. Use the following [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command to register the write capacity of your DynamoDB table called `TestTable`\. Set a minimum desired capacity of 5 write capacity units and a maximum desired capacity of 10 write capacity units\.
 
    **Linux, macOS, or Unix**
 
@@ -58,15 +51,14 @@ To use a DynamoDB global secondary index or a resource for a different service, 
    aws application-autoscaling register-scalable-target \
      --service-namespace dynamodb \
      --scalable-dimension dynamodb:table:WriteCapacityUnits \
-     --resource-id table/my-table \
-     --min-capacity 5 --max-capacity 10 \
-     --profile adminuser
+     --resource-id table/TestTable \
+     --min-capacity 5 --max-capacity 10
    ```
 
    **Windows**
 
    ```
-   aws application-autoscaling register-scalable-target --service-namespace dynamodb --scalable-dimension dynamodb:table:WriteCapacityUnits --resource-id table/my-table --min-capacity 5 --max-capacity 10 --profile adminuser
+   aws application-autoscaling register-scalable-target --service-namespace dynamodb --scalable-dimension dynamodb:table:WriteCapacityUnits --resource-id table/TestTable --min-capacity 5 --max-capacity 10
    ```
 
    This command does not return any output if it is successful\.
@@ -93,17 +85,16 @@ For this exercise, we create two one\-time actions for scale out and scale in\.
    aws application-autoscaling put-scheduled-action \
      --service-namespace dynamodb \
      --scalable-dimension dynamodb:table:WriteCapacityUnits \
-     --resource-id table/my-table \
+     --resource-id table/TestTable \
      --scheduled-action-name my-first-scheduled-action \
      --schedule "at(2019-05-20T17:05:00)" \
-     --scalable-target-action MinCapacity=15,MaxCapacity=20 \
-     --profile adminuser
+     --scalable-target-action MinCapacity=15,MaxCapacity=20
    ```
 
    **Windows**
 
    ```
-   aws application-autoscaling put-scheduled-action --service-namespace dynamodb --scalable-dimension dynamodb:table:WriteCapacityUnits --resource-id table/my-table --scheduled-action-name my-first-scheduled-action --schedule "at(2019-05-20T17:05:00)" --scalable-target-action MinCapacity=15,MaxCapacity=20 --profile adminuser
+   aws application-autoscaling put-scheduled-action --service-namespace dynamodb --scalable-dimension dynamodb:table:WriteCapacityUnits --resource-id table/TestTable --scheduled-action-name my-first-scheduled-action --schedule "at(2019-05-20T17:05:00)" --scalable-target-action MinCapacity=15,MaxCapacity=20
    ```
 
    This command does not return any output if it is successful\.
@@ -120,17 +111,16 @@ For this exercise, we create two one\-time actions for scale out and scale in\.
    aws application-autoscaling put-scheduled-action \
      --service-namespace dynamodb \
      --scalable-dimension dynamodb:table:WriteCapacityUnits \
-     --resource-id table/my-table \
+     --resource-id table/TestTable \
      --scheduled-action-name my-second-scheduled-action \
      --schedule "at(2019-05-20T17:10:00)" \
-     --scalable-target-action MinCapacity=5,MaxCapacity=10 \
-     --profile adminuser
+     --scalable-target-action MinCapacity=5,MaxCapacity=10
    ```
 
    **Windows**
 
    ```
-   aws application-autoscaling put-scheduled-action --service-namespace dynamodb --scalable-dimension dynamodb:table:WriteCapacityUnits --resource-id table/my-table --scheduled-action-name my-second-scheduled-action --schedule "at(2019-05-20T17:10:00)" --scalable-target-action MinCapacity=5,MaxCapacity=10 --profile adminuser
+   aws application-autoscaling put-scheduled-action --service-namespace dynamodb --scalable-dimension dynamodb:table:WriteCapacityUnits --resource-id table/TestTable --scheduled-action-name my-second-scheduled-action --schedule "at(2019-05-20T17:10:00)" --scalable-target-action MinCapacity=5,MaxCapacity=10
    ```
 
 1. \(Optional\) Get a list of scheduled actions for the specified service namespace using the following [describe\-scheduled\-actions](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/describe-scheduled-actions.html) command\.
@@ -139,14 +129,13 @@ For this exercise, we create two one\-time actions for scale out and scale in\.
 
    ```
    aws application-autoscaling describe-scheduled-actions \
-     --service-namespace dynamodb \
-     --profile adminuser
+     --service-namespace dynamodb
    ```
 
    **Windows**
 
    ```
-   aws application-autoscaling describe-scheduled-actions --service-namespace dynamodb --profile adminuser
+   aws application-autoscaling describe-scheduled-actions --service-namespace dynamodb
    ```
 
    The following is example output\.
@@ -157,9 +146,9 @@ For this exercise, we create two one\-time actions for scale out and scale in\.
            {
                "ScalableDimension": "dynamodb:table:WriteCapacityUnits",
                "Schedule": "at(2019-05-20T18:35:00)",
-               "ResourceId": "table/my-table",
+               "ResourceId": "table/TestTable",
                "CreationTime": 1561571888.361,
-               "ScheduledActionARN": "arn:aws:autoscaling:us-east-1:123456789012:scheduledAction:2d36aa3b-cdf9-4565-b290-81db519b227d:resource/dynamodb/table/my-table:scheduledActionName/my-first-scheduled-action",
+               "ScheduledActionARN": "arn:aws:autoscaling:us-east-1:123456789012:scheduledAction:2d36aa3b-cdf9-4565-b290-81db519b227d:resource/dynamodb/table/TestTable:scheduledActionName/my-first-scheduled-action",
                "ScalableTargetAction": {
                    "MinCapacity": 15,
                    "MaxCapacity": 20
@@ -170,9 +159,9 @@ For this exercise, we create two one\-time actions for scale out and scale in\.
            {
                "ScalableDimension": "dynamodb:table:WriteCapacityUnits",
                "Schedule": "at(2019-05-20T18:40:00)",
-               "ResourceId": "table/my-table",
+               "ResourceId": "table/TestTable",
                "CreationTime": 1561571946.021,
-               "ScheduledActionARN": "arn:aws:autoscaling:us-east-1:123456789012:scheduledAction:2d36aa3b-cdf9-4565-b290-81db519b227d:resource/dynamodb/table/my-table:scheduledActionName/my-second-scheduled-action",
+               "ScheduledActionARN": "arn:aws:autoscaling:us-east-1:123456789012:scheduledAction:2d36aa3b-cdf9-4565-b290-81db519b227d:resource/dynamodb/table/TestTable:scheduledActionName/my-second-scheduled-action",
                "ScalableTargetAction": {
                    "MinCapacity": 5,
                    "MaxCapacity": 10
@@ -196,14 +185,13 @@ In this step, you view the scaling activities triggered by the scheduled actions
 
    ```
    aws application-autoscaling describe-scaling-activities \
-     --service-namespace dynamodb \
-     --profile adminuser
+     --service-namespace dynamodb
    ```
 
    **Windows**
 
    ```
-   aws application-autoscaling describe-scaling-activities --service-namespace dynamodb --profile adminuser
+   aws application-autoscaling describe-scaling-activities --service-namespace dynamodb
    ```
 
    The following is example output for the first scheduled action while the scheduled action is in progress\.
@@ -216,7 +204,7 @@ In this step, you view the scaling activities triggered by the scheduled actions
            {
                "ScalableDimension": "dynamodb:table:WriteCapacityUnits",
                "Description": "Setting write capacity units to 15.",
-               "ResourceId": "table/my-table",
+               "ResourceId": "table/TestTable",
                "ActivityId": "d8ea4de6-9eaa-499f-b466-2cc5e681ba8b",
                "StartTime": 1561574108.904,
                "ServiceNamespace": "dynamodb",
@@ -227,7 +215,7 @@ In this step, you view the scaling activities triggered by the scheduled actions
            {
                "ScalableDimension": "dynamodb:table:WriteCapacityUnits",
                "Description": "Setting min capacity to 15 and max capacity to 20",
-               "ResourceId": "table/my-table",
+               "ResourceId": "table/TestTable",
                "ActivityId": "3250fd06-6940-4e8e-bb1f-d494db7554d2",
                "StartTime": 1561574108.512,
                "ServiceNamespace": "dynamodb",
@@ -247,7 +235,7 @@ In this step, you view the scaling activities triggered by the scheduled actions
            {
                "ScalableDimension": "dynamodb:table:WriteCapacityUnits",
                "Description": "Setting write capacity units to 10.",
-               "ResourceId": "table/my-table",
+               "ResourceId": "table/TestTable",
                "ActivityId": "4d1308c0-bbcf-4514-a673-b0220ae38547",
                "StartTime": 1561574415.086,
                "ServiceNamespace": "dynamodb",
@@ -259,7 +247,7 @@ In this step, you view the scaling activities triggered by the scheduled actions
            {
                "ScalableDimension": "dynamodb:table:WriteCapacityUnits",
                "Description": "Setting min capacity to 5 and max capacity to 10",
-               "ResourceId": "table/my-table",
+               "ResourceId": "table/TestTable",
                "ActivityId": "f2b7847b-721d-4e01-8ef0-0c8d3bacc1c7",
                "StartTime": 1561574414.644,
                "ServiceNamespace": "dynamodb",
@@ -270,7 +258,7 @@ In this step, you view the scaling activities triggered by the scheduled actions
            {
                "ScalableDimension": "dynamodb:table:WriteCapacityUnits",
                "Description": "Setting write capacity units to 15.",
-               "ResourceId": "table/my-table",
+               "ResourceId": "table/TestTable",
                "ActivityId": "d8ea4de6-9eaa-499f-b466-2cc5e681ba8b",
                "StartTime": 1561574108.904,
                "ServiceNamespace": "dynamodb",
@@ -282,7 +270,7 @@ In this step, you view the scaling activities triggered by the scheduled actions
            {
                "ScalableDimension": "dynamodb:table:WriteCapacityUnits",
                "Description": "Setting min capacity to 15 and max capacity to 20",
-               "ResourceId": "table/my-table",
+               "ResourceId": "table/TestTable",
                "ActivityId": "3250fd06-6940-4e8e-bb1f-d494db7554d2",
                "StartTime": 1561574108.512,
                "ServiceNamespace": "dynamodb",
@@ -294,31 +282,28 @@ In this step, you view the scaling activities triggered by the scheduled actions
    }
    ```
 
-1. After running the scheduled actions successfully, go to the DynamoDB console and choose the table that you want to work with\. View the **Write capacity units** under the **Capacity** tab\. After the second scaling action ran, the write capacity units should have been scaled from 15 to 10\. 
+1. After running the scheduled actions successfully, open the DynamoDB console and choose the table that you want to work with\. View the **Write capacity units** under the **Capacity** tab\. After the second scaling action ran, the write capacity units should have been scaled from 15 to 10\. 
 
-   You can also view this information through the AWS CLI\. 
-
-   Verify the table's current write capacity by using the DynamoDB [describe\-table](https://docs.aws.amazon.com/cli/latest/reference/dynamodb/describe-table.html) command\. Include the `--query` option to filter the output\. For more information about the output filtering capabilities of the AWS CLI, see [Controlling command output from the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-output.html) in the *AWS Command Line Interface User Guide*\.
+   You can also verify the table's current write capacity by using the following [describe\-table](https://docs.aws.amazon.com/cli/latest/reference/dynamodb/describe-table.html) command\. Include the `--query` option to filter the output\. For more information about the output filtering capabilities of the AWS CLI, see [Controlling command output from the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-output.html) in the *AWS Command Line Interface User Guide*\.
 
    **Linux, macOS, or Unix**
 
    ```
-   aws dynamodb describe-table --table-name my-table \
-     --query 'Table.[TableName,TableStatus,ProvisionedThroughput]' \
-     --profile adminuser
+   aws dynamodb describe-table --table-name TestTable \
+     --query 'Table.[TableName,TableStatus,ProvisionedThroughput]'
    ```
 
    **Windows**
 
    ```
-   aws dynamodb describe-table --table-name my-table --query "Table.[TableName,TableStatus,ProvisionedThroughput]" --profile adminuser
+   aws dynamodb describe-table --table-name TestTable --query "Table.[TableName,TableStatus,ProvisionedThroughput]"
    ```
 
    The following is example output\.
 
    ```
    [
-       "my-table",
+       "TestTable",
        "ACTIVE",
        {
            "NumberOfDecreasesToday": 1,
@@ -332,9 +317,7 @@ In this step, you view the scaling activities triggered by the scheduled actions
 
 ## Step 4: Next steps<a name="gs-next-steps"></a>
 
-Now that you have familiarized yourself with Application Auto Scaling and some of its features, consider doing the following: 
-+ If you want to try scaling on a recurring schedule, see the tutorial in [Tutorial: Configuring auto scaling to handle a heavy workload](application-auto-scaling-tutorial.md)\.
-+ If you want to try scaling dynamically in response to changes in resource utilization \(for example, by using the `DynamoDBWriteCapacityUtilization` metric\), follow the steps in [Target tracking scaling policies for Application Auto Scaling](application-auto-scaling-target-tracking.md)\.
+If you want to try scaling with both scheduled scaling and a scaling policy, follow the steps in [Tutorial: Configuring auto scaling to handle a heavy workload](application-auto-scaling-tutorial.md)\.
 
 ## Step 5: Clean up<a name="gs-clean-up"></a>
 
@@ -349,15 +332,14 @@ The following [delete\-scheduled\-action](https://docs.aws.amazon.com/cli/latest
 aws application-autoscaling delete-scheduled-action \
   --service-namespace dynamodb \
   --scalable-dimension dynamodb:table:WriteCapacityUnits \
-  --resource-id table/my-table \
-  --scheduled-action-name my-second-scheduled-action \
-  --profile adminuser
+  --resource-id table/TestTable \
+  --scheduled-action-name my-second-scheduled-action
 ```
 
 **Windows**
 
 ```
-aws application-autoscaling delete-scheduled-action --service-namespace dynamodb --scalable-dimension dynamodb:table:WriteCapacityUnits --resource-id table/my-table --scheduled-action-name my-second-scheduled-action --profile adminuser
+aws application-autoscaling delete-scheduled-action --service-namespace dynamodb --scalable-dimension dynamodb:table:WriteCapacityUnits --resource-id table/TestTable --scheduled-action-name my-second-scheduled-action
 ```
 
 **To deregister the scalable target**  
@@ -369,14 +351,13 @@ Use the following [deregister\-scalable\-target](https://docs.aws.amazon.com/cli
 aws application-autoscaling deregister-scalable-target \
   --service-namespace dynamodb \
   --scalable-dimension dynamodb:table:WriteCapacityUnits \
-  --resource-id table/my-table \
-  --profile adminuser
+  --resource-id table/TestTable
 ```
 
 **Windows**
 
 ```
-aws application-autoscaling deregister-scalable-target --service-namespace dynamodb --scalable-dimension dynamodb:table:WriteCapacityUnits --resource-id table/my-table --profile adminuser
+aws application-autoscaling deregister-scalable-target --service-namespace dynamodb --scalable-dimension dynamodb:table:WriteCapacityUnits --resource-id table/TestTable
 ```
 
 **To delete the DynamoDB table**  
@@ -385,12 +366,11 @@ Use the following [delete\-table](https://docs.aws.amazon.com/cli/latest/referen
 **Linux, macOS, or Unix**
 
 ```
-aws dynamodb delete-table --table-name my-table \
-  --profile adminuser
+aws dynamodb delete-table --table-name TestTable
 ```
 
 **Windows**
 
 ```
-aws dynamodb delete-table --table-name my-table --profile adminuser
+aws dynamodb delete-table --table-name TestTable
 ```

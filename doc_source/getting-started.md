@@ -7,10 +7,10 @@ An entity that you create to specify the resource that you want to scale\. Each 
 Each scalable target also has a minimum and maximum capacity\. Scaling policies will never go higher or lower than the minimum\-maximum range\. You can make out\-of\-band changes directly to the underlying resource that are outside of this range, which Application Auto Scaling doesn't know about\. However, anytime a scaling policy is invoked or the `RegisterScalableTarget` API is called, Application Auto Scaling retrieves the current capacity and compares it to the minimum and maximum capacity\. If it falls outside of the minimum\-maximum range, then the capacity is updated to comply with the set minimum and maximum\.
 
 **Scale in**  <a name="scalein"></a>
-When Application Auto Scaling automatically decreases capacity for a scalable target, the scalable target *scales in*\. The minimum capacity of the scalable target is the lowest capacity a scaling policy can scale in to\.
+When Application Auto Scaling automatically decreases capacity for a scalable target, the scalable target *scales in*\. When scaling policies are set, they cannot scale in the scalable target lower than its minimum capacity\.
 
 **Scale out**  <a name="scaleout"></a>
-When Application Auto Scaling automatically increases capacity for a scalable target, the scalable target *scales out*\. The maximum capacity of the scalable target is the highest capacity a scaling policy can scale out to\.
+When Application Auto Scaling automatically increases capacity for a scalable target, the scalable target *scales out*\. When scaling policies are set, they cannot scale out the scalable target higher than its maximum capacity\.
 
 **Scaling policy**  <a name="scalingpolicy"></a>
 A scaling policy instructs Application Auto Scaling to track a specific CloudWatch metric\. Then, it determines what scaling action to take when the metric is higher or lower than a certain threshold value\. For example, you might want to scale out if the CPU usage across your cluster starts to rise, and scale in when it drops again\.   

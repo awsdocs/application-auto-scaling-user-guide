@@ -26,7 +26,7 @@ aws application-autoscaling register-scalable-target --service-namespace ec2 --s
 ```
 
 **Note**  
-For brevity, the examples in this topic illustrate CLI commands for an Amazon EC2 Spot Fleet\. To specify a different scalable target, specify its namespace in `--service-namespace`, its scalable dimension in `--scalable-dimension`, and its resource ID in `--resource-id`\. For more information, see [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html)\. 
+For brevity, the examples in this topic illustrate CLI commands for an Amazon EC2 Spot Fleet\. To specify a different scalable target, specify its namespace in `--service-namespace`, its scalable dimension in `--scalable-dimension`, and its resource ID in `--resource-id`\.
 
 ## Create a target tracking scaling policy<a name="create-target-tracking-policy"></a>
 

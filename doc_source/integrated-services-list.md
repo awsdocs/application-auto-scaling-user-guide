@@ -4,7 +4,7 @@ Application Auto Scaling integrates with other AWS services so that you can add 
 
 The following table lists the AWS services that you can use with Application Auto Scaling, including information about supported methods for configuring auto scaling\. You can also use Application Auto Scaling with custom resources\.
 
-**Console access** – You can configure a compatible AWS service to start auto scaling by configuring a scaling policy in the console of the target service\. Currently, only ElastiCache and Spot Fleet provide console support for scheduled scaling\. If a service supports console access, see the *Learn more* link to learn how to configure auto scaling from that service's console\.
+**Console access** – You can configure a compatible AWS service to start auto scaling by configuring a scaling policy in the console of the target service\. Currently, only Amazon AppStream 2\.0, ElastiCache, and Spot Fleet provide console support for scheduled scaling\. If a service supports console access, see the *Learn more* link to learn how to configure auto scaling from that service's console\.
 
 **CLI access** – You can configure a compatible AWS service to start auto scaling using the AWS CLI\.
 

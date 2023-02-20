@@ -1,6 +1,6 @@
 # Application Auto Scaling identity\-based policy examples<a name="security_iam_id-based-policy-examples"></a>
 
-By default, a brand new IAM user has no permissions to do anything\. An IAM administrator must create IAM policies that grant users and roles permission to perform Application Auto Scaling API actions, such as configuring scaling policies\. The administrator must then attach those policies to the IAM users or roles that require the permissions\.
+By default, a brand new user in your AWS account has no permissions to do anything\. An IAM administrator must create and assign IAM policies that give an IAM identity \(such as a user or role\) permission to perform Application Auto Scaling API actions\.
 
 To learn how to create an IAM policy using the following example JSON policy documents, see [Creating policies on the JSON tab](https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_create.html#access_policies_create-json-editor) in the *IAM User Guide*\.
 
@@ -11,9 +11,9 @@ To learn how to create an IAM policy using the following example JSON policy doc
 
 ## Permissions required for Application Auto Scaling API actions<a name="application-auto-scaling-actions-permissions"></a>
 
-The following policies grant permissions for common use cases when calling Application Auto Scaling API\. Refer to this section when setting up [Access control](auth-and-access-control.md#access-control) and writing permissions policies that you can attach to an IAM user or role\. Each policy grants access to all or some of the Application Auto Scaling API actions\. You also need to make sure that the IAM user or role has a permissions policy for the target service and CloudWatch \(see the next section for details\)\. 
+The following policies grant permissions for common use cases when calling Application Auto Scaling API\. Refer to this section when writing identity\-based policies\. Each policy grants permissions to all or some of the Application Auto Scaling API actions\. You also need to make sure that end users have permissions for the target service and CloudWatch \(see the next section for details\)\. 
 
-The following permissions policy grants access to all Application Auto Scaling API actions\.
+The following identity\-based policy grants permissions to all Application Auto Scaling API actions\.
 
 ```
 {
@@ -30,7 +30,7 @@ The following permissions policy grants access to all Application Auto Scaling A
 }
 ```
 
-The following permissions policy grants access to all Application Auto Scaling API actions that are required to configure scaling policies and not scheduled actions\.
+The following identity\-based policy grants permissions to all Application Auto Scaling API actions that are required to configure scaling policies and not scheduled actions\.
 
 ```
 {
@@ -53,7 +53,7 @@ The following permissions policy grants access to all Application Auto Scaling A
 }
 ```
 
-The following permissions policy grants access to all Application Auto Scaling API actions that are required to configure scheduled actions and not scaling policies\.
+The following identity\-based policy grants permissions to all Application Auto Scaling API actions that are required to configure scheduled actions and not scaling policies\.
 
 ```
 {
@@ -78,7 +78,7 @@ The following permissions policy grants access to all Application Auto Scaling A
 
 ## Permissions required for API actions on target services and CloudWatch<a name="application-auto-scaling-additional-permissions"></a>
 
-To successfully configure and use Application Auto Scaling with the target service, IAM users must be granted the required permissions for Amazon CloudWatch and for each target service for which they will configure scaling\. Use the following policies to give users the minimum permissions required to work with target services and CloudWatch\.
+To successfully configure and use Application Auto Scaling with the target service, end users must be granted permissions for Amazon CloudWatch and for each target service for which they will configure scaling\. Use the following policies to grant the minimum permissions required to work with target services and CloudWatch\.
 
 **Topics**
 + [AppStream 2\.0 fleets](#permissions-for-appstream-fleets)
@@ -98,7 +98,7 @@ To successfully configure and use Application Auto Scaling with the target servi
 
 ### AppStream 2\.0 fleets<a name="permissions-for-appstream-fleets"></a>
 
-The following permissions policy grants access to all AppStream 2\.0 and CloudWatch API actions that are required\.
+The following identity\-based policy grants permissions to all AppStream 2\.0 and CloudWatch API actions that are required\.
 
 ```
 {
@@ -121,7 +121,7 @@ The following permissions policy grants access to all AppStream 2\.0 and CloudWa
 
 ### Aurora replicas<a name="permissions-for-aurora-clusters"></a>
 
-The following permissions policy grants access to all Aurora and CloudWatch API actions that are required\.
+The following identity\-based policy grants permissions to all Aurora and CloudWatch API actions that are required\.
 
 ```
 {
@@ -147,7 +147,7 @@ The following permissions policy grants access to all Aurora and CloudWatch API 
 
 ### Amazon Comprehend document classification and entity recognizer endpoints<a name="permissions-for-comprehend-endpoints"></a>
 
-The following permissions policy grants access to all Amazon Comprehend and CloudWatch API actions that are required\.
+The following identity\-based policy grants permissions to all Amazon Comprehend and CloudWatch API actions that are required\.
 
 ```
 {
@@ -170,7 +170,7 @@ The following permissions policy grants access to all Amazon Comprehend and Clou
 
 ### DynamoDB tables and global secondary indexes<a name="permissions-for-dynamodb-tables-and-gsis"></a>
 
-The following permissions policy grants access to all DynamoDB and CloudWatch API actions that are required\.
+The following identity\-based policy grants permissions to all DynamoDB and CloudWatch API actions that are required\.
 
 ```
 {
@@ -193,7 +193,7 @@ The following permissions policy grants access to all DynamoDB and CloudWatch AP
 
 ### ECS services<a name="permissions-for-ecs-services"></a>
 
-The following permissions policy grants access to all ECS and CloudWatch API actions that are required\.
+The following identity\-based policy grants permissions to all ECS and CloudWatch API actions that are required\.
 
 ```
 {
@@ -216,7 +216,7 @@ The following permissions policy grants access to all ECS and CloudWatch API act
 
 ### ElastiCache replication groups<a name="permissions-for-elasticache"></a>
 
-The following permissions policy grants access to all ElastiCache and CloudWatch API actions that are required\.
+The following identity\-based policy grants permissions to all ElastiCache and CloudWatch API actions that are required\.
 
 ```
 {
@@ -243,7 +243,7 @@ The following permissions policy grants access to all ElastiCache and CloudWatch
 
 ### Amazon EMR clusters<a name="permissions-for-emr-clusters"></a>
 
-The following permissions policy grants access to all Amazon EMR and CloudWatch API actions that are required\.
+The following identity\-based policy grants permissions to all Amazon EMR and CloudWatch API actions that are required\.
 
 ```
 {
@@ -266,7 +266,7 @@ The following permissions policy grants access to all Amazon EMR and CloudWatch 
 
 ### Amazon Keyspaces tables<a name="permissions-for-keyspaces-tables"></a>
 
-The following permissions policy grants access to all Amazon Keyspaces and CloudWatch API actions that are required\.
+The following identity\-based policy grants permissions to all Amazon Keyspaces and CloudWatch API actions that are required\.
 
 ```
 {
@@ -289,7 +289,7 @@ The following permissions policy grants access to all Amazon Keyspaces and Cloud
 
 ### Lambda functions<a name="permissions-for-lambda-functions"></a>
 
-The following permissions policy grants access to all Lambda and CloudWatch API actions that are required\.
+The following identity\-based policy grants permissions to all Lambda and CloudWatch API actions that are required\.
 
 ```
 {
@@ -313,7 +313,7 @@ The following permissions policy grants access to all Lambda and CloudWatch API 
 
 ### Amazon Managed Streaming for Apache Kafka \(MSK\) broker storage<a name="permissions-for-msk-broker-storage"></a>
 
-The following permissions policy grants access to all Amazon MSK and CloudWatch API actions that are required\.
+The following identity\-based policy grants permissions to all Amazon MSK and CloudWatch API actions that are required\.
 
 ```
 {
@@ -337,7 +337,7 @@ The following permissions policy grants access to all Amazon MSK and CloudWatch 
 
 ### Neptune clusters<a name="permissions-for-neptune-clusters"></a>
 
-The following permissions policy grants access to all Neptune and CloudWatch API actions that are required\.
+The following identity\-based policy grants permissions to all Neptune and CloudWatch API actions that are required\.
 
 ```
 {
@@ -364,7 +364,7 @@ The following permissions policy grants access to all Neptune and CloudWatch API
 
 ### SageMaker endpoints<a name="permissions-for-sagemaker-endpoints"></a>
 
-The following permissions policy grants access to all SageMaker and CloudWatch API actions that are required\.
+The following identity\-based policy grants permissions to all SageMaker and CloudWatch API actions that are required\.
 
 ```
 {
@@ -388,7 +388,7 @@ The following permissions policy grants access to all SageMaker and CloudWatch A
 
 ### Spot Fleets \(Amazon EC2\)<a name="permissions-for-spot-fleet"></a>
 
-The following permissions policy grants access to all Spot Fleet and CloudWatch API actions that are required\.
+The following identity\-based policy grants permissions to all Spot Fleet and CloudWatch API actions that are required\.
 
 ```
 {
@@ -411,7 +411,7 @@ The following permissions policy grants access to all Spot Fleet and CloudWatch 
 
 ### Custom resources<a name="permissions-for-custom-resources"></a>
 
-The following permissions policy grants a user the required permission for the API Gateway API executing action\. This policy also grants access to all CloudWatch actions that are required\.
+The following identity\-based policy grants permission for the API Gateway API executing action\. This policy also grants permissions to all CloudWatch actions that are required\.
 
 ```
 {
@@ -442,7 +442,7 @@ You can also create your own custom IAM policies to give users fine\-grained per
 **Tip**  
 To help you work out which API actions are required to perform tasks in the console, you can use a service such as AWS CloudTrail\. For more information, see the [AWS CloudTrail User Guide](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html)\. 
 
-The following shows an example of a permissions policy that allows a user to configure scaling policies for Spot Fleet\. In addition to the [IAM permissions for Spot Fleet](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet-requests.html#spot-fleet-iam-users), the IAM user that accesses fleet scaling settings from the console must have the appropriate permissions for the services that support dynamic scaling\. 
+The following identity\-based policy grants permissions to configure scaling policies for Spot Fleet\. In addition to the IAM permissions for Spot Fleet, the console user that accesses fleet scaling settings from the Amazon EC2 console must have the appropriate permissions for the services that support dynamic scaling\. 
 
 ```
 {
@@ -484,7 +484,7 @@ The following shows an example of a permissions policy that allows a user to con
 }
 ```
 
-This policy allows users to view and modify scaling policies in the Amazon EC2 console, and to create and manage CloudWatch alarms in the CloudWatch console\. 
+This policy allows console users to view and modify scaling policies in the Amazon EC2 console, and to create and manage CloudWatch alarms in the CloudWatch console\. 
 
 You can adjust the API actions to limit user access\. For example, replacing `application-autoscaling:*` with `application-autoscaling:Describe*` means that the user has read\-only access\. 
 

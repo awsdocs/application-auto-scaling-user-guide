@@ -1,11 +1,11 @@
 # AWS Lambda and Application Auto Scaling<a name="services-that-can-integrate-lambda"></a>
 
-You can scale Lambda functions using target tracking scaling policies and scheduled scaling\. 
+You can scale AWS Lambda provisioned concurrency using target tracking scaling policies and scheduled scaling\. 
 
 Use the following information to help you integrate Lambda with Application Auto Scaling\. 
 
 If you are just getting started with scaling Lambda functions, you can view sample configurations and details about using Lambda with Application Auto Scaling in the following documentation:
-+ [Managing concurrency for a Lambda function](https://docs.aws.amazon.com/lambda/latest/dg/configuration-concurrency.html) in the *AWS Lambda Developer Guide*
++ [Managing Lambda provisioned concurrency](https://docs.aws.amazon.com/lambda/latest/dg/provisioned-concurrency.html) in the *AWS Lambda Developer Guide*
 
 ## Service\-linked role created for Lambda<a name="integrate-service-linked-role-lambda"></a>
 

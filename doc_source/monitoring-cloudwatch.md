@@ -29,8 +29,8 @@ These metrics can help you discover your application's capacity requirements\. Y
 | --- | --- | --- | --- | 
 | [AvailableCapacity](https://docs.aws.amazon.com/appstream2/latest/developerguide/monitoring.html) | AWS/AppStream | Fleet | AppStream | 
 | [CapacityUtilization](https://docs.aws.amazon.com/appstream2/latest/developerguide/monitoring.html) | AWS/AppStream | Fleet | AppStream | 
-| [CPUUtilization](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Monitoring.html) | AWS/RDS | DBClusterIdentifier, Role \(READER\) | Aurora | 
-| [DatabaseConnections](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Monitoring.html) | AWS/RDS | DBClusterIdentifier, Role \(READER\) | Aurora | 
+| [CPUUtilization](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/metrics-reference.html) | AWS/RDS | DBClusterIdentifier, Role \(READER\) | Aurora | 
+| [DatabaseConnections](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/metrics-reference.html) | AWS/RDS | DBClusterIdentifier, Role \(READER\) | Aurora | 
 | [InferenceUtilization](https://docs.aws.amazon.com/comprehend/latest/dg/manage-endpoints-monitor.html) | AWS/Comprehend | EndpointArn | Comprehend | 
 | [ProvisionedReadCapacityUnits](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/metrics-dimensions.html) | AWS/DynamoDB | TableName, GlobalSecondaryIndexName | DynamoDB | 
 | [ProvisionedWriteCapacityUnits](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/metrics-dimensions.html) | AWS/DynamoDB | TableName, GlobalSecondaryIndexName | DynamoDB | 
@@ -39,6 +39,8 @@ These metrics can help you discover your application's capacity requirements\. Y
 | [CPUUtilization](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cloudwatch-metrics.html) | AWS/ECS | ClusterName, ServiceName | ECS | 
 | [MemoryUtilization](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cloudwatch-metrics.html) | AWS/ECS | ClusterName, ServiceName | ECS | 
 | [RequestCountPerTarget](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-cloudwatch-metrics.html) | AWS/ApplicationELB | TargetGroup | ECS | 
+| [EngineCPUUtilization](https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheMetrics.Redis.html) | AWS/ElastiCache | ReplicationGroupId, Role \(Primary\) | ElastiCache | 
+| [EngineCPUUtilization](https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheMetrics.Redis.html) | AWS/ElastiCache | ReplicationGroupId, Role \(Replica\) | ElastiCache | 
 | [YARNMemoryAvailablePercentage](https://docs.aws.amazon.com/emr/latest/ManagementGuide/UsingEMR_ViewingMetrics.html) | AWS/ElasticMapReduce | ClusterId | EMR | 
 | [ProvisionedReadCapacityUnits](https://docs.aws.amazon.com/keyspaces/latest/devguide/metrics-dimensions.html) | AWS/Cassandra | Keyspace, TableName | Amazon Keyspaces | 
 | [ProvisionedWriteCapacityUnits](https://docs.aws.amazon.com/keyspaces/latest/devguide/metrics-dimensions.html) | AWS/Cassandra | Keyspace, TableName | Amazon Keyspaces | 
@@ -47,6 +49,7 @@ These metrics can help you discover your application's capacity requirements\. Y
 | [ProvisionedConcurrencyUtilization](https://docs.aws.amazon.com/lambda/latest/dg/monitoring-functions-metrics.html) | AWS/Lambda | FunctionName, Resource | Lambda | 
 | [KafkaDataLogsDiskUsed](https://docs.aws.amazon.com/msk/latest/developerguide/monitoring.html) | AWS/Kafka | Cluster Name | Amazon MSK | 
 | [KafkaDataLogsDiskUsed](https://docs.aws.amazon.com/msk/latest/developerguide/monitoring.html) | AWS/Kafka | Cluster Name, Broker ID | Amazon MSK | 
+| [CPUUtilization](https://docs.aws.amazon.com/neptune/latest/userguide/cw-metrics.html) | AWS/Neptune | DBClusterIdentifier, Role \(READER\) | Neptune | 
 | [InvocationsPerInstance](https://docs.aws.amazon.com/sagemaker/latest/dg/monitoring-cloudwatch.html) | AWS/SageMaker  | EndpointName, VariantName | SageMaker | 
 | [CPUUtilization](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet-cloudwatch-metrics.html) | AWS/EC2Spot | FleetRequestId | Spot Fleet | 
 | [NetworkIn](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet-cloudwatch-metrics.html) | AWS/EC2Spot | FleetRequestId | Spot Fleet | 

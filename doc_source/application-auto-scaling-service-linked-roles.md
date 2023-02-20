@@ -30,7 +30,7 @@ For automatic role creation to succeed, users must have permission for the `iam:
 "Action": "iam:CreateServiceLinkedRole"
 ```
 
-The following is a permissions policy that allows an IAM user or role to create a service\-linked role for Spot Fleet\. You can specify the service\-linked role in the policy's `Resource` field as an ARN, and the service principal for your service\-linked role as a condition, as shown\. For the ARN for each service, see [Service\-linked role ARN reference](#specify-service-linked-role)\.
+The following is an identity\-based policy that grants permission to create a service\-linked role for Spot Fleet\. You can specify the service\-linked role in the policy's `Resource` field as an ARN, and the service principal for your service\-linked role as a condition, as shown\. For the ARN for each service, see [Service\-linked role ARN reference](#specify-service-linked-role)\.
 
 ```
 {

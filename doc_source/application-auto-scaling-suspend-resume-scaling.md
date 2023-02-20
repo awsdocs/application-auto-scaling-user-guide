@@ -31,7 +31,7 @@ The following descriptions explain what happens when individual scaling activiti
 You can suspend and resume individual scaling activities or all scaling activities for your Application Auto Scaling scalable target\.
 
 **Note**  
-For brevity, these examples illustrate how to suspend and resume scaling for a DynamoDB table\. To specify a different scalable target, specify its namespace in `--service-namespace`, its scalable dimension in `--scalable-dimension`, and its resource ID in `--resource-id`\. For a list of valid values for each option, see [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html)\.
+For brevity, these examples illustrate how to suspend and resume scaling for a DynamoDB table\. To specify a different scalable target, specify its namespace in `--service-namespace`, its scalable dimension in `--scalable-dimension`, and its resource ID in `--resource-id`\.
 
 **To suspend a scaling activity**  
 Open a command\-line window and use the [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command with the `--suspended-state` option as follows\. 
