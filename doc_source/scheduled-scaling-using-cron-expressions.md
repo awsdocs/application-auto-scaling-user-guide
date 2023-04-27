@@ -1,5 +1,8 @@
 # Schedule recurring scaling actions using cron expressions<a name="scheduled-scaling-using-cron-expressions"></a>
 
+**Important**  
+If you're looking for help with recurring schedules for Auto Scaling groups, see the [Recurring schedules](https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-scheduled-scaling.html#sch-actions_recurring_schedules) topic in the *Amazon EC2 Auto Scaling User Guide*\.
+
 You can create scheduled actions that run on a recurring schedule using a cron expression\. 
 
 To create a recurring schedule, specify a cron expression and a time zone to describe when that scheduled action is to recur\. The supported time zone values are the canonical names of the IANA time zones supported by [Joda\-Time](https://www.joda.org/joda-time/timezones.html) \(such as `Etc/GMT+9` or `Pacific/Tahiti`\)\. You can optionally specify a date and time for the start time, the end time, or both\. For an example command that uses the AWS CLI to create a scheduled action, see [Create a recurring scheduled action that specifies a time zone](examples-scheduled-actions.md#recurring-schedule-set-time-zone)\.

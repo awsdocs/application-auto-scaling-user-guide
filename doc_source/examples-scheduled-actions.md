@@ -3,7 +3,7 @@
 The following examples show how to create scheduled actions with the AWS CLI [put\-scheduled\-action](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/put-scheduled-action.html) command\. When you specify the new capacity, you can specify a minimum capacity, a maximum capacity, or both\.
 
 **Note**  
-For brevity, the examples in this topic illustrate CLI commands for a few of the services that integrate with Application Auto Scaling\. To specify a different scalable target, specify its namespace in `--service-namespace`, its scalable dimension in `--scalable-dimension`, and its resource ID in `--resource-id`\.
+For brevity, the examples in this topic illustrate CLI commands for a few of the services that integrate with Application Auto Scaling\. To specify a different scalable target, specify its namespace in `--service-namespace`, its scalable dimension in `--scalable-dimension`, and its resource ID in `--resource-id`\. For more information and examples for each service, see the topics in [AWS services that you can use with Application Auto Scaling](integrated-services-list.md)\.
 
 **Topics**
 + [Create a scheduled action that occurs only once](#one-time-schedule)

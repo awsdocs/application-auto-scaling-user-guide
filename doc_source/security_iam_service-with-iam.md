@@ -12,11 +12,11 @@ Before you use IAM to manage access to Application Auto Scaling, learn what IAM 
 | --- | --- | 
 |  [Identity\-based policies](#security_iam_service-with-iam-id-based-policies)  |    Yes  | 
 |  [Policy actions](#security_iam_service-with-iam-id-based-policies-actions)  |    Yes  | 
-|  [Policy resources](#security_iam_service-with-iam-id-based-policies-resources)  |    No   | 
-|  [Policy condition keys \(service\-specific\)](#security_iam_service-with-iam-id-based-policies-conditionkeys)  |    No   | 
+|  [Policy resources](#security_iam_service-with-iam-id-based-policies-resources)  |    Yes  | 
+|  [Policy condition keys \(service\-specific\)](#security_iam_service-with-iam-id-based-policies-conditionkeys)  |    Yes  | 
 |  [Resource\-based policies](#security_iam_service-with-iam-resource-based-policies)  |    No   | 
 |  [ACLs](#security_iam_service-with-iam-acls)  |    No   | 
-|  [Authorization based on tags](#security_iam_service-with-iam-tags)  |    No   | 
+|  [ABAC \(tags in policies\)](#security_iam_service-with-iam-tags)  |    Partial  | 
 |  [Temporary credentials](#security_iam_service-with-iam-roles-tempcreds)  |    Yes  | 
 |  [Service roles](#security_iam_service-with-iam-roles-service)  |    Yes  | 
 |  [Service\-linked roles](#security_iam_service-with-iam-roles-service-linked)  |    Yes  | 
@@ -61,31 +61,59 @@ You can specify multiple actions using wildcards \(\*\)\. For example, to specif
 "Action": "application-autoscaling:Describe*"
 ```
 
-For a complete list of policy actions for Application Auto Scaling, see [Actions defined by AWS Application Auto Scaling](https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsapplicationautoscaling.html#awsapplicationautoscaling-actions-as-permissions) in the *Service Authorization Reference*\.
+For a list of Application Auto Scaling actions, see [Actions defined by AWS Application Auto Scaling](https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsapplicationautoscaling.html#awsapplicationautoscaling-actions-as-permissions) in the *Service Authorization Reference*\.
 
 ### Resources<a name="security_iam_service-with-iam-id-based-policies-resources"></a>
 
 
 |  |  | 
 | --- |--- |
-|  Supports policy resources  |    No   | 
+|  Supports policy resources  |    Yes  | 
 
-The `Resource` element specifies the object or objects to which the action applies\.
+In an IAM policy statement, the `Resource` element specifies the object or objects that the statement covers\. For Application Auto Scaling, each IAM policy statement applies to the scalable targets that you specify using their Amazon Resource Names \(ARNs\)\.
 
-Application Auto Scaling has no service\-defined resources that can be used as the `Resource` element of an IAM policy statement\. Therefore, there are no Amazon Resource Names \(ARNs\) for Application Auto Scaling for you to use in an IAM policy\. To control access to Application Auto Scaling API actions, always use an \* \(asterisk\) as the resource when writing an IAM policy\. 
+The ARN resource format for scalable targets:
+
+```
+arn:aws:application-autoscaling:region:account-id:scalable-target/unique-identifier
+```
+
+For example, you can indicate a specific scalable target in your statement using its ARN as follows\. The unique ID \(1234abcd56ab78cd901ef1234567890ab123\) is a value assigned by Application Auto Scaling to the scalable target\.
+
+```
+"Resource": "arn:aws:application-autoscaling:us-east-1:123456789012:scalable-target/1234abcd56ab78cd901ef1234567890ab123"
+```
+
+You can specify all instances that belong to a specific account by replacing the unique identifier with a wildcard \(\*\) as follows\.
+
+```
+"Resource": "arn:aws:application-autoscaling:us-east-1:123456789012:scalable-target/*"
+```
+
+To specify all resources, or if a specific API action does not support ARNs, use a wildcard \(\*\) as the `Resource` element as follows\.
+
+```
+"Resource": "*"
+```
+
+For more information, see [Resource types defined by AWS Application Auto Scaling](https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsapplicationautoscaling.html#awsapplicationautoscaling-policy-keys) in the *Service Authorization Reference*\.
 
 ### Condition keys<a name="security_iam_service-with-iam-id-based-policies-conditionkeys"></a>
 
 
 |  |  | 
 | --- |--- |
-|  Supports service\-specific policy condition keys  |    No   | 
+|  Supports service\-specific policy condition keys  |    Yes  | 
 
-The `Condition` element \(or `Condition` *block*\) lets you specify conditions in which a statement is in effect\. For example, you might want a policy to be applied only after a specific date\. To express conditions, use predefined condition keys\.
+You can specify conditions in the IAM policies that control access to Application Auto Scaling resources\. The policy statement is effective only when the conditions are true\.
 
-Application Auto Scaling does not provide any service\-specific condition keys, but it does support using some global condition keys\. To see all AWS global condition keys, see [AWS global condition context keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html) in the *IAM User Guide*\. 
+Application Auto Scaling supports the following service\-defined condition keys that you can use in identity\-based policies to determine who can perform Application Auto Scaling API actions\.
++ `application-autoscaling:scalable-dimension`
++ `application-autoscaling:service-namespace`
 
-The `Condition` element is optional\. 
+To learn which Application Auto Scaling API actions you can use a condition key with, see [Actions defined by AWS Application Auto Scaling](https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsapplicationautoscaling.html#awsapplicationautoscaling-actions-as-permissions) in the *Service Authorization Reference*\. For more information about using Application Auto Scaling condition keys, see [Condition keys for AWS Application Auto Scaling](https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsapplicationautoscaling.html#awsapplicationautoscaling-policy-keys)\.
+
+To view the global condition keys that are available to all services, see [AWS global condition context keys](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html) in the *IAM User Guide*\. 
 
 ## Resource\-based policies<a name="security_iam_service-with-iam-resource-based-policies"></a>
 
@@ -107,14 +135,22 @@ Application Auto Scaling does not support resource\-based policies\.
 
 Application Auto Scaling does not support Access Control Lists \(ACLs\)\.
 
-## Authorization based on tags<a name="security_iam_service-with-iam-tags"></a>
+## ABAC with Application Auto Scaling<a name="security_iam_service-with-iam-tags"></a>
 
 
 |  |  | 
 | --- |--- |
-|  Supports ABAC \(tags in policies\)  |    No   | 
+|  Supports ABAC \(tags in policies\)  |    Partial  | 
 
-Application Auto Scaling has no service\-defined resources that can be tagged\. Therefore, it does not support controlling access based on tags\.
+Attribute\-based access control \(ABAC\) is an authorization strategy that defines permissions based on attributes\. In AWS, these attributes are called *tags*\. You can attach tags to IAM entities \(users or roles\) and to many AWS resources\. Tagging entities and resources is the first step of ABAC\. Then you design ABAC policies to allow operations when the principal's tag matches the tag on the resource that they are trying to access\.
+
+ABAC is helpful in environments that are growing rapidly and helps with situations where policy management becomes cumbersome\.
+
+To control access based on tags, you provide tag information in the [condition element](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_condition.html) of a policy using the `aws:ResourceTag/key-name`, `aws:RequestTag/key-name`, or `aws:TagKeys` condition keys\.
+
+ABAC is possible for resources that support tags, but not everything supports tags\. Scheduled actions and scaling policies don't support tags, but scalable targets support tags\. For more information, see [Tagging support for Application Auto Scaling](resource-tagging-support.md)\. 
+
+For more information about ABAC, see [What is ABAC?](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction_attribute-based-access-control.html) in the *IAM User Guide*\. To view a tutorial with steps for setting up ABAC, see [Use attribute\-based access control \(ABAC\)](https://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_attribute-based-access-control.html) in the *IAM User Guide*\.
 
 ## Using temporary credentials with Application Auto Scaling<a name="security_iam_service-with-iam-roles-tempcreds"></a>
 

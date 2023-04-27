@@ -16,47 +16,58 @@ CloudWatch dashboards are customizable home pages in the CloudWatch console that
 
 1. Choose a type of widget to add to your dashboard, such as a line graph\. Then choose **Configure**, and choose the metric that you want to add to your dashboard\. For more information, see [Add or remove a graph from a CloudWatch dashboard](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/add_remove_graph_dashboard.html) in the *Amazon CloudWatch User Guide*
 
-By default, the metrics that you create in the CloudWatch dashboards are averages\.
-
 ## Metrics and dimensions<a name="metrics-to-monitor"></a>
 
 When you interact with the services that integrate with Application Auto Scaling, they send the metrics shown in the following table to CloudWatch\. In CloudWatch, metrics are grouped first by the service namespace, and then by the various dimension combinations within each namespace\. 
 
-These metrics can help you discover your application's capacity requirements\. You can use this information to set your capacity statically, or to set up automatic scaling\. If your application's workload is not constant, this indicates that you should consider using automatic scaling\. 
+These metrics can help you discover your application's capacity requirements\. You can use this information to set your capacity statically, or to set up auto scaling\. If your application's workload is not constant, this indicates that you should consider using auto scaling\. When you create a target tracking scaling policy, Application Auto Scaling provides a predefined metric to simplify the creation of the scaling policy\. For detailed descriptions of these metrics, see the documentation for the metric of interest in the following table\.
 
 
-| Metric name  | Namespace | Dimensions | Applies to | 
+| Metric name  | Namespace | Dimensions | Relevant predefined metric | 
 | --- | --- | --- | --- | 
-| [AvailableCapacity](https://docs.aws.amazon.com/appstream2/latest/developerguide/monitoring.html) | AWS/AppStream | Fleet | AppStream | 
-| [CapacityUtilization](https://docs.aws.amazon.com/appstream2/latest/developerguide/monitoring.html) | AWS/AppStream | Fleet | AppStream | 
-| [CPUUtilization](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/metrics-reference.html) | AWS/RDS | DBClusterIdentifier, Role \(READER\) | Aurora | 
-| [DatabaseConnections](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/metrics-reference.html) | AWS/RDS | DBClusterIdentifier, Role \(READER\) | Aurora | 
-| [InferenceUtilization](https://docs.aws.amazon.com/comprehend/latest/dg/manage-endpoints-monitor.html) | AWS/Comprehend | EndpointArn | Comprehend | 
-| [ProvisionedReadCapacityUnits](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/metrics-dimensions.html) | AWS/DynamoDB | TableName, GlobalSecondaryIndexName | DynamoDB | 
-| [ProvisionedWriteCapacityUnits](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/metrics-dimensions.html) | AWS/DynamoDB | TableName, GlobalSecondaryIndexName | DynamoDB | 
-| [ConsumedReadCapacityUnits](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/metrics-dimensions.html) | AWS/DynamoDB | TableName, GlobalSecondaryIndexName | DynamoDB | 
-| [ConsumedWriteCapacityUnits](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/metrics-dimensions.html) | AWS/DynamoDB | TableName, GlobalSecondaryIndexName | DynamoDB | 
-| [CPUUtilization](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cloudwatch-metrics.html) | AWS/ECS | ClusterName, ServiceName | ECS | 
-| [MemoryUtilization](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cloudwatch-metrics.html) | AWS/ECS | ClusterName, ServiceName | ECS | 
-| [RequestCountPerTarget](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-cloudwatch-metrics.html) | AWS/ApplicationELB | TargetGroup | ECS | 
-| [EngineCPUUtilization](https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheMetrics.Redis.html) | AWS/ElastiCache | ReplicationGroupId, Role \(Primary\) | ElastiCache | 
-| [EngineCPUUtilization](https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheMetrics.Redis.html) | AWS/ElastiCache | ReplicationGroupId, Role \(Replica\) | ElastiCache | 
-| [YARNMemoryAvailablePercentage](https://docs.aws.amazon.com/emr/latest/ManagementGuide/UsingEMR_ViewingMetrics.html) | AWS/ElasticMapReduce | ClusterId | EMR | 
-| [ProvisionedReadCapacityUnits](https://docs.aws.amazon.com/keyspaces/latest/devguide/metrics-dimensions.html) | AWS/Cassandra | Keyspace, TableName | Amazon Keyspaces | 
-| [ProvisionedWriteCapacityUnits](https://docs.aws.amazon.com/keyspaces/latest/devguide/metrics-dimensions.html) | AWS/Cassandra | Keyspace, TableName | Amazon Keyspaces | 
-| [ConsumedReadCapacityUnits](https://docs.aws.amazon.com/keyspaces/latest/devguide/metrics-dimensions.html) | AWS/Cassandra | Keyspace, TableName | Amazon Keyspaces | 
-| [ConsumedWriteCapacityUnits](https://docs.aws.amazon.com/keyspaces/latest/devguide/metrics-dimensions.html) | AWS/Cassandra | Keyspace, TableName | Amazon Keyspaces | 
-| [ProvisionedConcurrencyUtilization](https://docs.aws.amazon.com/lambda/latest/dg/monitoring-functions-metrics.html) | AWS/Lambda | FunctionName, Resource | Lambda | 
-| [KafkaDataLogsDiskUsed](https://docs.aws.amazon.com/msk/latest/developerguide/monitoring.html) | AWS/Kafka | Cluster Name | Amazon MSK | 
-| [KafkaDataLogsDiskUsed](https://docs.aws.amazon.com/msk/latest/developerguide/monitoring.html) | AWS/Kafka | Cluster Name, Broker ID | Amazon MSK | 
-| [CPUUtilization](https://docs.aws.amazon.com/neptune/latest/userguide/cw-metrics.html) | AWS/Neptune | DBClusterIdentifier, Role \(READER\) | Neptune | 
-| [InvocationsPerInstance](https://docs.aws.amazon.com/sagemaker/latest/dg/monitoring-cloudwatch.html) | AWS/SageMaker  | EndpointName, VariantName | SageMaker | 
-| [CPUUtilization](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet-cloudwatch-metrics.html) | AWS/EC2Spot | FleetRequestId | Spot Fleet | 
-| [NetworkIn](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet-cloudwatch-metrics.html) | AWS/EC2Spot | FleetRequestId | Spot Fleet | 
-| [NetworkOut](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet-cloudwatch-metrics.html) | AWS/EC2Spot | FleetRequestId | Spot Fleet | 
-| [RequestCountPerTarget](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-cloudwatch-metrics.html) | AWS/ApplicationELB | TargetGroup | Spot Fleet | 
+| AppStream |  |  |  | 
+| [AvailableCapacity](https://docs.aws.amazon.com/appstream2/latest/developerguide/monitoring.html) | AWS/AppStream | Fleet | Not applicable | 
+| [CapacityUtilization](https://docs.aws.amazon.com/appstream2/latest/developerguide/monitoring.html) | AWS/AppStream | Fleet | AppStreamAverageCapacityUtilization | 
+| Aurora |  |  |  | 
+| [CPUUtilization](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/metrics-reference.html) | AWS/RDS | DBClusterIdentifier, Role \(READER\) | RDSReaderAverageCPUUtilization  | 
+| [DatabaseConnections](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/metrics-reference.html) | AWS/RDS | DBClusterIdentifier, Role \(READER\) | RDSReaderAverageDatabaseConnections | 
+| Comprehend |  |  |  | 
+| [InferenceUtilization](https://docs.aws.amazon.com/comprehend/latest/dg/manage-endpoints-monitor.html) | AWS/Comprehend | EndpointArn | ComprehendInferenceUtilization | 
+| DynamoDB |  |  |  | 
+| [ProvisionedReadCapacityUnits](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/metrics-dimensions.html) | AWS/DynamoDB | TableName, GlobalSecondaryIndexName | DynamoDBReadCapacityUtilization | 
+| [ProvisionedWriteCapacityUnits](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/metrics-dimensions.html) | AWS/DynamoDB | TableName, GlobalSecondaryIndexName | DynamoDBWriteCapacityUtilization | 
+| [ConsumedReadCapacityUnits](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/metrics-dimensions.html) | AWS/DynamoDB | TableName, GlobalSecondaryIndexName | DynamoDBReadCapacityUtilization | 
+| [ConsumedWriteCapacityUnits](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/metrics-dimensions.html) | AWS/DynamoDB | TableName, GlobalSecondaryIndexName | DynamoDBWriteCapacityUtilization | 
+| ECS |  |  |  | 
+| [CPUUtilization](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cloudwatch-metrics.html) | AWS/ECS | ClusterName, ServiceName | ECSServiceAverageCPUUtilization | 
+| [MemoryUtilization](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cloudwatch-metrics.html) | AWS/ECS | ClusterName, ServiceName | ECSServiceAverageMemoryUtilization | 
+| [RequestCountPerTarget](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-cloudwatch-metrics.html) | AWS/ApplicationELB | TargetGroup | ALBRequestCountPerTarget | 
+| ElastiCache |  |  |  | 
+| [EngineCPUUtilization](https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheMetrics.Redis.html) | AWS/ElastiCache | ReplicationGroupId, Role \(Primary\) | ElastiCachePrimaryEngineCPUUtilization | 
+| [EngineCPUUtilization](https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheMetrics.Redis.html) | AWS/ElastiCache | ReplicationGroupId, Role \(Replica\) | ElastiCacheReplicaEngineCPUUtilization | 
+| EMR |  |  |  | 
+| [YARNMemoryAvailablePercentage](https://docs.aws.amazon.com/emr/latest/ManagementGuide/UsingEMR_ViewingMetrics.html) | AWS/ElasticMapReduce | ClusterId | Not applicable | 
+| Amazon Keyspaces |  |  |  | 
+| [ProvisionedReadCapacityUnits](https://docs.aws.amazon.com/keyspaces/latest/devguide/metrics-dimensions.html) | AWS/Cassandra | Keyspace, TableName | CassandraReadCapacityUtilization | 
+| [ProvisionedWriteCapacityUnits](https://docs.aws.amazon.com/keyspaces/latest/devguide/metrics-dimensions.html) | AWS/Cassandra | Keyspace, TableName | CassandraWriteCapacityUtilization | 
+| [ConsumedReadCapacityUnits](https://docs.aws.amazon.com/keyspaces/latest/devguide/metrics-dimensions.html) | AWS/Cassandra | Keyspace, TableName | CassandraReadCapacityUtilization | 
+| [ConsumedWriteCapacityUnits](https://docs.aws.amazon.com/keyspaces/latest/devguide/metrics-dimensions.html) | AWS/Cassandra | Keyspace, TableName | CassandraWriteCapacityUtilization | 
+| Lambda |  |  |  | 
+| [ProvisionedConcurrencyUtilization](https://docs.aws.amazon.com/lambda/latest/dg/monitoring-functions-metrics.html) | AWS/Lambda | FunctionName, Resource | LambdaProvisionedConcurrencyUtilization | 
+| Amazon MSK |  |  |  | 
+| [KafkaDataLogsDiskUsed](https://docs.aws.amazon.com/msk/latest/developerguide/monitoring.html) | AWS/Kafka | Cluster Name | KafkaBrokerStorageUtilization | 
+| [KafkaDataLogsDiskUsed](https://docs.aws.amazon.com/msk/latest/developerguide/monitoring.html) | AWS/Kafka | Cluster Name, Broker ID | KafkaBrokerStorageUtilization | 
+| Neptune |  |  |  | 
+| [CPUUtilization](https://docs.aws.amazon.com/neptune/latest/userguide/cw-metrics.html) | AWS/Neptune | DBClusterIdentifier, Role \(READER\) | NeptuneReaderAverageCPUUtilization | 
+| SageMaker |  |  |  | 
+| [InvocationsPerInstance](https://docs.aws.amazon.com/sagemaker/latest/dg/monitoring-cloudwatch.html) | AWS/SageMaker  | EndpointName, VariantName | SageMakerVariantInvocationsPerInstance | 
+| Spot Fleet |  |  |  | 
+| [CPUUtilization](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet-cloudwatch-metrics.html) | AWS/EC2Spot | FleetRequestId | EC2SpotFleetRequestAverageCPUUtilization | 
+| [NetworkIn](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet-cloudwatch-metrics.html) | AWS/EC2Spot | FleetRequestId | EC2SpotFleetRequestAverageNetworkIn | 
+| [NetworkOut](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet-cloudwatch-metrics.html) | AWS/EC2Spot | FleetRequestId | EC2SpotFleetRequestAverageNetworkOut | 
+| [RequestCountPerTarget](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-cloudwatch-metrics.html) | AWS/ApplicationELB | TargetGroup | ALBRequestCountPerTarget | 
 
-While CloudWatch allows you to choose any statistic and period for each metric, not all combinations are useful\. For example, the Average, Minimum, and Maximum statistics for CPU utilization are useful, but the Sum statistic is not\. For more information, refer to the service's documentation by following the links provided in the preceding table\.
+By default, the metrics that you create in the CloudWatch dashboards are averages\. While CloudWatch allows you to choose any statistic for each metric, not all combinations are useful\. For example, the average, minimum, and maximum statistics for CPU utilization are useful, but the sum statistic is not\. For more information, refer to the service's documentation by following the links provided in the preceding table\.
 
 A commonly used measure of application performance is average CPU utilization\. If there is an increase in CPU utilization and you have insufficient capacity to handle it, the application might become unresponsive\. On the other hand, if you have too much capacity and resources are running when utilization is low, this increases the costs for using that service\.
 

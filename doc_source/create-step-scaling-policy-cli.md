@@ -26,8 +26,16 @@ aws application-autoscaling register-scalable-target --service-namespace ecs \
 aws application-autoscaling register-scalable-target --service-namespace ecs --scalable-dimension ecs:service:DesiredCount --resource-id service/default/sample-app-service --min-capacity 2 --max-capacity 10
 ```
 
+If successful, this command returns the ARN of the scalable target\.
+
+```
+{
+    "ScalableTargetARN": "arn:aws:application-autoscaling:region:account-id:scalable-target/1234abcd56ab78cd901ef1234567890ab123"
+}
+```
+
 **Note**  
-For brevity, the examples in this topic illustrate CLI commands for an Amazon ECS service\. To specify a different scalable target, specify its namespace in `--service-namespace`, its scalable dimension in `--scalable-dimension`, and its resource ID in `--resource-id`\.
+For brevity, the examples in this topic illustrate CLI commands for an Amazon ECS service\. To specify a different scalable target, specify its namespace in `--service-namespace`, its scalable dimension in `--scalable-dimension`, and its resource ID in `--resource-id`\. For more information and examples for each service, see the topics in [AWS services that you can use with Application Auto Scaling](integrated-services-list.md)\.
 
 ## Create a step scaling policy<a name="create-step-scaling-policy"></a>
 

@@ -40,6 +40,14 @@ If you want to configure auto scaling using the AWS CLI or one of the AWS SDKs, 
     --max-capacity 10
   ```
 
+  If successful, this command returns the ARN of the scalable target\.
+
+  ```
+  {
+      "ScalableTargetARN": "arn:aws:application-autoscaling:region:account-id:scalable-target/1234abcd56ab78cd901ef1234567890ab123"
+  }
+  ```
+
   Call the [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command for a table's read capacity\. The following example registers the provisioned read capacity of a table called `my-table`, with a minimum capacity of five read capacity units and a maximum capacity of 10 read units\.
 
   ```
@@ -49,6 +57,14 @@ If you want to configure auto scaling using the AWS CLI or one of the AWS SDKs, 
     --resource-id table/my-table \
     --min-capacity 5 \
     --max-capacity 10
+  ```
+
+  If successful, this command returns the ARN of the scalable target\.
+
+  ```
+  {
+      "ScalableTargetARN": "arn:aws:application-autoscaling:region:account-id:scalable-target/1234abcd56ab78cd901ef1234567890ab123"
+  }
   ```
 
   Call the [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command for the write capacity of a global secondary index\. The following example registers the provisioned write capacity of a global secondary index called `my-table-index`, with a minimum capacity of five write capacity units and a maximum capacity of 10 write capacity units\.
@@ -62,6 +78,14 @@ If you want to configure auto scaling using the AWS CLI or one of the AWS SDKs, 
     --max-capacity 10
   ```
 
+  If successful, this command returns the ARN of the scalable target\.
+
+  ```
+  {
+      "ScalableTargetARN": "arn:aws:application-autoscaling:region:account-id:scalable-target/1234abcd56ab78cd901ef1234567890ab123"
+  }
+  ```
+
   Call the [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command for the read capacity of a global secondary index\. The following example registers the provisioned read capacity of a global secondary index called `my-table-index`, with a minimum capacity of five read capacity units and a maximum capacity of 10 read capacity units\.
 
   ```
@@ -71,6 +95,14 @@ If you want to configure auto scaling using the AWS CLI or one of the AWS SDKs, 
     --resource-id table/my-table/index/my-table-index \
     --min-capacity 5 \
     --max-capacity 10
+  ```
+
+  If successful, this command returns the ARN of the scalable target\.
+
+  ```
+  {
+      "ScalableTargetARN": "arn:aws:application-autoscaling:region:account-id:scalable-target/1234abcd56ab78cd901ef1234567890ab123"
+  }
   ```
 + AWS SDK:
 

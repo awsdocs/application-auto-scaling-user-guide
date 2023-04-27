@@ -37,6 +37,14 @@ If you want to configure auto scaling using the AWS CLI or one of the AWS SDKs, 
     --max-capacity 10
   ```
 
+  If successful, this command returns the ARN of the scalable target\.
+
+  ```
+  {
+      "ScalableTargetARN": "arn:aws:application-autoscaling:region:account-id:scalable-target/1234abcd56ab78cd901ef1234567890ab123"
+  }
+  ```
+
   The following example registers the provisioned read capacity of a table called `mytable`, with a minimum capacity of five read capacity units and a maximum capacity of 10 read capacity units\.
 
   ```
@@ -46,6 +54,14 @@ If you want to configure auto scaling using the AWS CLI or one of the AWS SDKs, 
     --resource-id keyspace/mykeyspace/table/mytable \
     --min-capacity 5 \
     --max-capacity 10
+  ```
+
+  If successful, this command returns the ARN of the scalable target\.
+
+  ```
+  {
+      "ScalableTargetARN": "arn:aws:application-autoscaling:region:account-id:scalable-target/1234abcd56ab78cd901ef1234567890ab123"
+  }
   ```
 + AWS SDK: 
 

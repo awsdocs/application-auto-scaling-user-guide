@@ -3,7 +3,7 @@
 The AWS CLI includes several other commands that help you manage your scheduled actions\. 
 
 **Note**  
-For brevity, the examples in this topic illustrate CLI commands for a few of the services that integrate with Application Auto Scaling\. To specify a different scalable target, specify its namespace in `--service-namespace`, its scalable dimension in `--scalable-dimension`, and its resource ID in `--resource-id`\.
+For brevity, the examples in this topic illustrate CLI commands for a few of the services that integrate with Application Auto Scaling\. To specify a different scalable target, specify its namespace in `--service-namespace`, its scalable dimension in `--scalable-dimension`, and its resource ID in `--resource-id`\. For more information and examples for each service, see the topics in [AWS services that you can use with Application Auto Scaling](integrated-services-list.md)\.
 
 **Topics**
 + [View scaling activities for a specified service](#describe-scaling-activities-service-namespace)
@@ -221,7 +221,13 @@ aws application-autoscaling register-scalable-target --service-namespace rds \
 aws application-autoscaling register-scalable-target --service-namespace rds --scalable-dimension rds:cluster:ReadReplicaCount --resource-id cluster:my-db-cluster --suspended-state "{\"ScheduledScalingSuspended\": true}"
 ```
 
-If successful, this command returns to the prompt\. 
+If successful, this command returns the ARN of the scalable target\.
+
+```
+{
+    "ScalableTargetARN": "arn:aws:application-autoscaling:region:account-id:scalable-target/1234abcd56ab78cd901ef1234567890ab123"
+}
+```
 
 To resume scheduled scaling, run this command again, specifying `false` as the value of the `ScheduledScalingSuspended` attribute\.
 

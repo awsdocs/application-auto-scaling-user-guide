@@ -38,59 +38,67 @@ The combination of scheduled scaling and target tracking scaling can help reduce
 
 ## Choose metrics<a name="target-tracking-choose-metrics"></a>
 
-The following predefined metrics are available for use when you create target tracking scaling policies\. You can optionally define which metric to monitor and use with your target tracking scaling policy by using a custom metric\. 
+You can create target tracking scaling policies with either predefined metrics or custom metrics\. 
 
-**AppStream 2\.0**
-+ `AppStreamAverageCapacityUtilization`
+When you create a target tracking scaling policy with a predefined metric, you choose one metric from the following list of predefined metrics\. 
 
-**Aurora**
-+ `RDSReaderAverageCPUUtilization`
-+ `RDSReaderAverageDatabaseConnections`
+AppStream 2\.0  
+`AppStreamAverageCapacityUtilization` \(Percent\)
 
-**Amazon Comprehend**
-+ `ComprehendInferenceUtilization`
+Aurora  
+`RDSReaderAverageCPUUtilization` \(Percent\)  
+`RDSReaderAverageDatabaseConnections` \(Count\)
 
-**DynamoDB**
-+ `DynamoDBReadCapacityUtilization`
-+ `DynamoDBWriteCapacityUtilization`
+Amazon Comprehend  
+`ComprehendInferenceUtilization` \(Percent\)
 
-**Amazon ECS**
-+ `ALBRequestCountPerTarget` \(load balancer metric\)
-+ `ECSServiceAverageCPUUtilization`
-+ `ECSServiceAverageMemoryUtilization`
+DynamoDB  
+`DynamoDBReadCapacityUtilization` \(Percent\)  
+`DynamoDBWriteCapacityUtilization` \(Percent\)
 
-**ElastiCache**
-+ `ElastiCachePrimaryEngineCPUUtilization`
-+ `ElastiCacheReplicaEngineCPUUtilization`
-+ `ElastiCacheDatabaseMemoryUsageCountedForEvictPercentage`
+Amazon ECS  
+`ALBRequestCountPerTarget` \(Count\)  
+`ECSServiceAverageCPUUtilization` \(Percent\)  
+`ECSServiceAverageMemoryUtilization` \(Percent\)
 
-**Amazon Keyspaces \(for Apache Cassandra\)**
-+ `CassandraReadCapacityUtilization`
-+ `CassandraWriteCapacityUtilization`
+ElastiCache  
+`ElastiCachePrimaryEngineCPUUtilization` \(Percent\)  
+`ElastiCacheReplicaEngineCPUUtilization` \(Percent\)  
+`ElastiCacheDatabaseMemoryUsageCountedForEvictPercentage` \(Percent\)
 
-**Lambda**
-+ `LambdaProvisionedConcurrencyUtilization`
+Amazon Keyspaces \(for Apache Cassandra\)  
+`CassandraReadCapacityUtilization` \(Percent\)  
+`CassandraWriteCapacityUtilization` \(Percent\)
 
-**Amazon Managed Streaming for Apache Kafka \(MSK\)**
-+ `KafkaBrokerStorageUtilization`
+Lambda  
+`LambdaProvisionedConcurrencyUtilization` \(Percent\)
 
-**Neptune**
-+ `NeptuneReaderAverageCPUUtilization`
+Amazon Managed Streaming for Apache Kafka \(MSK\)  
+`KafkaBrokerStorageUtilization` \(Percent\)
 
-**Spot Fleet \(Amazon EC2\)**
-+ `ALBRequestCountPerTarget` \(load balancer metric\)
-+ `EC2SpotFleetRequestAverageCPUUtilization`
-+ `EC2SpotFleetRequestAverageNetworkIn`
-+ `EC2SpotFleetRequestAverageNetworkOut`
+Neptune  
+`NeptuneReaderAverageCPUUtilization` \(Percent\)
 
-**SageMaker**
-+ `SageMakerVariantInvocationsPerInstance`
+Spot Fleet \(Amazon EC2\)  
+`ALBRequestCountPerTarget` \(Count\)  
+`EC2SpotFleetRequestAverageCPUUtilization` \(Percent\)  
+`EC2SpotFleetRequestAverageNetworkIn` \(Count\)  
+`EC2SpotFleetRequestAverageNetworkOut` \(Count\)
+
+SageMaker  
+`SageMakerVariantInvocationsPerInstance` \(Count\)
+
+**Tip**  
+Each predefined metric is based on a metric published by the respective service\. For more information about these metrics, see the documentation for the service you are using available from the table in [Metrics and dimensions](monitoring-cloudwatch.md#metrics-to-monitor)\.
 
 Keep the following in mind when choosing a metric:
 + Not all metrics work for target tracking\. This can be important when you are specifying a custom metric\. The metric must be a valid utilization metric and describe how busy a scalable target is\. The metric value must increase or decrease proportionally to the capacity of the scalable target so that the metric data can be used to proportionally scale the scalable target\. 
-+ To see whether a target service supports specifying a custom metric in the console, consult the documentation for that service\. For information about how to use the AWS CLI to create a target tracking scaling policy with a custom metric, see [Create a target tracking scaling policy](create-target-tracking-policy-cli.md#create-target-tracking-policy)\.
 + To use the `ALBRequestCountPerTarget` metric, you must specify the `ResourceLabel` parameter to identify the target group that is associated with the metric\. 
 + When a metric emits real 0 values to CloudWatch \(for example, `ALBRequestCountPerTarget`\), Application Auto Scaling can scale in to 0 when there is no traffic to your application\. To have your scalable target scale in to 0 when no requests are routed it, the scalable target's minimum capacity must be set to 0\. 
++ When you create a target tracking scaling policy with a custom metric, you can use metric math to combine metrics\. For more information, see [Create a target tracking scaling policy for Application Auto Scaling using metric math](application-auto-scaling-target-tracking-metric-math.md)\.
++ To see whether the service you are using supports specifying a custom metric in the console, consult the documentation for that service\. 
+
+**Use detailed monitoring for Amazon EC2**
 
 When you use EC2 instance metrics in your scaling policies, we recommend that you configure these metrics with a 1\-minute granularity to ensure a faster response to changes in the metric value\. Scaling on instance metrics with a 5\-minute granularity can result in slower response times and scaling on stale metric data\.
 

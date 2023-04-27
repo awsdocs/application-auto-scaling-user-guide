@@ -31,7 +31,7 @@ The following descriptions explain what happens when individual scaling activiti
 You can suspend and resume individual scaling activities or all scaling activities for your Application Auto Scaling scalable target\.
 
 **Note**  
-For brevity, these examples illustrate how to suspend and resume scaling for a DynamoDB table\. To specify a different scalable target, specify its namespace in `--service-namespace`, its scalable dimension in `--scalable-dimension`, and its resource ID in `--resource-id`\.
+For brevity, these examples illustrate how to suspend and resume scaling for a DynamoDB table\. To specify a different scalable target, specify its namespace in `--service-namespace`, its scalable dimension in `--scalable-dimension`, and its resource ID in `--resource-id`\. For more information and examples for each service, see the topics in [AWS services that you can use with Application Auto Scaling](integrated-services-list.md)\.
 
 **To suspend a scaling activity**  
 Open a command\-line window and use the [register\-scalable\-target](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command with the `--suspended-state` option as follows\. 
@@ -48,6 +48,14 @@ aws application-autoscaling register-scalable-target --service-namespace dynamod
 
 ```
 aws application-autoscaling register-scalable-target --service-namespace dynamodb --scalable-dimension dynamodb:table:ReadCapacityUnits --resource-id table/my-table --suspended-state file://config.json
+```
+
+If successful, this command returns the ARN of the scalable target\.
+
+```
+{
+    "ScalableTargetARN": "arn:aws:application-autoscaling:region:account-id:scalable-target/1234abcd56ab78cd901ef1234567890ab123"
+}
 ```
 
 To only suspend scale\-in activities that are triggered by a scaling policy, specify the following in config\.json\.
@@ -98,6 +106,14 @@ This example assumes that the file config\.json contains the following JSON\-for
     "DynamicScalingInSuspended":true,
     "DynamicScalingOutSuspended":true,
     "ScheduledScalingSuspended":true
+}
+```
+
+If successful, this command returns the ARN of the scalable target\.
+
+```
+{
+    "ScalableTargetARN": "arn:aws:application-autoscaling:region:account-id:scalable-target/1234abcd56ab78cd901ef1234567890ab123"
 }
 ```
 
@@ -168,5 +184,13 @@ This example assumes that the file config\.json contains the following JSON\-for
     "DynamicScalingInSuspended":false,
     "DynamicScalingOutSuspended":false,
     "ScheduledScalingSuspended":false
+}
+```
+
+If successful, this command returns the ARN of the scalable target\.
+
+```
+{
+    "ScalableTargetARN": "arn:aws:application-autoscaling:region:account-id:scalable-target/1234abcd56ab78cd901ef1234567890ab123"
 }
 ```

@@ -55,7 +55,13 @@ Start by registering your resource as a scalable target with Application Auto Sc
   aws application-autoscaling register-scalable-target --service-namespace namespace --scalable-dimension dimension --resource-id identifier --min-capacity 0 --max-capacity 0
   ```
 
-  This command does not return any output if it is successful\.
+  If successful, this command returns the ARN of the scalable target\.
+
+  ```
+  {
+      "ScalableTargetARN": "arn:aws:application-autoscaling:region:account-id:scalable-target/1234abcd56ab78cd901ef1234567890ab123"
+  }
+  ```
 
 ## Step 2: Set up scheduled actions according to your requirements<a name="tutorial-create-scheduled-actions"></a>
 

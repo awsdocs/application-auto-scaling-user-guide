@@ -35,6 +35,14 @@ To configure auto scaling using the AWS CLI or one of the AWS SDKs, you can use 
     --max-capacity 3
   ```
 
+  If successful, this command returns the ARN of the scalable target\.
+
+  ```
+  {
+      "ScalableTargetARN": "arn:aws:application-autoscaling:region:account-id:scalable-target/1234abcd56ab78cd901ef1234567890ab123"
+  }
+  ```
+
   Call the [https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html](https://docs.aws.amazon.com/cli/latest/reference/application-autoscaling/register-scalable-target.html) command for an entity recognizer endpoint\. The following example registers the desired number of inference units to be used by the model for an entity recognizer using the endpoint's ARN, with a minimum capacity of one inference unit and a maximum capacity of three inference units\.
 
   ```
@@ -44,6 +52,14 @@ To configure auto scaling using the AWS CLI or one of the AWS SDKs, you can use 
     --resource-id arn:aws:comprehend:us-west-2:123456789012:entity-recognizer-endpoint/EXAMPLE \
     --min-capacity 1 \
     --max-capacity 3
+  ```
+
+  If successful, this command returns the ARN of the scalable target\.
+
+  ```
+  {
+      "ScalableTargetARN": "arn:aws:application-autoscaling:region:account-id:scalable-target/1234abcd56ab78cd901ef1234567890ab123"
+  }
   ```
 + AWS SDK: 
 

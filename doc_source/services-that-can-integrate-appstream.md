@@ -36,6 +36,14 @@ If you want to configure auto scaling using the AWS CLI or one of the AWS SDKs, 
      --min-capacity 1 \
      --max-capacity 5
   ```
+
+  If successful, this command returns the ARN of the scalable target\.
+
+  ```
+  {
+      "ScalableTargetARN": "arn:aws:application-autoscaling:region:account-id:scalable-target/1234abcd56ab78cd901ef1234567890ab123"
+  }
+  ```
 + AWS SDK: 
 
   Call the [RegisterScalableTarget](https://docs.aws.amazon.com/autoscaling/application/APIReference/API_RegisterScalableTarget.html) operation and provide `ResourceId`, `ScalableDimension`, `ServiceNamespace`, `MinCapacity`, and `MaxCapacity` as parameters\. 

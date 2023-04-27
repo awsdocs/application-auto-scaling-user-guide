@@ -61,7 +61,13 @@ Begin by registering your DynamoDB table as a scalable target with Application A
    aws application-autoscaling register-scalable-target --service-namespace dynamodb --scalable-dimension dynamodb:table:WriteCapacityUnits --resource-id table/TestTable --min-capacity 5 --max-capacity 10
    ```
 
-   This command does not return any output if it is successful\.
+   If successful, this command returns the ARN of the scalable target\.
+
+   ```
+   {
+       "ScalableTargetARN": "arn:aws:application-autoscaling:region:account-id:scalable-target/1234abcd56ab78cd901ef1234567890ab123"
+   }
+   ```
 
 ## Step 2: Create two scheduled actions<a name="gs-create-scheduled-action"></a>
 
